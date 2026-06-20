@@ -57,3 +57,5 @@ texture = ExtResource("3_c651c")
 
 [node name="OnFloor" type="RayCast2D" parent="Scene/CharacterBody2D" unique_id=1858477538]
 target_position = Vector2(0, 29)
+
+[node name="Camera2D" type="Camera2D" parent="Scene/CharacterBody2D" unique_id=760465680]
