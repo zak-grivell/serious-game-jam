@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://c8tesuotehef3"]
+
+[ext_resource type="PackedScene" uid="uid://bsr040tqx1sx0" path="res://transition/transition.tscn" id="1_1nbid"]
+[ext_resource type="Script" uid="uid://h0qe7pjgm0h6" path="res://main-menu/main-menu-button.gd" id="1_2g4i4"]
+[ext_resource type="PackedScene" uid="uid://ekvt1amehlo" path="res://main/main.tscn" id="2_6u48k"]
+
+[node name="MainMenu" type="Control" unique_id=560184596]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="." unique_id=1560036746]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Panel" unique_id=1235841176]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -58.5
+offset_top = 295.0
+offset_right = 58.5
+offset_bottom = 318.0
+grow_horizontal = 2
+text = "SERIOUS GAME"
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="Panel" unique_id=348429248 node_paths=PackedStringArray("transition")]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -74.5
+offset_top = -293.0
+offset_right = 74.5
+offset_bottom = -262.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "BE PROFESSIONAL
+"
+script = ExtResource("1_2g4i4")
+target_scene = ExtResource("2_6u48k")
+transition = NodePath("../../Transition")
+
+[node name="Transition" parent="." unique_id=355810688 instance=ExtResource("1_1nbid")]
+layout_mode = 1
+onload = false

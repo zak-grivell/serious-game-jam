@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://bsr040tqx1sx0"]
+
+[ext_resource type="Texture2D" uid="uid://b7jdjvvtwjhp5" path="res://transition/cat.jpg" id="1_rtb6f"]
+[ext_resource type="Script" uid="uid://cl17iqnqy4o67" path="res://transition/transition.gd" id="1_x13xl"]
+
+[sub_resource type="Animation" id="Animation_rtb6f"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_q5fnr"]
+resource_name = "on_exit"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_x13xl"]
+resource_name = "on_load"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_q5fnr"]
+_data = {
+&"RESET": SubResource("Animation_rtb6f"),
+&"on_exit": SubResource("Animation_q5fnr"),
+&"on_load": SubResource("Animation_x13xl")
+}
+
+[node name="Transition" type="Control" unique_id=355810688]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_x13xl")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1641236049]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("1_rtb6f")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=363824073]
+libraries/ = SubResource("AnimationLibrary_q5fnr")
