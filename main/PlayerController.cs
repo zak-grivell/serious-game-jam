@@ -6,7 +6,7 @@ public partial class PlayerController : RigidBody2D
 
 	private const float SPIN_SPEED = 10.0f;
 	private const float MAX_SPIN = 100.0f;
-	private const float SPIN_LAUNCH_MULTIPLIER = 1000.0f;
+	private const float SPIN_LAUNCH_MULTIPLIER = 100.0f;
 	private const float JUMP_FORCE = -600.0f;
 	private const float VERTICAL_BOOST_MULTIPLIER = 14f;
 	private const float SPIN_DECEL = 40f;
@@ -37,7 +37,7 @@ public partial class PlayerController : RigidBody2D
 		{
 			LinearVelocity = LinearVelocity with
 			{
-				X = LinearVelocity.X + MathF.Sign(SpinSpeed) * SPIN_LAUNCH_MULTIPLIER,
+				X = LinearVelocity.X + SpinSpeed * SPIN_LAUNCH_MULTIPLIER,
 				Y = -Mathf.Abs(SpinSpeed) * VERTICAL_BOOST_MULTIPLIER
 			};
 
