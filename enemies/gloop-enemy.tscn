@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://bf6xinkrxn4m8"]
+
+[ext_resource type="Script" uid="uid://soq3nlg8vcsh" path="res://scripts/life/HealthComp.cs" id="2_0kcgx"]
+
+[sub_resource type="Gradient" id="Gradient_r6kxj"]
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_r6kxj"]
+gradient = SubResource("Gradient_r6kxj")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5h4g0"]
+
+[node name="GloopEnemy" type="CharacterBody2D" unique_id=389013661]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1556938574]
+scale = Vector2(0.08, 20)
+texture = SubResource("GradientTexture1D_r6kxj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=719743613]
+shape = SubResource("RectangleShape2D_5h4g0")
+
+[node name="HealthComp" type="Node" parent="." unique_id=1417937934]
+script = ExtResource("2_0kcgx")
+maxHp = 1
+dmgITime = 0.1

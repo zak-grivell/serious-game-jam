@@ -3,22 +3,17 @@ using System;
 
 public partial class PlayerController : RigidBody2D
 {
-
 	private const float SPIN_SPEED = 10.0f;
-	private const float MAX_SPIN = 100.0f;
-	private const float SPIN_LAUNCH_MULTIPLIER = 1000.0f;
+	private const float SPIN_ACCEL = 5f;
+	private const float MAX_SPIN = 1000.0f;
+	private const float SPIN_FORCE = 100.0f;
 	private const float JUMP_FORCE = -600.0f;
-	private const float VERTICAL_BOOST_MULTIPLIER = 6f;
-	private const float SPIN_DECEL = 40f;
-	private Sprite2D Sprite;
-	private float SpinSpeed = 0;
+	private const float VERTICAL_BOOST_MULTIPLIER = 1f;
+
 	private RayCast2D OnFloor;
-	private const double MAX_CHARGE_TIME = 2.0f;
-	private double ChargeTimer = 0;
-	private float SPIN_ACCEL = (float)(MAX_SPIN / MAX_CHARGE_TIME);
+
 	public override void _Ready() {
 		OnFloor = GetNode<RayCast2D>("OnFloor");
-		Sprite = GetNode<Sprite2D>("Sprite2D");
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -27,47 +22,30 @@ public partial class PlayerController : RigidBody2D
 
 		OnFloor.Rotation = -Rotation;
 
-		if (Input.IsActionJustPressed("ui_left") || Input.IsActionJustPressed("ui_right"))
-		{
-			ChargeTimer = 0;
-		}
+		//AngularVelocity = direction * SPIN_SPEED;
+
+		//LinearVelocity = LinearVelocity with
+		//{
+		//	X = LinearVelocity.X + direction * SPIN_FORCE
+		//};
 
 		// if the button is held, spin up that direction
 		if (Input.IsActionPressed("ui_left") || Input.IsActionPressed("ui_right"))
 		{
-			if (ChargeTimer < MAX_CHARGE_TIME)
-			{
-				SpinSpeed += direction * SPIN_ACCEL;
-				SpinSpeed = Mathf.Clamp(SpinSpeed, -MAX_SPIN, MAX_SPIN);
-				ChargeTimer += delta;
-				GD.Print("spinning up");
-			}
-			else
-			{
-				ChargeTimer = MAX_CHARGE_TIME;
-			}
-
-			GD.Print("direction held, spin speed " + SpinSpeed.ToString() + " charge timer " + ChargeTimer);
-		}
-		else
-		{
-			if (OnFloor.IsColliding())
-			{
-				SpinSpeed = SpinSpeed - Mathf.Sign(SpinSpeed) * SPIN_DECEL;
-				
-			}
+			AngularVelocity += direction * SPIN_ACCEL;
+			AngularVelocity = Mathf.Clamp(AngularVelocity, -MAX_SPIN, MAX_SPIN);
+			GD.Print("direction held");
 		}
 
 		if (Input.IsActionJustReleased("ui_left") || Input.IsActionJustReleased("ui_right"))
 		{
 			LinearVelocity = LinearVelocity with
 			{
-				X = LinearVelocity.X + MathF.Sign(SpinSpeed) * SPIN_LAUNCH_MULTIPLIER,
-				Y = -Mathf.Abs(SpinSpeed) * VERTICAL_BOOST_MULTIPLIER
+				X = LinearVelocity.X + direction * SPIN_FORCE,
+				Y = -Mathf.Abs(AngularVelocity) * VERTICAL_BOOST_MULTIPLIER
 			};
 
 			GD.Print("direction released " + LinearVelocity.ToString());
-			GD.Print("spin speed " + SpinSpeed);
 		}
 
 		if (Input.IsActionJustPressed("ui_accept") && OnFloor.IsColliding())
@@ -78,7 +56,5 @@ public partial class PlayerController : RigidBody2D
 				Y = JUMP_FORCE
 			};
 		}
-
-		Sprite.Rotation += SpinSpeed;
 	}
 }
