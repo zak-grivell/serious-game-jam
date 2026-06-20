@@ -1,6 +1,21 @@
 [gd_scene format=3 uid="uid://ekvt1amehlo"]
 
 [ext_resource type="PackedScene" uid="uid://bsr040tqx1sx0" path="res://transition/transition.tscn" id="1_53q0u"]
+[ext_resource type="Script" uid="uid://bpkn7kbddrque" path="res://main/PlayerController.cs" id="2_xwkvk"]
+[ext_resource type="Texture2D" uid="uid://dem0b0s5kogty" path="res://main/assets/hampter.jpeg" id="3_c651c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ltqda"]
+size = Vector2(510, 63)
+
+[sub_resource type="Gradient" id="Gradient_3wy1v"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_buqre"]
+gradient = SubResource("Gradient_3wy1v")
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 1)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_s4s1w"]
+radius = 22.0
 
 [node name="Main" type="Control" unique_id=78732012]
 layout_mode = 3
@@ -12,3 +27,33 @@ grow_vertical = 2
 
 [node name="Transition" parent="." unique_id=355810688 instance=ExtResource("1_53q0u")]
 layout_mode = 1
+
+[node name="Scene" type="Node2D" parent="." unique_id=1080076457]
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Scene" unique_id=153065952]
+position = Vector2(300, 300)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scene/StaticBody2D" unique_id=889530374]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_ltqda")
+
+[node name="Sprite2D" type="Sprite2D" parent="Scene/StaticBody2D" unique_id=1593420286]
+position = Vector2(0.5, 0)
+scale = Vector2(8, 1)
+texture = SubResource("GradientTexture2D_buqre")
+
+[node name="CharacterBody2D" type="RigidBody2D" parent="Scene" unique_id=1599436710]
+position = Vector2(300, 80)
+inertia = 8.0
+linear_damp = 1.0
+script = ExtResource("2_xwkvk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scene/CharacterBody2D" unique_id=1025784810]
+shape = SubResource("CircleShape2D_s4s1w")
+
+[node name="Sprite2D" type="Sprite2D" parent="Scene/CharacterBody2D" unique_id=2145414226]
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("3_c651c")
+
+[node name="OnFloor" type="RayCast2D" parent="Scene/CharacterBody2D" unique_id=1858477538]
+target_position = Vector2(0, 29)
