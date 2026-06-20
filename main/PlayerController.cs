@@ -9,7 +9,7 @@ public partial class PlayerController : RigidBody2D
 	private const float SPIN_LAUNCH_MULTIPLIER = 100.0f;
 	private const float JUMP_FORCE = -600.0f;
 	private const float VERTICAL_BOOST_MULTIPLIER = 14f;
-	private const float SPIN_DECEL = 40f;
+	private const float SPIN_DECEL = 0.1f;
 	private Sprite2D Sprite;
 	private float SpinSpeed = 0;
 	private RayCast2D OnFloor;
@@ -67,8 +67,8 @@ public partial class PlayerController : RigidBody2D
 		{
 			if (OnFloor.IsColliding())
 			{
-				SpinSpeed = SpinSpeed - Mathf.Sign(SpinSpeed) * SPIN_DECEL;
-				
+				SpinSpeed = Mathf.Lerp(SpinSpeed, 0, 0.07f);
+				GD.Print("slowing down, spin speed is " + SpinSpeed.ToString());
 			}
 		}
 
