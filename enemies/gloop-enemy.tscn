@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://bf6xinkrxn4m8"]
 
 [ext_resource type="Script" uid="uid://soq3nlg8vcsh" path="res://scripts/life/HealthComp.cs" id="2_0kcgx"]
+[ext_resource type="Script" uid="uid://b8eqomuii5u1l" path="res://scripts/life/DefaultEnemyDeath.cs" id="2_t1db6"]
 
 [sub_resource type="Gradient" id="Gradient_r6kxj"]
 
@@ -18,7 +19,12 @@ texture = SubResource("GradientTexture1D_r6kxj")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=719743613]
 shape = SubResource("RectangleShape2D_5h4g0")
 
-[node name="HealthComp" type="Node" parent="." unique_id=1417937934]
+[node name="HealthComp" type="Node" parent="." unique_id=1417937934 node_paths=PackedStringArray("deathComp")]
 script = ExtResource("2_0kcgx")
 maxHp = 1
 dmgITime = 0.1
+deathComp = NodePath("../DeathComp")
+
+[node name="DeathComp" type="Node" parent="." unique_id=1133529683 node_paths=PackedStringArray("enemyNode")]
+script = ExtResource("2_t1db6")
+enemyNode = NodePath("..")
