@@ -16,11 +16,14 @@ public partial class PlayerController : RigidBody2D
 	private float SPIN_ACCEL = (float)(MAX_SPIN / MAX_CHARGE_TIME);
 	private double ChargeUpInterpolant;
 	private float HeldDirection;
+	private const int SlowestFPS = 6;
+	private const int FastestFPS = 24;
 	private bool InAir;
 
 	public override void _Ready() {
 		OnFloor = GetNode<RayCast2D>("OnFloor");
 		Sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+		Sprite.SpriteFrames.SetAnimationSpeed("default", SlowestFPS);
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -34,6 +37,7 @@ public partial class PlayerController : RigidBody2D
 		{
 			InAir = false;
 			ChargeUpInterpolant = 0;
+			Sprite.SpriteFrames.SetAnimationSpeed("default", SlowestFPS);
 			GD.Print("touched ground");
 		}
 
@@ -107,9 +111,11 @@ public partial class PlayerController : RigidBody2D
 		{
 			GD.Print("spinning at " + SpinSpeed.ToString());
 			GD.Print(HeldDirection.ToString());
-			Sprite.Rotation += HeldDirection * SpinSpeed;
+			Sprite.SpriteFrames.SetAnimationSpeed("default", Mathf.Lerp(SlowestFPS, FastestFPS, ChargeUpInterpolant));
+			//Sprite.Rotation += HeldDirection * SpinSpeed;
 		}
 
+		GD.Print(Sprite.SpriteFrames.GetAnimationSpeed("default").ToString());
 		((ShaderMaterial)Sprite.Material).SetShaderParameter("interpolant", ChargeUpInterpolant);
 
 		//Sprite.Modulate = InAir ? new Color(0, 0, 1) : new Color(0, 1, 0);
