@@ -8,7 +8,7 @@ public partial class PlayerController : RigidBody2D
 	private const float LAUNCH_MAX_SPEED = 1000.0f;
 	private const float JUMP_FORCE = -600.0f;
 	private const float VERTICAL_BOOST_MULTIPLIER = 1000f;
-	private Sprite2D Sprite;
+	private AnimatedSprite2D Sprite;
 	private float SpinSpeed = 0;
 	private RayCast2D OnFloor;
 	private const double MAX_CHARGE_TIME = 1.0f;
@@ -20,6 +20,7 @@ public partial class PlayerController : RigidBody2D
 
 	public override void _Ready() {
 		OnFloor = GetNode<RayCast2D>("OnFloor");
+		Sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 	}
 
 	public override void _PhysicsProcess(double delta)
