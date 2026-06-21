@@ -4,17 +4,6 @@ using System;
 
 public partial class PlayerController : RigidBody2D
 {
-<<<<<<< HEAD
-	private const float SPIN_SPEED = 10.0f;
-	private const float SPIN_ACCEL = 5f;
-	private const float MAX_SPIN = 1000.0f;
-	private const float SPIN_FORCE = 100.0f;
-	private const float JUMP_FORCE = -600.0f;
-	private const float VERTICAL_BOOST_MULTIPLIER = 1f;
-
-	private RayCast2D OnFloor;
-
-=======
 	// TO-DO: make the player slow when charging up
 	private const float MAX_SPIN = 0.4f;
 	private const float LAUNCH_MAX_SPEED = 1000.0f;
@@ -29,7 +18,7 @@ public partial class PlayerController : RigidBody2D
 	private double ChargeUpInterpolant;
 	private float HeldDirection;
 	private bool InAir;
->>>>>>> main
+
 	public override void _Ready() {
 		OnFloor = GetNode<RayCast2D>("OnFloor");
 	}
@@ -40,14 +29,6 @@ public partial class PlayerController : RigidBody2D
 
 		OnFloor.Rotation = -Rotation;
 
-<<<<<<< HEAD
-		//AngularVelocity = direction * SPIN_SPEED;
-
-		//LinearVelocity = LinearVelocity with
-		//{
-		//	X = LinearVelocity.X + direction * SPIN_FORCE
-		//};
-=======
 		// if we FELL to the ground, not as we leave it
 		if (OnFloor.IsColliding() && InAir && LinearVelocity.Y > 0)
 		{
@@ -55,26 +36,10 @@ public partial class PlayerController : RigidBody2D
 			ChargeUpInterpolant = 0;
 			GD.Print("touched ground");
 		}
->>>>>>> main
 
 		if (!InAir)
 		{
-<<<<<<< HEAD
-			AngularVelocity += direction * SPIN_ACCEL;
-			AngularVelocity = Mathf.Clamp(AngularVelocity, -MAX_SPIN, MAX_SPIN);
-			GD.Print("direction held");
-		}
 
-		if (Input.IsActionJustReleased("ui_left") || Input.IsActionJustReleased("ui_right"))
-		{
-			LinearVelocity = LinearVelocity with
-			{
-				X = LinearVelocity.X + direction * SPIN_FORCE,
-				Y = -Mathf.Abs(AngularVelocity) * VERTICAL_BOOST_MULTIPLIER
-			};
-
-			GD.Print("direction released " + LinearVelocity.ToString());
-=======
 			if (Input.IsActionJustPressed("ui_left") || Input.IsActionJustPressed("ui_right"))
 			{
 				ChargeTimer = 0;
@@ -124,7 +89,7 @@ public partial class PlayerController : RigidBody2D
 					//GD.Print("slowing down, spin speed is " + SpinSpeed.ToString());
 				}
 			}
->>>>>>> main
+
 		}
 
 		if (Input.IsActionJustPressed("ui_accept") && OnFloor.IsColliding())
@@ -135,8 +100,6 @@ public partial class PlayerController : RigidBody2D
 				Y = JUMP_FORCE
 			};
 		}
-<<<<<<< HEAD
-=======
 
 		SpinSpeed = (float)ChargeUpInterpolant * MAX_SPIN;
 
@@ -146,6 +109,5 @@ public partial class PlayerController : RigidBody2D
 		}
 
 		Sprite.Modulate = InAir ? new Color(0, 0, 1) : new Color(0, 1, 0);
->>>>>>> main
 	}
 }
