@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bsr040tqx1sx0" path="res://transition/transition.tscn" id="1_53q0u"]
 [ext_resource type="Script" uid="uid://bpkn7kbddrque" path="res://main/PlayerController.cs" id="2_xwkvk"]
 [ext_resource type="Texture2D" uid="uid://dem0b0s5kogty" path="res://main/assets/hampter.jpeg" id="3_c651c"]
+[ext_resource type="PackedScene" uid="uid://c201kqm66rjry" path="res://menus/pause-menu/pause_menu.tscn" id="4_c651c"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c651c"]
 size = Vector2(514, 66)
@@ -85,40 +86,44 @@ position = Vector2(0, -17.810528)
 scale = Vector2(1, 1.0078948)
 points = PackedVector2Array(0, 2, -1, 15, 1, 64, -2, 191, -3, 346, -3, -14)
 
-[node name="worldborderright" type="StaticBody2D" parent="." unique_id=189720154]
+[node name="worldborderright" type="StaticBody2D" parent="Scene" unique_id=189720154]
 position = Vector2(650, 19)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="worldborderright" unique_id=18223731]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scene/worldborderright" unique_id=18223731]
 position = Vector2(-7, 10)
 shape = SubResource("WorldBoundaryShape2D_c651c")
 
-[node name="Line2D(deletable)" type="Line2D" parent="worldborderright/CollisionShape2D" unique_id=1904165710]
+[node name="Line2D(deletable)" type="Line2D" parent="Scene/worldborderright/CollisionShape2D" unique_id=1904165710]
 position = Vector2(0, -17.810528)
 scale = Vector2(1, 1.0078948)
 points = PackedVector2Array(0, 2, -1, 15, 1, 64, -2, 191, -3, 346, -3, -14)
 
-[node name="worldbordertop" type="StaticBody2D" parent="." unique_id=742549755]
+[node name="worldbordertop" type="StaticBody2D" parent="Scene" unique_id=742549755]
 position = Vector2(650, 19)
 rotation = 1.5707964
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="worldbordertop" unique_id=1132604812]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scene/worldbordertop" unique_id=1132604812]
 position = Vector2(-7, 10)
 shape = SubResource("WorldBoundaryShape2D_3wy1v")
 
-[node name="Line2D(deletable)" type="Line2D" parent="worldbordertop/CollisionShape2D" unique_id=547997853]
+[node name="Line2D(deletable)" type="Line2D" parent="Scene/worldbordertop/CollisionShape2D" unique_id=547997853]
 position = Vector2(0, 2.3405473)
 scale = Vector2(1, 1.847523)
 points = PackedVector2Array(0, 2, -1, 15, 1, 64, -2, 191, -3, 346, -3, -14)
 
-[node name="worldborderbottom" type="StaticBody2D" parent="." unique_id=385593940]
+[node name="worldborderbottom" type="StaticBody2D" parent="Scene" unique_id=385593940]
 position = Vector2(650, 370)
 rotation = 1.5707964
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="worldborderbottom" unique_id=86098201]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scene/worldborderbottom" unique_id=86098201]
 position = Vector2(-7, 10)
 shape = SubResource("WorldBoundaryShape2D_kfbq2")
 
-[node name="Line2D(deletable)" type="Line2D" parent="worldborderbottom/CollisionShape2D" unique_id=1406373933]
+[node name="Line2D(deletable)" type="Line2D" parent="Scene/worldborderbottom/CollisionShape2D" unique_id=1406373933]
 position = Vector2(0, 2.3405473)
 scale = Vector2(1, 1.847523)
 points = PackedVector2Array(0, 2, -1, 15, 1, 64, -2, 191, -3, 346, -3, -14)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=945506084]
+
+[node name="PauseMenu" parent="CanvasLayer" unique_id=1440574524 instance=ExtResource("4_c651c")]
