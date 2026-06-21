@@ -1,5 +1,4 @@
 using Godot;
-using NewGameProject.main;
 using System;
 
 public partial class PlayerController : RigidBody2D
@@ -69,7 +68,7 @@ public partial class PlayerController : RigidBody2D
 					// uhhh??
 					//SpinSpeed += direction * SPIN_ACCEL * (float)delta;
 					//SpinSpeed = Mathf.Clamp(SpinSpeed, -MAX_SPIN, MAX_SPIN);
-					LinearVelocity = Maths.Lerp(LinearVelocity, Vector2.Zero, (float)ChargeUpInterpolant);
+					LinearVelocity = LinearVelocity.Lerp(Vector2.Zero, (float)ChargeUpInterpolant);
 					ChargeTimer += delta;
 					ChargeUpInterpolant = ChargeTimer / MAX_CHARGE_TIME;
 					GD.Print("spinning up");
