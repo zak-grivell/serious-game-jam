@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bsr040tqx1sx0" path="res://transition/transition.tscn" id="1_1nbid"]
 [ext_resource type="Script" uid="uid://h0qe7pjgm0h6" path="res://main-menu/main-menu-button.gd" id="1_2g4i4"]
+[ext_resource type="Script" uid="uid://ea0atw50p7qr" path="res://main-menu/main_menu.gd" id="1_xjbnb"]
 [ext_resource type="PackedScene" uid="uid://ekvt1amehlo" path="res://main/main.tscn" id="2_6u48k"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1nbid"]
@@ -14,6 +15,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_xjbnb")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=382684783]
 layout_mode = 1
@@ -26,21 +28,6 @@ grow_vertical = 2
 texture = SubResource("CompressedTexture2D_1nbid")
 expand_mode = 1
 
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1440512016]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.215
-anchor_top = 0.384
-anchor_right = 0.754
-anchor_bottom = 0.85300004
-offset_left = -137.6
-offset_top = -138.24
-offset_right = 158.44
-offset_bottom = 51.919983
-
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=501890069]
-layout_mode = 2
-
 [node name="idk what this is" type="Panel" parent="." unique_id=1560036746]
 layout_mode = 1
 anchors_preset = 15
@@ -49,18 +36,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
-
-[node name="Button" type="Button" parent="idk what this is" unique_id=348429248 node_paths=PackedStringArray("transition")]
-layout_mode = 0
-offset_left = 160.0
-offset_top = 156.0
-offset_right = 453.0
-offset_bottom = 187.0
-text = "BE PROFESSIONAL
-"
-script = ExtResource("1_2g4i4")
-target_scene = ExtResource("2_6u48k")
-transition = NodePath("../../Transition")
 
 [node name="Label" type="Label" parent="idk what this is" unique_id=1235841176]
 layout_mode = 1
@@ -72,9 +47,84 @@ offset_top = 57.0
 offset_right = 90.0
 offset_bottom = 91.0
 grow_horizontal = 2
+theme_override_font_sizes/font_size = 32
 text = "SERIOUS GAME"
 horizontal_alignment = 1
 
+[node name="MarginContainer" type="MarginContainer" parent="idk what this is" unique_id=1440512016]
+custom_minimum_size = Vector2(250, 225)
+custom_maximum_size = Vector2(250, 225)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -125.0
+offset_top = -250.0
+offset_right = 125.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="idk what this is/MarginContainer" unique_id=501890069]
+custom_minimum_size = Vector2(180, 0)
+custom_maximum_size = Vector2(180, -1)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = -2
+
+[node name="Start" type="Button" parent="idk what this is/MarginContainer/VBoxContainer" unique_id=348429248 node_paths=PackedStringArray("transition")]
+custom_minimum_size = Vector2(180, 35)
+custom_maximum_size = Vector2(180, -1)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "BE PROFESSIONAL"
+script = ExtResource("1_2g4i4")
+target_scene = ExtResource("2_6u48k")
+transition = NodePath("../../../../Transition")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="idk what this is/MarginContainer/VBoxContainer" unique_id=1560377920]
+custom_minimum_size = Vector2(150, 150)
+custom_maximum_size = Vector2(150, -1)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 5
+
+[node name="Settings" type="Button" parent="idk what this is/MarginContainer/VBoxContainer/VBoxContainer" unique_id=1484822010]
+custom_minimum_size = Vector2(125, 30)
+custom_maximum_size = Vector2(125, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "SETTINGS"
+
+[node name="Credits" type="Button" parent="idk what this is/MarginContainer/VBoxContainer/VBoxContainer" unique_id=999584653]
+custom_minimum_size = Vector2(125, 30)
+custom_maximum_size = Vector2(125, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "CREDITS
+"
+
+[node name="Quit" type="Button" parent="idk what this is/MarginContainer/VBoxContainer/VBoxContainer" unique_id=1042793215]
+custom_minimum_size = Vector2(125, 30)
+custom_maximum_size = Vector2(125, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "QUIT"
+
 [node name="Transition" parent="." unique_id=355810688 instance=ExtResource("1_1nbid")]
+visible = true
 layout_mode = 1
 onload = false
+
+[connection signal="pressed" from="idk what this is/MarginContainer/VBoxContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
