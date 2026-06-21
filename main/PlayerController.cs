@@ -106,6 +106,8 @@ public partial class PlayerController : RigidBody2D
 			Sprite.Rotation += HeldDirection * SpinSpeed;
 		}
 
-		Sprite.Modulate = InAir ? new Color(0, 0, 1) : new Color(0, 1, 0);
+		((ShaderMaterial)Sprite.Material).SetShaderParameter("interpolant", ChargeUpInterpolant);
+
+		//Sprite.Modulate = InAir ? new Color(0, 0, 1) : new Color(0, 1, 0);
 	}
 }
