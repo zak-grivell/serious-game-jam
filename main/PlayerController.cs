@@ -1,5 +1,4 @@
 using Godot;
-using NewGameProject.main;
 using System;
 
 public partial class PlayerController : RigidBody2D
@@ -18,9 +17,9 @@ public partial class PlayerController : RigidBody2D
 	private double ChargeUpInterpolant;
 	private float HeldDirection;
 	private bool InAir;
+
 	public override void _Ready() {
 		OnFloor = GetNode<RayCast2D>("OnFloor");
-		Sprite = GetNode<Sprite2D>("Sprite2D");
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -39,6 +38,7 @@ public partial class PlayerController : RigidBody2D
 
 		if (!InAir)
 		{
+
 			if (Input.IsActionJustPressed("ui_left") || Input.IsActionJustPressed("ui_right"))
 			{
 				ChargeTimer = 0;
@@ -68,7 +68,7 @@ public partial class PlayerController : RigidBody2D
 					// uhhh??
 					//SpinSpeed += direction * SPIN_ACCEL * (float)delta;
 					//SpinSpeed = Mathf.Clamp(SpinSpeed, -MAX_SPIN, MAX_SPIN);
-					LinearVelocity = Maths.Lerp(LinearVelocity, Vector2.Zero, (float)ChargeUpInterpolant);
+					LinearVelocity = LinearVelocity.Lerp(Vector2.Zero, (float)ChargeUpInterpolant);
 					ChargeTimer += delta;
 					ChargeUpInterpolant = ChargeTimer / MAX_CHARGE_TIME;
 					GD.Print("spinning up");
@@ -88,6 +88,7 @@ public partial class PlayerController : RigidBody2D
 					//GD.Print("slowing down, spin speed is " + SpinSpeed.ToString());
 				}
 			}
+
 		}
 
 		if (Input.IsActionJustPressed("ui_accept") && OnFloor.IsColliding())
