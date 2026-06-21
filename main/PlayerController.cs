@@ -1,4 +1,5 @@
 using Godot;
+using NewGameProject.main;
 using System;
 
 public partial class PlayerController : RigidBody2D
@@ -28,10 +29,12 @@ public partial class PlayerController : RigidBody2D
 
 		OnFloor.Rotation = -Rotation;
 
-		if (OnFloor.IsColliding() && InAir)
+		// if we FELL to the ground, not as we leave it
+		if (OnFloor.IsColliding() && InAir && LinearVelocity.Y > 0)
 		{
 			InAir = false;
 			ChargeUpInterpolant = 0;
+			GD.Print("touched ground");
 		}
 
 		if (!InAir)
@@ -65,6 +68,7 @@ public partial class PlayerController : RigidBody2D
 					// uhhh??
 					//SpinSpeed += direction * SPIN_ACCEL * (float)delta;
 					//SpinSpeed = Mathf.Clamp(SpinSpeed, -MAX_SPIN, MAX_SPIN);
+					LinearVelocity = Maths.Lerp(LinearVelocity, Vector2.Zero, (float)ChargeUpInterpolant);
 					ChargeTimer += delta;
 					ChargeUpInterpolant = ChargeTimer / MAX_CHARGE_TIME;
 					GD.Print("spinning up");
@@ -101,5 +105,7 @@ public partial class PlayerController : RigidBody2D
 		{
 			Sprite.Rotation += HeldDirection * SpinSpeed;
 		}
+
+		Sprite.Modulate = InAir ? new Color(0, 0, 1) : new Color(0, 1, 0);
 	}
 }
