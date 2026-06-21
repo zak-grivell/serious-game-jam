@@ -11,7 +11,7 @@ public partial class PlayerController : RigidBody2D
 	private Sprite2D Sprite;
 	private float SpinSpeed = 0;
 	private RayCast2D OnFloor;
-	private const double MAX_CHARGE_TIME = 2.0f;
+	private const double MAX_CHARGE_TIME = 1.0f;
 	private double ChargeTimer = 0;
 	private float SPIN_ACCEL = (float)(MAX_SPIN / MAX_CHARGE_TIME);
 	private double ChargeUpInterpolant;
@@ -104,6 +104,8 @@ public partial class PlayerController : RigidBody2D
 
 		if (!InAir)
 		{
+			GD.Print("spinning at " + SpinSpeed.ToString());
+			GD.Print(HeldDirection.ToString());
 			Sprite.Rotation += HeldDirection * SpinSpeed;
 		}
 
