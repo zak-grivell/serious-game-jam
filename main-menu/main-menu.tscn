@@ -123,8 +123,8 @@ size_flags_vertical = 4
 text = "QUIT"
 
 [node name="Transition" parent="." unique_id=355810688 instance=ExtResource("1_1nbid")]
-visible = true
 layout_mode = 1
 onload = false
 
+[connection signal="pressed" from="idk what this is/MarginContainer/VBoxContainer/VBoxContainer/Credits" to="." method="_on_credits_pressed"]
 [connection signal="pressed" from="idk what this is/MarginContainer/VBoxContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]

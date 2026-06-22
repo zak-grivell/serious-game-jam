@@ -2,8 +2,9 @@
 
 [ext_resource type="PackedScene" uid="uid://bsr040tqx1sx0" path="res://transition/transition.tscn" id="1_53q0u"]
 [ext_resource type="Script" uid="uid://bpkn7kbddrque" path="res://main/PlayerController.cs" id="2_xwkvk"]
-[ext_resource type="Texture2D" uid="uid://ds45d7lj8xnxq" path="res://main/assets/PlayerAnimation.png" id="3_c651c"]
-[ext_resource type="Texture2D" uid="uid://y2a3wbxh3pik" path="res://images/placeholder-tilesheet.png" id="4_3wy1v"]
+[ext_resource type="Script" uid="uid://dufetdr1vqdac" path="res://main/HeartHealth.cs" id="3_4dugh"]
+[ext_resource type="Texture2D" uid="uid://ds45d7lj8xnxq" path="res://main/assets/PlayerAnimation.png" id="3_67ri8"]
+[ext_resource type="Texture2D" uid="uid://d0hmedb88oefy" path="res://images/heart.png" id="4_3wy1v"]
 [ext_resource type="PackedScene" uid="uid://c201kqm66rjry" path="res://menus/pause-menu/pause_menu.tscn" id="4_c651c"]
 [ext_resource type="PackedScene" uid="uid://70qxxcxf1xne" path="res://cutscenes/cutscene.tscn" id="5_3wy1v"]
 
@@ -388,7 +389,6 @@ target_position = Vector2(0, 31)
 [node name="Camera2D" type="Camera2D" parent="Scene/CharacterBody2D" unique_id=760465680]
 
 [node name="LaunchBar" type="ProgressBar" parent="Scene/CharacterBody2D" unique_id=1499505273]
-visible = false
 custom_minimum_size = Vector2(70, 13)
 custom_maximum_size = Vector2(70, 13)
 offset_left = -35.0
@@ -401,20 +401,52 @@ max_value = 1.0
 value = 0.5
 show_percentage = false
 
-[node name="Sprite2D" type="Sprite2D" parent="Scene/CharacterBody2D" unique_id=766558107]
-scale = Vector2(0.19427848, 0.19610186)
-texture = ExtResource("3_c651c")
-hframes = 6
-frame = 3
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Scene/CharacterBody2D" unique_id=1354926261]
-libraries/ = SubResource("AnimationLibrary_kfbq2")
-autoplay = &"RESET"
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Scene/CharacterBody2D" unique_id=657390569]
+scale = Vector2(0.21013336, 0.20830898)
+sprite_frames = SubResource("SpriteFrames_g8iiu")
+frame_progress = 0.00749064
 
 [node name="TileMapLayer" type="TileMapLayer" parent="Scene" unique_id=1743828336]
 position = Vector2(-19, 565)
 tile_map_data = PackedByteArray("AAAAAPz/AAAAAAAAAAABAPz/AAAAAAAAAAACAPz/AAAAAAAAAAADAPz/AAAAAAAAAAADAPv/AAAAAAAAAAAEAPv/AAAAAAAAAAAFAPv/AAAAAAAAAAAGAPv/AAAAAAAAAAAHAPv/AAAAAAAAAAAIAPv/AAAAAAAAAAAJAPv/AAAAAAAAAAAKAPv/AAAAAAAAAAALAPv/AAAAAAAAAAAMAPv/AAAAAAAAAAANAPv/AAAAAAAAAAAOAPv/AAAAAAAAAAAPAPv/AAAAAAAAAAAAAPv/AAAAAAAAAAABAPv/AAAAAAAAAAACAPv/AAAAAAAAAAAEAPz/AAAAAAAAAAAFAPz/AAAAAAAAAAAGAPz/AAAAAAAAAAAHAPz/AAAAAAAAAAAIAPz/AAAAAAAAAAAJAPz/AAAAAAAAAAAKAPz/AAAAAAAAAAALAPz/AAAAAAAAAAAMAPz/AAAAAAAAAAANAPz/AAAAAAAAAAAOAPz/AAAAAAAAAAAPAPz/AAAAAAAAAAAQAPz/AAAAAAAAAAARAPz/AAAAAAAAAAAQAPv/AAAAAAAAAAARAPv/AAAAAAAAAAASAPv/AAAAAAAAAAATAPv/AAAAAAAAAAAUAPv/AAAAAAAAAAAVAPv/AAAAAAAAAAAWAPv/AAAAAAAAAAASAPz/AAAAAAAAAAATAPz/AAAAAAAAAAAUAPz/AAAAAAAAAAAVAPz/AAAAAAAAAAAWAPz/AAAAAAAAAAAXAPz/AAAAAAAAAAAYAPz/AAAAAAAAAAAZAPz/AAAAAAAAAAAaAPz/AAAAAAAAAAAbAPz/AAAAAAAAAAAXAPv/AAAAAAAAAAAYAPv/AAAAAAAAAAAZAPv/AAAAAAAAAAAaAPv/AAAAAAAAAAAbAPv/AAAAAAAAAAAcAPv/AAAAAAAAAAAdAPv/AAAAAAAAAAAeAPv/AAAAAAAAAAAfAPv/AAAAAAAAAAAgAPv/AAAAAAAAAAAhAPv/AAAAAAAAAAAiAPv/AAAAAAAAAAAjAPv/AAAAAAAAAAAkAPv/AAAAAAAAAAAlAPv/AAAAAAAAAAAcAPz/AAAAAAAAAAAdAPz/AAAAAAAAAAAeAPz/AAAAAAAAAAAfAPz/AAAAAAAAAAAgAPz/AAAAAAAAAAAhAPz/AAAAAAAAAAAiAPz/AAAAAAAAAAAjAPz/AAAAAAAAAAAkAPz/AAAAAAAAAAAlAPz/AAAAAAAAAAAAAPr/AAAFAAIAAAABAPr/AAAFAAIAAAACAPr/AAAFAAIAAAADAPr/AAAFAAIAAAAEAPr/AAAFAAIAAAAFAPr/AAAFAAIAAAAGAPr/AAAFAAIAAAAHAPr/AAAFAAIAAAAIAPr/AAAFAAIAAAAJAPr/AAAFAAIAAAAKAPr/AAAFAAIAAAALAPr/AAAFAAIAAAAMAPr/AAAFAAIAAAANAPr/AAAFAAIAAAAOAPr/AAAFAAIAAAAPAPr/AAABAAIAAAAQAPr/AAAAAAAAAAARAPr/AAAAAAAAAAASAPr/AAAAAAAAAAATAPr/AAAAAAAAAAAUAPr/AAAAAAAAAAAVAPr/AAAAAAAAAAAWAPr/AAAAAAAAAAAXAPr/AAAAAAAAAAAYAPr/AAACAAIAAAAZAPr/AAAFAAIAAAAaAPr/AAAFAAIAAAAbAPr/AAAFAAIAAAAcAPr/AAAFAAIAAAAdAPr/AAAFAAIAAAAeAPr/AAAFAAIAAAAfAPr/AAAFAAIAAAAgAPr/AAAFAAIAAAAhAPr/AAAFAAIAAAAiAPr/AAAFAAIAAAAjAPr/AAAFAAIAAAAkAPr/AAAFAAIAAAAlAPr/AAAFAAIAAAAQAPn/AAABAAIAAAAPAPn/AAABAAEAAAAQAPj/AAABAAEAAAARAPj/AAACAAAAAAASAPj/AAACAAAAAAATAPj/AAACAAAAAAAUAPj/AAACAAAAAAAVAPj/AAACAAAAAAAWAPj/AAACAAAAAAAXAPj/AAACAAEAAAAYAPn/AAACAAEAAAAXAPn/AAACAAIAAAAWAPn/AAAAAAAAAAAVAPn/AAAAAAAAAAAUAPn/AAAAAAAAAAATAPn/AAAAAAAAAAASAPn/AAAAAAAAAAARAPn/AAAAAAAAAAA=")
 tile_set = SubResource("TileSet_bxjk7")
+
+[node name="HeartHealth" type="CanvasLayer" parent="Scene" unique_id=1637908785]
+script = ExtResource("3_4dugh")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Scene/HeartHealth" unique_id=891086074]
+custom_minimum_size = Vector2(135, 50)
+anchors_preset = -1
+anchor_right = 0.28500003
+anchor_bottom = 0.15400001
+offset_left = 15.0
+offset_top = 15.0
+offset_right = -32.400024
+offset_bottom = 9.559994
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 4
+
+[node name="heart1" type="TextureRect" parent="Scene/HeartHealth/HBoxContainer" unique_id=563060328]
+custom_minimum_size = Vector2(40, 35)
+custom_maximum_size = Vector2(45, 35)
+layout_mode = 2
+texture = ExtResource("4_3wy1v")
+expand_mode = 1
+
+[node name="heart2" type="TextureRect" parent="Scene/HeartHealth/HBoxContainer" unique_id=95623042]
+custom_minimum_size = Vector2(40, 35)
+custom_maximum_size = Vector2(45, 35)
+layout_mode = 2
+texture = ExtResource("4_3wy1v")
+expand_mode = 1
+
+[node name="heart3" type="TextureRect" parent="Scene/HeartHealth/HBoxContainer" unique_id=1015394691]
+custom_minimum_size = Vector2(40, 35)
+custom_maximum_size = Vector2(45, 35)
+layout_mode = 2
+texture = ExtResource("4_3wy1v")
+expand_mode = 1
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=945506084]
 
