@@ -84,8 +84,7 @@ custom_maximum_size = Vector2(180, -1)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-text = "BE PROFESSIONAL
-"
+text = "BE PROFESSIONAL"
 script = ExtResource("1_2g4i4")
 target_scene = ExtResource("2_6u48k")
 transition = NodePath("../../../../Transition")
@@ -124,6 +123,7 @@ size_flags_vertical = 4
 text = "QUIT"
 
 [node name="Transition" parent="." unique_id=355810688 instance=ExtResource("1_1nbid")]
+visible = true
 layout_mode = 1
 onload = false
 
