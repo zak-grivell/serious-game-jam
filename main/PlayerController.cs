@@ -20,7 +20,6 @@ public partial class PlayerController : RigidBody2D
 	private const int FastestFPS = 24;
 	private bool InAir;
 	private ProgressBar LaunchBar;
-	// line above is for launch bar
 
 	public override void _Ready() {
 		OnFloor = GetNode<RayCast2D>("OnFloor");

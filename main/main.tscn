@@ -1,9 +1,11 @@
 [gd_scene format=3 uid="uid://ekvt1amehlo"]
 
 [ext_resource type="PackedScene" uid="uid://bsr040tqx1sx0" path="res://transition/transition.tscn" id="1_53q0u"]
-[ext_resource type="Script" uid="uid://bpkn7kbddrque" path="res://main/PlayerController.cs" id="2_xwkvk"]
+[ext_resource type="Script" uid="uid://bpkn7kbddrque" path="res://main/PlayerController.cs" id="2_kfbq2"]
 [ext_resource type="Texture2D" uid="uid://ds45d7lj8xnxq" path="res://main/assets/PlayerAnimation.png" id="3_c651c"]
+[ext_resource type="Texture2D" uid="uid://d0hmedb88oefy" path="res://images/heart.png" id="4_3wy1v"]
 [ext_resource type="PackedScene" uid="uid://c201kqm66rjry" path="res://menus/pause-menu/pause_menu.tscn" id="4_c651c"]
+[ext_resource type="Script" uid="uid://dufetdr1vqdac" path="res://main/HeartHealth.cs" id="4_kfbq2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c651c"]
 size = Vector2(514, 66)
@@ -126,12 +128,12 @@ position = Vector2(0.5, 0)
 scale = Vector2(8, 1)
 texture = SubResource("GradientTexture2D_buqre")
 
-[node name="CharacterBody2D" type="RigidBody2D" parent="Scene" unique_id=1599436710]
+[node name="CharacterBody2D" type="RigidBody2D" parent="Scene" unique_id=1599436710 groups=["player"]]
 position = Vector2(300, 0)
 rotation = -0.018606728
 inertia = 8.0
 linear_damp = 1.0
-script = ExtResource("2_xwkvk")
+script = ExtResource("2_kfbq2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Scene/CharacterBody2D" unique_id=1025784810]
 shape = SubResource("CircleShape2D_s4s1w")
@@ -159,6 +161,39 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_gvs4p")
 max_value = 1.0
 value = 0.5
 show_percentage = false
+
+[node name="HeartHealth" type="CanvasLayer" parent="Scene/CharacterBody2D" unique_id=1578099181]
+script = ExtResource("4_kfbq2")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Scene/CharacterBody2D/HeartHealth" unique_id=557153661]
+custom_minimum_size = Vector2(165, 0)
+custom_maximum_size = Vector2(165, -1)
+offset_left = 28.0
+offset_top = 76.0
+offset_right = 203.0
+offset_bottom = 125.0
+theme_override_constants/separation = 3
+
+[node name="Heart1" type="TextureRect" parent="Scene/CharacterBody2D/HeartHealth/HBoxContainer" unique_id=260575206]
+custom_minimum_size = Vector2(50, 45)
+custom_maximum_size = Vector2(50, 45)
+layout_mode = 2
+texture = ExtResource("4_3wy1v")
+expand_mode = 1
+
+[node name="Heart2" type="TextureRect" parent="Scene/CharacterBody2D/HeartHealth/HBoxContainer" unique_id=952606056]
+custom_minimum_size = Vector2(50, 45)
+custom_maximum_size = Vector2(50, 45)
+layout_mode = 2
+texture = ExtResource("4_3wy1v")
+expand_mode = 1
+
+[node name="Heart3" type="TextureRect" parent="Scene/CharacterBody2D/HeartHealth/HBoxContainer" unique_id=2012663308]
+custom_minimum_size = Vector2(50, 45)
+custom_maximum_size = Vector2(50, 45)
+layout_mode = 2
+texture = ExtResource("4_3wy1v")
+expand_mode = 1
 
 [node name="worldborderleft" type="StaticBody2D" parent="Scene" unique_id=206021060]
 position = Vector2(0, -110)
