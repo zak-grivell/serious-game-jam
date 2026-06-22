@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://diims8y4idwwg"]
+
+[ext_resource type="Script" uid="uid://bxjetxme0df7o" path="res://scripts/projectile movement/LinearVectorMovement.cs" id="1_tkk7j"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5h4g0"]
+
+[sub_resource type="Gradient" id="Gradient_8v5gc"]
+offsets = PackedFloat32Array(0, 0.6370192, 0.9879808, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.6370192, 0.6370192, 0.6370192, 1, 0.74759614, 0.74759614, 0.74759614, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_8v5gc"]
+gradient = SubResource("Gradient_8v5gc")
+
+[node name="OrbOfDoom" type="CharacterBody2D" unique_id=1905422025]
+collision_layer = 16
+collision_mask = 3
+metadata/directionVector = Vector2(0, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1327639106]
+light_mask = 0
+visibility_layer = 32
+scale = Vector2(0.25, 0.25)
+shape = SubResource("RectangleShape2D_5h4g0")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=614176072]
+light_mask = 0
+visibility_layer = 16
+scale = Vector2(0.02, 5)
+texture = SubResource("GradientTexture1D_8v5gc")
+
+[node name="LinearVelocityComp" type="Node" parent="." unique_id=1690636878 node_paths=PackedStringArray("root", "rb")]
+script = ExtResource("1_tkk7j")
+root = NodePath("..")
+rb = NodePath("..")

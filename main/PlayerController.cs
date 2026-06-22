@@ -20,6 +20,8 @@ public partial class PlayerController : RigidBody2D
 	private double NormalisedCharge = 0;
 	private const int SlowestFPS = 6;
 	private const int FastestFPS = 24;
+	private ProgressBar LaunchBar;
+	// line above is for launch bar
 
 	public override void _Ready()
 	{
@@ -27,7 +29,12 @@ public partial class PlayerController : RigidBody2D
 		Sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		// Sprite.SpriteFrames.SetAnimationSpeed("default", SlowestFPS);
 
-		//an = GetNode<AnimationPlayer>("AnimationPlayer");
+		an = GetNode<AnimationPlayer>("AnimationPlayer");
+		
+		LaunchBar = GetNode<ProgressBar>("LaunchBar");
+		LaunchBar.MaxValue = 1.0;
+		LaunchBar.Value = 0.0;
+		LaunchBar.Visible = false;
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -61,6 +68,9 @@ public partial class PlayerController : RigidBody2D
 				}
 				
 				NormalisedCharge = 0;
+				
+				LaunchBar.Value = 0;
+				LaunchBar.Visible = false;
 			}
 			else
 			{
@@ -70,6 +80,8 @@ public partial class PlayerController : RigidBody2D
 			
 				NormalisedCharge = Mathf.Clamp(Mathf.Lerp(NormalisedCharge, direction, delta * CHARGE_RATE), -1, 1);
 				Rotation = Mathf.LerpAngle(Rotation, -0.5f * direction, 0.1f);
+				LaunchBar.Visible = true;
+				LaunchBar.Value = MathF.Abs((float)NormalisedCharge);
 			}
 
 			if (Input.IsActionJustPressed("ui_accept"))
