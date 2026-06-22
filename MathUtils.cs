@@ -1,0 +1,23 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Godot;
+
+namespace NewGameProject
+{
+    public static class MathUtils
+    {
+        public static float VectorToAngle(Vector2 vector)
+        {
+            float output = MathF.Atan2(vector.Y, vector.X) + MathF.PI / 2; //ANGLES ARE FROM THE vertical
+
+            if (output > 0)
+            {
+                return output;
+            }
+            else return output + Mathf.Pi * 2;
+        }
+    }
+}
