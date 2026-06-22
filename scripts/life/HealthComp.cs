@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class PlayerAttributes : Node
+public partial class HealthComp : Node
 {
 	[Export] private int maxHp;
 	private int hp;
@@ -12,11 +12,11 @@ public partial class PlayerAttributes : Node
 
 	[Export] private DeathComp deathComp;
 
-    public override void _Ready()
+	public override void _Ready()
 	{
 		hp = maxHp;
-        currDmgITime = 0.0f;
-    }
+		currDmgITime = 0.0f;
+	}
 
 	public override void _Process(double delta) {
 		if(this.currDmgITime > 0) this.currDmgITime -= delta;
@@ -27,11 +27,7 @@ public partial class PlayerAttributes : Node
 		{
 			this.hp -= dmg;
 			this.currDmgITime = dmgITime;
-			if (this.hp <= 0)
-			{
-				deathComp.Die();
-                return;
-			}
+			if (this.hp <= 0) deathComp.Die();
 		}
 	}
 	public int GetHp() => hp;

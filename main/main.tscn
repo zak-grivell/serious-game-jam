@@ -1,49 +1,141 @@
 [gd_scene format=3 uid="uid://ekvt1amehlo"]
 
 [ext_resource type="PackedScene" uid="uid://bsr040tqx1sx0" path="res://transition/transition.tscn" id="1_53q0u"]
+[ext_resource type="Shader" uid="uid://cjm6tultyxsi2" path="res://main/fireball.tres" id="2_67ri8"]
 [ext_resource type="Script" uid="uid://bpkn7kbddrque" path="res://main/PlayerController.cs" id="2_xwkvk"]
-[ext_resource type="Texture2D" uid="uid://dem0b0s5kogty" path="res://main/assets/hampter.jpeg" id="3_c651c"]
+[ext_resource type="Script" uid="uid://dufetdr1vqdac" path="res://main/HeartHealth.cs" id="3_4dugh"]
+[ext_resource type="Texture2D" uid="uid://ds45d7lj8xnxq" path="res://main/assets/PlayerAnimation.png" id="3_c651c"]
+[ext_resource type="Texture2D" uid="uid://gvynu55kgaqp" path="res://main/assets/textures/T_VFX_MarbleNoise_tiled.png" id="3_grrlh"]
+[ext_resource type="Texture2D" uid="uid://dqvvfjslfvoyw" path="res://main/assets/textures/T_LeLuStar11.jpg" id="4_0i4oc"]
+[ext_resource type="PackedScene" uid="uid://c201kqm66rjry" path="res://menus/pause-menu/pause_menu.tscn" id="4_c651c"]
+[ext_resource type="PackedScene" uid="uid://70qxxcxf1xne" path="res://cutscenes/cutscene.tscn" id="5_3wy1v"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ltqda"]
-size = Vector2(510, 63)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c651c"]
+size = Vector2(633, 66)
 
-[sub_resource type="Gradient" id="Gradient_3wy1v"]
+[sub_resource type="Gradient" id="Gradient_c651c"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_buqre"]
-gradient = SubResource("Gradient_3wy1v")
+gradient = SubResource("Gradient_c651c")
 fill_from = Vector2(0, 1)
 fill_to = Vector2(0, 1)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s4s1w"]
-radius = 22.0
+radius = 27.000004
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_43yv0"]
+bg_color = Color(0.5313938, 0.55376303, 0.97701985, 0)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gvs4p"]
+bg_color = Color(0.19215687, 0.6745098, 0.7607843, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="Gradient" id="Gradient_bsumw"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_cyir4"]
+gradient = SubResource("Gradient_bsumw")
+fill_from = Vector2(0.98717946, 0.3931624)
+fill_to = Vector2(1, 0.97863245)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g8iiu"]
+shader = ExtResource("2_67ri8")
+shader_parameter/Texture1 = ExtResource("3_grrlh")
+shader_parameter/Texture2 = SubResource("GradientTexture2D_cyir4")
+shader_parameter/FrameCount = 0
+shader_parameter/CurrentFrame = 0
+shader_parameter/Texture3 = ExtResource("4_0i4oc")
+
+[sub_resource type="Animation" id="Animation_c651c"]
+length = 0.20000334376432
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0009999999, 0.033333335, 0.06666667, 0.10000001, 0.13333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [1, 2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_3wy1v"]
+resource_name = "default"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.10000001, 0.13333334, 0.16666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kfbq2"]
+_data = {
+&"RESET": SubResource("Animation_c651c"),
+&"default": SubResource("Animation_3wy1v")
+}
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_xwkvk"]
+normal = Vector2(1, 0)
+distance = 7.2049155
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_c651c"]
+normal = Vector2(-1, 0)
+distance = 7.2049155
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_3wy1v"]
+normal = Vector2(1, 0)
+distance = -9.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_kfbq2"]
+normal = Vector2(-1, 0)
 
 [node name="Main" type="Control" unique_id=78732012]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 181.0
+offset_right = 19.0
+offset_bottom = 181.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="Transition" parent="." unique_id=355810688 instance=ExtResource("1_53q0u")]
-layout_mode = 1
 
 [node name="Scene" type="Node2D" parent="." unique_id=1080076457]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Scene" unique_id=153065952]
-position = Vector2(300, 300)
+position = Vector2(306, 203)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Scene/StaticBody2D" unique_id=889530374]
-position = Vector2(0, -0.5)
-shape = SubResource("RectangleShape2D_ltqda")
+position = Vector2(3.5, 1)
+shape = SubResource("RectangleShape2D_c651c")
 
 [node name="Sprite2D" type="Sprite2D" parent="Scene/StaticBody2D" unique_id=1593420286]
-position = Vector2(0.5, 0)
-scale = Vector2(8, 1)
+position = Vector2(-1.5000286, 0)
+scale = Vector2(9.859374, 1)
 texture = SubResource("GradientTexture2D_buqre")
 
 [node name="CharacterBody2D" type="RigidBody2D" parent="Scene" unique_id=1599436710]
-position = Vector2(300, 80)
+position = Vector2(300, 0)
+rotation = -0.018606728
+gravity_scale = 0.5
 inertia = 8.0
 linear_damp = 1.0
 script = ExtResource("2_xwkvk")
@@ -51,11 +143,128 @@ script = ExtResource("2_xwkvk")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Scene/CharacterBody2D" unique_id=1025784810]
 shape = SubResource("CircleShape2D_s4s1w")
 
-[node name="Sprite2D" type="Sprite2D" parent="Scene/CharacterBody2D" unique_id=2145414226]
-scale = Vector2(0.05, 0.05)
-texture = ExtResource("3_c651c")
-
 [node name="OnFloor" type="RayCast2D" parent="Scene/CharacterBody2D" unique_id=1858477538]
-target_position = Vector2(0, 29)
+target_position = Vector2(0, 31)
 
 [node name="Camera2D" type="Camera2D" parent="Scene/CharacterBody2D" unique_id=760465680]
+
+[node name="LaunchBar" type="ProgressBar" parent="Scene/CharacterBody2D" unique_id=1499505273]
+custom_minimum_size = Vector2(70, 13)
+custom_maximum_size = Vector2(70, 13)
+offset_left = -35.0
+offset_top = -55.0
+offset_right = 35.0
+offset_bottom = -42.0
+theme_override_styles/background = SubResource("StyleBoxFlat_43yv0")
+theme_override_styles/fill = SubResource("StyleBoxFlat_gvs4p")
+max_value = 1.0
+value = 0.5
+show_percentage = false
+
+[node name="Sprite2D" type="Sprite2D" parent="Scene/CharacterBody2D" unique_id=766558107]
+material = SubResource("ShaderMaterial_g8iiu")
+scale = Vector2(0.19427848, 0.19610186)
+texture = ExtResource("3_c651c")
+hframes = 6
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Scene/CharacterBody2D" unique_id=1354926261]
+libraries/ = SubResource("AnimationLibrary_kfbq2")
+autoplay = &"RESET"
+
+[node name="worldborderleft" type="StaticBody2D" parent="Scene" unique_id=206021060]
+position = Vector2(0, -110)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scene/worldborderleft" unique_id=2059113658]
+position = Vector2(-7, 10)
+shape = SubResource("WorldBoundaryShape2D_xwkvk")
+
+[node name="Line2D(deletable)" type="Line2D" parent="Scene/worldborderleft/CollisionShape2D" unique_id=2108756412]
+position = Vector2(0, -17.810528)
+scale = Vector2(1, 1.0078948)
+points = PackedVector2Array(0, 2, -1, 15, 1, 64, -2, 191, -3, 346, -3, -14)
+
+[node name="worldborderright" type="StaticBody2D" parent="Scene" unique_id=189720154]
+position = Vector2(635, -130)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scene/worldborderright" unique_id=18223731]
+position = Vector2(-7, 10)
+shape = SubResource("WorldBoundaryShape2D_c651c")
+
+[node name="Line2D(deletable)" type="Line2D" parent="Scene/worldborderright/CollisionShape2D" unique_id=1904165710]
+scale = Vector2(1, 1.0078948)
+points = PackedVector2Array(0, 2, -1, 15, 1, 64, -2, 191, -3, 346, -3, -14)
+
+[node name="worldbordertop" type="StaticBody2D" parent="Scene" unique_id=742549755]
+position = Vector2(630, -110)
+rotation = 1.5707964
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scene/worldbordertop" unique_id=1132604812]
+position = Vector2(-7, 10)
+shape = SubResource("WorldBoundaryShape2D_3wy1v")
+
+[node name="Line2D(deletable)" type="Line2D" parent="Scene/worldbordertop/CollisionShape2D" unique_id=547997853]
+scale = Vector2(1, 1.847523)
+points = PackedVector2Array(0, 2, -1, 15, 1, 64, -2, 191, -3, 346, -3, -14)
+
+[node name="worldborderbottom" type="StaticBody2D" parent="Scene" unique_id=385593940]
+position = Vector2(630, 245)
+rotation = 1.5707964
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scene/worldborderbottom" unique_id=86098201]
+position = Vector2(-7, 10)
+shape = SubResource("WorldBoundaryShape2D_kfbq2")
+
+[node name="Line2D(deletable)" type="Line2D" parent="Scene/worldborderbottom/CollisionShape2D" unique_id=1406373933]
+position = Vector2(0, 2.3405473)
+scale = Vector2(1, 1.847523)
+points = PackedVector2Array(0, 2, -1, 15, 1, 64, -2, 191, -3, 346, -3, -14)
+
+[node name="HeartHealth" type="CanvasLayer" parent="Scene" unique_id=1637908785]
+script = ExtResource("3_4dugh")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Scene/HeartHealth" unique_id=891086074]
+custom_minimum_size = Vector2(135, 50)
+anchors_preset = -1
+anchor_right = 0.28500003
+anchor_bottom = 0.15400001
+offset_left = 15.0
+offset_top = 15.0
+offset_right = -32.400024
+offset_bottom = 9.559994
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 4
+
+[node name="heart1" type="TextureRect" parent="Scene/HeartHealth/HBoxContainer" unique_id=563060328]
+custom_minimum_size = Vector2(40, 35)
+custom_maximum_size = Vector2(45, 35)
+layout_mode = 2
+texture = ExtResource("4_3wy1v")
+expand_mode = 1
+
+[node name="heart2" type="TextureRect" parent="Scene/HeartHealth/HBoxContainer" unique_id=95623042]
+custom_minimum_size = Vector2(40, 35)
+custom_maximum_size = Vector2(45, 35)
+layout_mode = 2
+texture = ExtResource("4_3wy1v")
+expand_mode = 1
+
+[node name="heart3" type="TextureRect" parent="Scene/HeartHealth/HBoxContainer" unique_id=1015394691]
+custom_minimum_size = Vector2(40, 35)
+custom_maximum_size = Vector2(45, 35)
+layout_mode = 2
+texture = ExtResource("4_3wy1v")
+expand_mode = 1
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=945506084]
+
+[node name="PauseMenu" parent="CanvasLayer" unique_id=1440574524 instance=ExtResource("4_c651c")]
+offset_left = 11.0
+offset_top = 40.0
+offset_right = 14.0
+offset_bottom = 41.0
+
+[node name="Cutscene" parent="CanvasLayer" unique_id=829148526 instance=ExtResource("5_3wy1v")]
+visible = false
+
+[node name="Transition" parent="CanvasLayer" unique_id=355810688 instance=ExtResource("1_53q0u")]

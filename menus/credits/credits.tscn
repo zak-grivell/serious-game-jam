@@ -1,0 +1,92 @@
+[gd_scene format=3 uid="uid://crawtulysn04t"]
+
+[ext_resource type="Script" uid="uid://htl5chc2fcvy" path="res://menus/credits/credits.gd" id="1_v1kn4"]
+[ext_resource type="Texture2D" uid="uid://f0rxjylwlgx1" path="res://images/hamster.jpg" id="2_32j7k"]
+
+[node name="Control" type="Control" unique_id=2018038336]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_v1kn4")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1990932283]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_32j7k")
+expand_mode = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=256555716]
+custom_minimum_size = Vector2(200, 250)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -125.0
+offset_right = 100.0
+offset_bottom = 135.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1178580964]
+custom_minimum_size = Vector2(200, 250)
+custom_maximum_size = Vector2(200, 250)
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=337345193]
+custom_minimum_size = Vector2(180, 200)
+layout_mode = 2
+theme_override_constants/separation = -5
+
+[node name="heading" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=543114959]
+custom_minimum_size = Vector2(100, 35)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/normal_font_size = 24
+text = "CREDITS"
+
+[node name="text" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=580197981]
+custom_minimum_size = Vector2(110, 190)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/normal_font_size = 10
+text = "---- Art ----
+Gemma
+
+---- Music ----
+Jimi
+
+---- Programming ----
+Fares
+Zak
+Oliver
+Leia
+Zoe
+Kierian"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="back" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1263784830]
+custom_minimum_size = Vector2(50, 25)
+custom_maximum_size = Vector2(50, 25)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 12
+text = "BACK"
+
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/back" to="." method="_on_back_pressed"]
