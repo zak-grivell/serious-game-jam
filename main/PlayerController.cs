@@ -58,11 +58,10 @@ public partial class PlayerController : RigidBody2D
             }
             else
             {
-                LinearVelocity = LinearVelocity.Lerp(
-                    Vector2.Zero,
-                    MathF.Abs((float)NormalisedCharge)
-                );
-
+				LinearVelocity = LinearVelocity with {
+					X = Mathf.Lerp(LinearVelocity .X, 0, MathF.Abs((float)NormalisedCharge))
+				};
+			
 				NormalisedCharge = Mathf.Clamp(Mathf.Lerp(NormalisedCharge, direction, delta * CHARGE_RATE), -1, 1);
 				Rotation = Mathf.LerpAngle(Rotation, -0.5f * direction, 0.1f);
 			}
