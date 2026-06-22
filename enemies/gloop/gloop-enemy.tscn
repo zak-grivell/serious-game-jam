@@ -12,16 +12,20 @@
 gradient = SubResource("Gradient_r6kxj")
 
 [node name="GloopEnemy" type="CharacterBody2D" unique_id=855592643]
+collision_layer = 4
+collision_mask = 3
 metadata/pos1 = 0.0
 metadata/pos2 = 0.0
 metadata/speed = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=719743613]
-visibility_layer = 0
+light_mask = 0
+visibility_layer = 32
 shape = SubResource("RectangleShape2D_5h4g0")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1556938574]
-visibility_layer = 3
+light_mask = 0
+visibility_layer = 4
 scale = Vector2(0.08, 20)
 texture = SubResource("GradientTexture1D_r6kxj")
 

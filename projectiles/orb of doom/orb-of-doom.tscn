@@ -18,11 +18,13 @@ metadata/directionVector = Vector2(0, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1327639106]
 light_mask = 0
-visibility_layer = 0
+visibility_layer = 32
 scale = Vector2(0.25, 0.25)
 shape = SubResource("RectangleShape2D_5h4g0")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=614176072]
+light_mask = 0
+visibility_layer = 16
 scale = Vector2(0.02, 5)
 texture = SubResource("GradientTexture1D_8v5gc")
 
