@@ -19,11 +19,17 @@ public partial class PlayerController : RigidBody2D
 	private const int SlowestFPS = 6;
 	private const int FastestFPS = 24;
 	private bool InAir;
+	private ProgressBar LaunchBar;
+	// line above is for launch bar
 
 	public override void _Ready() {
 		OnFloor = GetNode<RayCast2D>("OnFloor");
 		Sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		Sprite.SpriteFrames.SetAnimationSpeed("default", SlowestFPS);
+		LaunchBar = GetNode<ProgressBar>("LaunchBar");
+		LaunchBar.MaxValue = 1.0;
+		LaunchBar.Value = 0.0;
+		LaunchBar.Visible = false;
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -37,6 +43,7 @@ public partial class PlayerController : RigidBody2D
 		{
 			InAir = false;
 			ChargeUpInterpolant = 0;
+			LaunchBar.Value = 0;
 			Sprite.SpriteFrames.SetAnimationSpeed("default", SlowestFPS);
 			GD.Print("touched ground");
 		}
@@ -63,6 +70,7 @@ public partial class PlayerController : RigidBody2D
 				GD.Print("charge proportion " + (float)ChargeUpInterpolant);
 
 				InAir = true;
+				LaunchBar.Visible = false;
 			}
 
 			// if the button is held, spin up that direction
@@ -76,6 +84,8 @@ public partial class PlayerController : RigidBody2D
 					LinearVelocity = LinearVelocity.Lerp(Vector2.Zero, (float)ChargeUpInterpolant);
 					ChargeTimer += delta;
 					ChargeUpInterpolant = ChargeTimer / MAX_CHARGE_TIME;
+					LaunchBar.Visible = true;
+					LaunchBar.Value = ChargeUpInterpolant;
 					GD.Print("spinning up");
 				}
 				else

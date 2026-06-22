@@ -8,10 +8,10 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c651c"]
 size = Vector2(514, 66)
 
-[sub_resource type="Gradient" id="Gradient_3wy1v"]
+[sub_resource type="Gradient" id="Gradient_c651c"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_buqre"]
-gradient = SubResource("Gradient_3wy1v")
+gradient = SubResource("Gradient_c651c")
 fill_from = Vector2(0, 1)
 fill_to = Vector2(0, 1)
 
@@ -67,6 +67,20 @@ animations = [{
 "name": &"default",
 "speed": 5.0
 }]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_43yv0"]
+bg_color = Color(0.5313938, 0.55376303, 0.97701985, 0)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gvs4p"]
+bg_color = Color(0.19215687, 0.6745098, 0.7607843, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_xwkvk"]
 normal = Vector2(1, 0)
@@ -133,6 +147,19 @@ sprite_frames = SubResource("SpriteFrames_g8iiu")
 autoplay = "default"
 frame_progress = 0.3288092
 
+[node name="LaunchBar" type="ProgressBar" parent="Scene/CharacterBody2D" unique_id=1499505273]
+custom_minimum_size = Vector2(70, 13)
+custom_maximum_size = Vector2(70, 13)
+offset_left = -35.0
+offset_top = -55.0
+offset_right = 35.0
+offset_bottom = -42.0
+theme_override_styles/background = SubResource("StyleBoxFlat_43yv0")
+theme_override_styles/fill = SubResource("StyleBoxFlat_gvs4p")
+max_value = 1.0
+value = 0.5
+show_percentage = false
+
 [node name="worldborderleft" type="StaticBody2D" parent="Scene" unique_id=206021060]
 position = Vector2(0, -110)
 
@@ -184,7 +211,7 @@ points = PackedVector2Array(0, 2, -1, 15, 1, 64, -2, 191, -3, 346, -3, -14)
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=945506084]
 
 [node name="PauseMenu" parent="CanvasLayer" unique_id=1440574524 instance=ExtResource("4_c651c")]
-offset_left = 5.0
-offset_top = 60.0
-offset_right = 8.0
-offset_bottom = 61.0
+offset_left = 11.0
+offset_top = 57.0
+offset_right = 14.0
+offset_bottom = 58.0

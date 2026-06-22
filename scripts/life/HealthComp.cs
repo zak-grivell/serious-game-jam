@@ -28,7 +28,7 @@ public partial class HealthComp : Node
 			this.hp -= dmg;
 			this.currDmgITime = dmgITime;
 			if (this.hp <= 0) deathComp.Die();
-        }
+		}
 	}
 	public int GetHp() => hp;
 }
