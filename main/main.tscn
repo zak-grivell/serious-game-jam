@@ -1,9 +1,8 @@
 [gd_scene format=3 uid="uid://ekvt1amehlo"]
 
 [ext_resource type="PackedScene" uid="uid://bsr040tqx1sx0" path="res://transition/transition.tscn" id="1_53q0u"]
-[ext_resource type="Script" uid="uid://bpkn7kbddrque" path="res://main/PlayerController.cs" id="2_kfbq2"]
+[ext_resource type="Script" uid="uid://bpkn7kbddrque" path="res://main/PlayerController.cs" id="2_xwkvk"]
 [ext_resource type="Texture2D" uid="uid://ds45d7lj8xnxq" path="res://main/assets/PlayerAnimation.png" id="3_c651c"]
-[ext_resource type="Texture2D" uid="uid://d0hmedb88oefy" path="res://images/heart.png" id="4_3wy1v"]
 [ext_resource type="PackedScene" uid="uid://c201kqm66rjry" path="res://menus/pause-menu/pause_menu.tscn" id="4_c651c"]
 [ext_resource type="PackedScene" uid="uid://70qxxcxf1xne" path="res://cutscenes/cutscene.tscn" id="5_3wy1v"]
 
@@ -100,9 +99,6 @@ offset_bottom = 181.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Transition" parent="." unique_id=355810688 instance=ExtResource("1_53q0u")]
-layout_mode = 1
-
 [node name="Scene" type="Node2D" parent="." unique_id=1080076457]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Scene" unique_id=153065952]
@@ -117,13 +113,13 @@ position = Vector2(-1.5000286, 0)
 scale = Vector2(9.859374, 1)
 texture = SubResource("GradientTexture2D_buqre")
 
-[node name="CharacterBody2D" type="RigidBody2D" parent="Scene" unique_id=1599436710 groups=["player"]]
+[node name="CharacterBody2D" type="RigidBody2D" parent="Scene" unique_id=1599436710]
 position = Vector2(300, 0)
 rotation = -0.018606728
 gravity_scale = 0.5
 inertia = 8.0
 linear_damp = 1.0
-script = ExtResource("2_kfbq2")
+script = ExtResource("2_xwkvk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Scene/CharacterBody2D" unique_id=1025784810]
 shape = SubResource("CircleShape2D_s4s1w")
@@ -133,14 +129,7 @@ target_position = Vector2(0, 31)
 
 [node name="Camera2D" type="Camera2D" parent="Scene/CharacterBody2D" unique_id=760465680]
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Scene/CharacterBody2D" unique_id=588869511]
-scale = Vector2(0.252, 0.267)
-sprite_frames = SubResource("SpriteFrames_g8iiu")
-autoplay = "default"
-frame_progress = 0.3288092
-
 [node name="LaunchBar" type="ProgressBar" parent="Scene/CharacterBody2D" unique_id=1499505273]
-visible = false
 custom_minimum_size = Vector2(70, 13)
 custom_maximum_size = Vector2(70, 13)
 offset_left = -35.0
@@ -162,39 +151,6 @@ frame = 3
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Scene/CharacterBody2D" unique_id=1354926261]
 libraries/ = SubResource("AnimationLibrary_kfbq2")
 autoplay = &"RESET"
-
-[node name="HeartHealth" type="CanvasLayer" parent="Scene/CharacterBody2D" unique_id=1578099181]
-script = ExtResource("4_kfbq2")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Scene/CharacterBody2D/HeartHealth" unique_id=557153661]
-custom_minimum_size = Vector2(165, 0)
-custom_maximum_size = Vector2(165, -1)
-offset_left = 28.0
-offset_top = 76.0
-offset_right = 203.0
-offset_bottom = 125.0
-theme_override_constants/separation = 3
-
-[node name="Heart1" type="TextureRect" parent="Scene/CharacterBody2D/HeartHealth/HBoxContainer" unique_id=260575206]
-custom_minimum_size = Vector2(50, 45)
-custom_maximum_size = Vector2(50, 45)
-layout_mode = 2
-texture = ExtResource("4_3wy1v")
-expand_mode = 1
-
-[node name="Heart2" type="TextureRect" parent="Scene/CharacterBody2D/HeartHealth/HBoxContainer" unique_id=952606056]
-custom_minimum_size = Vector2(50, 45)
-custom_maximum_size = Vector2(50, 45)
-layout_mode = 2
-texture = ExtResource("4_3wy1v")
-expand_mode = 1
-
-[node name="Heart3" type="TextureRect" parent="Scene/CharacterBody2D/HeartHealth/HBoxContainer" unique_id=2012663308]
-custom_minimum_size = Vector2(50, 45)
-custom_maximum_size = Vector2(50, 45)
-layout_mode = 2
-texture = ExtResource("4_3wy1v")
-expand_mode = 1
 
 [node name="worldborderleft" type="StaticBody2D" parent="Scene" unique_id=206021060]
 position = Vector2(0, -110)
