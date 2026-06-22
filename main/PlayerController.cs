@@ -3,11 +3,11 @@ using System;
 
 public partial class PlayerController : RigidBody2D
 {
-    // TO-DO: make the player slow when charging up
-    private const float MAX_SPIN = 0.4f;
-    private const float LAUNCH_MAX_SPEED = 1000.0f;
-    private const float JUMP_FORCE = -600.0f;
-    private const float VERTICAL_BOOST_MULTIPLIER = 5000f;
+	// TO-DO: make the player slow when charging up
+	private const float MAX_SPIN = 0.4f;
+	private const float LAUNCH_MAX_SPEED = 1000.0f;
+	private const float JUMP_FORCE = -600.0f;
+	private const float VERTICAL_BOOST_MULTIPLIER = 5000f;
 
 	private Sprite2D Sprite;
 	private AnimationPlayer an;
@@ -52,16 +52,16 @@ public partial class PlayerController : RigidBody2D
 					Y = -MathF.Abs((float)NormalisedCharge) * VERTICAL_BOOST_MULTIPLIER
 				};
 
-                if (NormalisedCharge != 0) {
-                    AngularVelocity += (float)NormalisedCharge * 5;
-                } else {
-                    AngularVelocity -= 0.5f * AngularVelocity * Rotation;
-                }
-                
-                NormalisedCharge = 0;
-            }
-            else
-            {
+				if (NormalisedCharge != 0) {
+					AngularVelocity += (float)NormalisedCharge * 5;
+				} else {
+					AngularVelocity -= 0.5f * AngularVelocity * Rotation;
+				}
+				
+				NormalisedCharge = 0;
+			}
+			else
+			{
 				LinearVelocity = LinearVelocity with {
 					X = Mathf.Lerp(LinearVelocity .X, 0, MathF.Abs((float)NormalisedCharge))
 				};
@@ -79,8 +79,15 @@ public partial class PlayerController : RigidBody2D
 				};
 			}
 
-			an.SpeedScale = (float)NormalisedCharge * 10;		
+			an.SpeedScale = (float)NormalisedCharge * 10;
 
+			//idk if i should be doing this every frame but whatever
+			(Sprite.Material as ShaderMaterial).SetShaderParameter("CurrentFrame", Sprite.Frame);
+			(Sprite.Material as ShaderMaterial).SetShaderParameter("FrameCount", Sprite.Hframes);
+
+			GD.Print((Sprite.Material as ShaderMaterial).GetShaderParameter("CurrentFrame"));
+			GD.Print((Sprite.Material as ShaderMaterial).GetShaderParameter("FrameCount"));
+			
 			// Sprite.SpriteFrames.SetAnimationSpeed("default", Mathf.Lerp(SlowestFPS, FastestFPS, Mathf.Abs(NormalisedCharge)));
 		}
 
