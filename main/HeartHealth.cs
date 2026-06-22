@@ -9,6 +9,7 @@ public partial class HeartHealth : CanvasLayer
 	private TextureRect heart1;
 	private TextureRect heart2;
 	private TextureRect heart3;
+	private HealthComp health;
 	
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -16,7 +17,6 @@ public partial class HeartHealth : CanvasLayer
 		heart1 = GetNode<TextureRect>("HBoxContainer/Heart1");
 		heart2 = GetNode<TextureRect>("HBoxContainer/Heart2");
 		heart3 = GetNode<TextureRect>("HBoxContainer/Heart3");
-		// Go up from HeartHealth to Player
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -144,7 +144,7 @@ target_position = Vector2(0, 29)
 [node name="Camera2D" type="Camera2D" parent="Scene/CharacterBody2D" unique_id=760465680]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Scene/CharacterBody2D" unique_id=588869511]
-scale = Vector2(0.251856, 0.26691788)
+scale = Vector2(0.252, 0.267)
 sprite_frames = SubResource("SpriteFrames_g8iiu")
 autoplay = "default"
 frame_progress = 0.3288092
