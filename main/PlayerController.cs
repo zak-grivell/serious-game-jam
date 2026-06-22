@@ -91,8 +91,15 @@ public partial class PlayerController : RigidBody2D
 				};
 			}
 
-			an.SpeedScale = (float)NormalisedCharge * 10;		
+			an.SpeedScale = (float)NormalisedCharge * 10;
 
+			//idk if i should be doing this every frame but whatever
+			(Sprite.Material as ShaderMaterial).SetShaderParameter("CurrentFrame", Sprite.Frame);
+			(Sprite.Material as ShaderMaterial).SetShaderParameter("FrameCount", Sprite.Hframes);
+
+			GD.Print((Sprite.Material as ShaderMaterial).GetShaderParameter("CurrentFrame"));
+			GD.Print((Sprite.Material as ShaderMaterial).GetShaderParameter("FrameCount"));
+			
 			// Sprite.SpriteFrames.SetAnimationSpeed("default", Mathf.Lerp(SlowestFPS, FastestFPS, Mathf.Abs(NormalisedCharge)));
 		}
 

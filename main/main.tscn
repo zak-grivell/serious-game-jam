@@ -1,10 +1,12 @@
 [gd_scene format=3 uid="uid://ekvt1amehlo"]
 
 [ext_resource type="PackedScene" uid="uid://bsr040tqx1sx0" path="res://transition/transition.tscn" id="1_53q0u"]
+[ext_resource type="Shader" uid="uid://cjm6tultyxsi2" path="res://main/fireball.tres" id="2_67ri8"]
 [ext_resource type="Script" uid="uid://bpkn7kbddrque" path="res://main/PlayerController.cs" id="2_xwkvk"]
 [ext_resource type="Script" uid="uid://dufetdr1vqdac" path="res://main/HeartHealth.cs" id="3_4dugh"]
 [ext_resource type="Texture2D" uid="uid://ds45d7lj8xnxq" path="res://main/assets/PlayerAnimation.png" id="3_c651c"]
-[ext_resource type="Texture2D" uid="uid://d0hmedb88oefy" path="res://images/heart.png" id="4_3wy1v"]
+[ext_resource type="Texture2D" uid="uid://gvynu55kgaqp" path="res://main/assets/textures/T_VFX_MarbleNoise_tiled.png" id="3_grrlh"]
+[ext_resource type="Texture2D" uid="uid://dqvvfjslfvoyw" path="res://main/assets/textures/T_LeLuStar11.jpg" id="4_0i4oc"]
 [ext_resource type="PackedScene" uid="uid://c201kqm66rjry" path="res://menus/pause-menu/pause_menu.tscn" id="4_c651c"]
 [ext_resource type="PackedScene" uid="uid://70qxxcxf1xne" path="res://cutscenes/cutscene.tscn" id="5_3wy1v"]
 
@@ -34,6 +36,21 @@ corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
+
+[sub_resource type="Gradient" id="Gradient_bsumw"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_cyir4"]
+gradient = SubResource("Gradient_bsumw")
+fill_from = Vector2(0.98717946, 0.3931624)
+fill_to = Vector2(1, 0.97863245)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g8iiu"]
+shader = ExtResource("2_67ri8")
+shader_parameter/Texture1 = ExtResource("3_grrlh")
+shader_parameter/Texture2 = SubResource("GradientTexture2D_cyir4")
+shader_parameter/FrameCount = 0
+shader_parameter/CurrentFrame = 0
+shader_parameter/Texture3 = ExtResource("4_0i4oc")
 
 [sub_resource type="Animation" id="Animation_c651c"]
 length = 0.20000334376432
@@ -145,10 +162,10 @@ value = 0.5
 show_percentage = false
 
 [node name="Sprite2D" type="Sprite2D" parent="Scene/CharacterBody2D" unique_id=766558107]
+material = SubResource("ShaderMaterial_g8iiu")
 scale = Vector2(0.19427848, 0.19610186)
 texture = ExtResource("3_c651c")
 hframes = 6
-frame = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Scene/CharacterBody2D" unique_id=1354926261]
 libraries/ = SubResource("AnimationLibrary_kfbq2")
