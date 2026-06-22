@@ -34,7 +34,8 @@ corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
 [sub_resource type="Animation" id="Animation_c651c"]
-length = 0.001
+length = 0.20000334376432
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -42,10 +43,10 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0.0009999999, 0.033333335, 0.06666667, 0.10000001, 0.13333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
-"values": [0]
+"values": [1, 2, 3, 4, 5]
 }
 
 [sub_resource type="Animation" id="Animation_3wy1v"]
@@ -146,11 +147,11 @@ show_percentage = false
 scale = Vector2(0.19427848, 0.19610186)
 texture = ExtResource("3_c651c")
 hframes = 6
+frame = 3
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Scene/CharacterBody2D" unique_id=1354926261]
 libraries/ = SubResource("AnimationLibrary_kfbq2")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Scene/CharacterBody2D" unique_id=1568411869]
+autoplay = &"RESET"
 
 [node name="worldborderleft" type="StaticBody2D" parent="Scene" unique_id=206021060]
 position = Vector2(0, -110)

@@ -3,13 +3,14 @@ using System;
 
 public partial class PlayerController : RigidBody2D
 {
-    // TO-DO: make the player slow when charging up
-    private const float MAX_SPIN = 0.4f;
-    private const float LAUNCH_MAX_SPEED = 1000.0f;
-    private const float JUMP_FORCE = -600.0f;
-    private const float VERTICAL_BOOST_MULTIPLIER = 5000f;
+	// TO-DO: make the player slow when charging up
+	private const float MAX_SPIN = 0.4f;
+	private const float LAUNCH_MAX_SPEED = 1000.0f;
+	private const float JUMP_FORCE = -600.0f;
+	private const float VERTICAL_BOOST_MULTIPLIER = 5000f;
 
-	private AnimatedSprite2D Sprite;
+	private Sprite2D Sprite;
+	private AnimationPlayer Animation;
 	private RayCast2D floorRaycast;
 	private const float CHARGE_RATE = 20.0f;
 	private const float DECHARGE_RATE = 200.0f;
@@ -20,8 +21,8 @@ public partial class PlayerController : RigidBody2D
 	public override void _Ready()
 	{
 		floorRaycast = GetNode<RayCast2D>("OnFloor");
-		Sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
-		Sprite.SpriteFrames.SetAnimationSpeed("default", SlowestFPS);
+		Sprite = GetNode<Sprite2D>("Sprite2D");
+		Animation.SpeedScale = 1f;
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -75,7 +76,9 @@ public partial class PlayerController : RigidBody2D
 				};
 			}
 
-			Sprite.SpriteFrames.SetAnimationSpeed("default", Mathf.Lerp(SlowestFPS, FastestFPS, Mathf.Abs(NormalisedCharge)));
+			Animation.SpeedScale = (float)Mathf.Lerp(1f, FastestFPS / SlowestFPS, Mathf.Abs(NormalisedCharge));
+			GD.Print(Animation.SpeedScale.ToString());
+
 		}
 
 
