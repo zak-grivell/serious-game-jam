@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://bpkn7kbddrque" path="res://main/PlayerController.cs" id="2_xwkvk"]
 [ext_resource type="Texture2D" uid="uid://ds45d7lj8xnxq" path="res://main/assets/PlayerAnimation.png" id="3_c651c"]
 [ext_resource type="PackedScene" uid="uid://c201kqm66rjry" path="res://menus/pause-menu/pause_menu.tscn" id="4_c651c"]
+[ext_resource type="PackedScene" uid="uid://70qxxcxf1xne" path="res://cutscenes/cutscene.tscn" id="5_3wy1v"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c651c"]
 size = Vector2(633, 66)
@@ -16,57 +17,7 @@ fill_from = Vector2(0, 1)
 fill_to = Vector2(0, 1)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s4s1w"]
-radius = 36.000004
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3wy1v"]
-atlas = ExtResource("3_c651c")
-region = Rect2(0, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kfbq2"]
-atlas = ExtResource("3_c651c")
-region = Rect2(320, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4dugh"]
-atlas = ExtResource("3_c651c")
-region = Rect2(640, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_67ri8"]
-atlas = ExtResource("3_c651c")
-region = Rect2(960, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_grrlh"]
-atlas = ExtResource("3_c651c")
-region = Rect2(1280, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_0i4oc"]
-atlas = ExtResource("3_c651c")
-region = Rect2(1600, 0, 320, 320)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_g8iiu"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3wy1v")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kfbq2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4dugh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_67ri8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_grrlh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_0i4oc")
-}],
-"loop": 1,
-"name": &"default",
-"speed": 5.0
-}]
+radius = 27.000004
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_43yv0"]
 bg_color = Color(0.5313938, 0.55376303, 0.97701985, 0)
@@ -81,6 +32,45 @@ corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
+
+[sub_resource type="Animation" id="Animation_c651c"]
+length = 0.20000334376432
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.0009999999, 0.033333335, 0.06666667, 0.10000001, 0.13333334),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [1, 2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_3wy1v"]
+resource_name = "default"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.10000001, 0.13333334, 0.16666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kfbq2"]
+_data = {
+&"RESET": SubResource("Animation_c651c"),
+&"default": SubResource("Animation_3wy1v")
+}
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_xwkvk"]
 normal = Vector2(1, 0)
@@ -109,9 +99,6 @@ offset_bottom = 181.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Transition" parent="." unique_id=355810688 instance=ExtResource("1_53q0u")]
-layout_mode = 1
-
 [node name="Scene" type="Node2D" parent="." unique_id=1080076457]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Scene" unique_id=153065952]
@@ -129,6 +116,7 @@ texture = SubResource("GradientTexture2D_buqre")
 [node name="CharacterBody2D" type="RigidBody2D" parent="Scene" unique_id=1599436710]
 position = Vector2(300, 0)
 rotation = -0.018606728
+gravity_scale = 0.5
 inertia = 8.0
 linear_damp = 1.0
 script = ExtResource("2_xwkvk")
@@ -137,17 +125,12 @@ script = ExtResource("2_xwkvk")
 shape = SubResource("CircleShape2D_s4s1w")
 
 [node name="OnFloor" type="RayCast2D" parent="Scene/CharacterBody2D" unique_id=1858477538]
-target_position = Vector2(0, 42.955)
+target_position = Vector2(0, 31)
 
 [node name="Camera2D" type="Camera2D" parent="Scene/CharacterBody2D" unique_id=760465680]
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Scene/CharacterBody2D" unique_id=588869511]
-scale = Vector2(0.251856, 0.26691788)
-sprite_frames = SubResource("SpriteFrames_g8iiu")
-autoplay = "default"
-frame_progress = 0.3288092
-
 [node name="LaunchBar" type="ProgressBar" parent="Scene/CharacterBody2D" unique_id=1499505273]
+visible = false
 custom_minimum_size = Vector2(70, 13)
 custom_maximum_size = Vector2(70, 13)
 offset_left = -35.0
@@ -159,6 +142,16 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_gvs4p")
 max_value = 1.0
 value = 0.5
 show_percentage = false
+
+[node name="Sprite2D" type="Sprite2D" parent="Scene/CharacterBody2D" unique_id=766558107]
+scale = Vector2(0.19427848, 0.19610186)
+texture = ExtResource("3_c651c")
+hframes = 6
+frame = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Scene/CharacterBody2D" unique_id=1354926261]
+libraries/ = SubResource("AnimationLibrary_kfbq2")
+autoplay = &"RESET"
 
 [node name="worldborderleft" type="StaticBody2D" parent="Scene" unique_id=206021060]
 position = Vector2(0, -110)
@@ -212,6 +205,11 @@ points = PackedVector2Array(0, 2, -1, 15, 1, 64, -2, 191, -3, 346, -3, -14)
 
 [node name="PauseMenu" parent="CanvasLayer" unique_id=1440574524 instance=ExtResource("4_c651c")]
 offset_left = 11.0
-offset_top = 57.0
+offset_top = 40.0
 offset_right = 14.0
-offset_bottom = 58.0
+offset_bottom = 41.0
+
+[node name="Cutscene" parent="CanvasLayer" unique_id=829148526 instance=ExtResource("5_3wy1v")]
+visible = false
+
+[node name="Transition" parent="CanvasLayer" unique_id=355810688 instance=ExtResource("1_53q0u")]
