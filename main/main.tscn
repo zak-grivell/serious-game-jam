@@ -2,9 +2,12 @@
 
 [ext_resource type="PackedScene" uid="uid://bsr040tqx1sx0" path="res://transition/transition.tscn" id="1_53q0u"]
 [ext_resource type="Script" uid="uid://bpkn7kbddrque" path="res://main/PlayerController.cs" id="2_xwkvk"]
+[ext_resource type="Shader" uid="uid://cjm6tultyxsi2" path="res://main/fireball.tres" id="3_4dugh"]
 [ext_resource type="Texture2D" uid="uid://ds45d7lj8xnxq" path="res://main/assets/PlayerAnimation.png" id="3_c651c"]
+[ext_resource type="Texture2D" uid="uid://dqvvfjslfvoyw" path="res://main/assets/textures/T_LeLuStar11.jpg" id="4_67ri8"]
 [ext_resource type="PackedScene" uid="uid://c201kqm66rjry" path="res://menus/pause-menu/pause_menu.tscn" id="4_c651c"]
 [ext_resource type="PackedScene" uid="uid://70qxxcxf1xne" path="res://cutscenes/cutscene.tscn" id="5_3wy1v"]
+[ext_resource type="Texture2D" uid="uid://gvynu55kgaqp" path="res://main/assets/textures/T_VFX_MarbleNoise_tiled.png" id="5_grrlh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c651c"]
 size = Vector2(633, 66)
@@ -18,6 +21,21 @@ fill_to = Vector2(0, 1)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s4s1w"]
 radius = 36.000004
+
+[sub_resource type="Gradient" id="Gradient_0i4oc"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6iioa"]
+gradient = SubResource("Gradient_0i4oc")
+fill_from = Vector2(0, 0.42735043)
+fill_to = Vector2(0, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bsumw"]
+shader = ExtResource("3_4dugh")
+shader_parameter/Scale = Vector2(1, 1)
+shader_parameter/Speed = Vector2(0, 1)
+shader_parameter/Texture_1 = ExtResource("5_grrlh")
+shader_parameter/Texture_2 = SubResource("GradientTexture2D_6iioa")
+shader_parameter/MultiplyTexture = ExtResource("4_67ri8")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_3wy1v"]
 atlas = ExtResource("3_c651c")
@@ -141,6 +159,7 @@ target_position = Vector2(0, 42.955)
 [node name="Camera2D" type="Camera2D" parent="Scene/CharacterBody2D" unique_id=760465680]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Scene/CharacterBody2D" unique_id=588869511]
+material = SubResource("ShaderMaterial_bsumw")
 scale = Vector2(0.251856, 0.26691788)
 sprite_frames = SubResource("SpriteFrames_g8iiu")
 autoplay = "default"
