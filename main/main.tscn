@@ -2,9 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bsr040tqx1sx0" path="res://transition/transition.tscn" id="1_53q0u"]
 [ext_resource type="Script" uid="uid://bpkn7kbddrque" path="res://main/PlayerController.cs" id="2_xwkvk"]
-[ext_resource type="Shader" uid="uid://cjm6tultyxsi2" path="res://main/fireball.tres" id="3_4dugh"]
 [ext_resource type="Texture2D" uid="uid://ds45d7lj8xnxq" path="res://main/assets/PlayerAnimation.png" id="3_c651c"]
-[ext_resource type="Texture2D" uid="uid://dqvvfjslfvoyw" path="res://main/assets/textures/T_LeLuStar11.jpg" id="4_67ri8"]
 [ext_resource type="PackedScene" uid="uid://c201kqm66rjry" path="res://menus/pause-menu/pause_menu.tscn" id="4_c651c"]
 [ext_resource type="PackedScene" uid="uid://70qxxcxf1xne" path="res://cutscenes/cutscene.tscn" id="5_3wy1v"]
 [ext_resource type="Texture2D" uid="uid://gvynu55kgaqp" path="res://main/assets/textures/T_VFX_MarbleNoise_tiled.png" id="5_grrlh"]
@@ -22,71 +20,6 @@ fill_to = Vector2(0, 1)
 [sub_resource type="CircleShape2D" id="CircleShape2D_s4s1w"]
 radius = 36.000004
 
-[sub_resource type="Gradient" id="Gradient_0i4oc"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_6iioa"]
-gradient = SubResource("Gradient_0i4oc")
-fill_from = Vector2(0, 0.42735043)
-fill_to = Vector2(0, 1)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_bsumw"]
-shader = ExtResource("3_4dugh")
-shader_parameter/Scale = Vector2(1, 1)
-shader_parameter/Speed = Vector2(0, 1)
-shader_parameter/Texture_1 = ExtResource("5_grrlh")
-shader_parameter/Texture_2 = SubResource("GradientTexture2D_6iioa")
-shader_parameter/MultiplyTexture = ExtResource("4_67ri8")
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3wy1v"]
-atlas = ExtResource("3_c651c")
-region = Rect2(0, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kfbq2"]
-atlas = ExtResource("3_c651c")
-region = Rect2(320, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4dugh"]
-atlas = ExtResource("3_c651c")
-region = Rect2(640, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_67ri8"]
-atlas = ExtResource("3_c651c")
-region = Rect2(960, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_grrlh"]
-atlas = ExtResource("3_c651c")
-region = Rect2(1280, 0, 320, 320)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_0i4oc"]
-atlas = ExtResource("3_c651c")
-region = Rect2(1600, 0, 320, 320)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_g8iiu"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_3wy1v")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kfbq2")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4dugh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_67ri8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_grrlh")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_0i4oc")
-}],
-"loop": 1,
-"name": &"default",
-"speed": 5.0
-}]
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_43yv0"]
 bg_color = Color(0.5313938, 0.55376303, 0.97701985, 0)
 corner_radius_top_left = 4
@@ -100,6 +33,44 @@ corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
+
+[sub_resource type="Animation" id="Animation_c651c"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_3wy1v"]
+resource_name = "default"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.06666667, 0.10000001, 0.13333334, 0.16666667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kfbq2"]
+_data = {
+&"RESET": SubResource("Animation_c651c"),
+&"default": SubResource("Animation_3wy1v")
+}
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_xwkvk"]
 normal = Vector2(1, 0)
@@ -158,13 +129,6 @@ target_position = Vector2(0, 42.955)
 
 [node name="Camera2D" type="Camera2D" parent="Scene/CharacterBody2D" unique_id=760465680]
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Scene/CharacterBody2D" unique_id=588869511]
-material = SubResource("ShaderMaterial_bsumw")
-scale = Vector2(0.251856, 0.26691788)
-sprite_frames = SubResource("SpriteFrames_g8iiu")
-autoplay = "default"
-frame_progress = 0.3288092
-
 [node name="LaunchBar" type="ProgressBar" parent="Scene/CharacterBody2D" unique_id=1499505273]
 visible = false
 custom_minimum_size = Vector2(70, 13)
@@ -178,6 +142,14 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_gvs4p")
 max_value = 1.0
 value = 0.5
 show_percentage = false
+
+[node name="Sprite2D" type="Sprite2D" parent="Scene/CharacterBody2D" unique_id=766558107]
+scale = Vector2(0.19427848, 0.19610186)
+texture = ExtResource("3_c651c")
+hframes = 6
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Scene/CharacterBody2D" unique_id=1354926261]
+libraries/ = SubResource("AnimationLibrary_kfbq2")
 
 [node name="worldborderleft" type="StaticBody2D" parent="Scene" unique_id=206021060]
 position = Vector2(0, -110)
