@@ -19,7 +19,7 @@ public partial class FiniteStateController : Node
 		{
 			state.Update(delta);
 			IState nextState = state.NextState();
-			if (nextState != null && nextState.GetType() != this.state.GetType()) {
+			if (nextState != null && nextState != this.state) {
 				this.state.OnLeave();
 				nextState.OnEnter();
 			}

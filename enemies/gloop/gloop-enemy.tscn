@@ -4,14 +4,18 @@
 [ext_resource type="Script" uid="uid://soq3nlg8vcsh" path="res://scripts/life/HealthComp.cs" id="2_0kcgx"]
 [ext_resource type="Script" uid="uid://b8eqomuii5u1l" path="res://scripts/life/DefaultEnemyDeath.cs" id="2_t1db6"]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5h4g0"]
+
 [sub_resource type="Gradient" id="Gradient_r6kxj"]
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_r6kxj"]
 gradient = SubResource("Gradient_r6kxj")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5h4g0"]
+[node name="GloopEnemy" type="CharacterBody2D" unique_id=855592643]
 
-[node name="GloopEnemy" type="Node2D" unique_id=2139560567]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=719743613]
+visibility_layer = 0
+shape = SubResource("RectangleShape2D_5h4g0")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1556938574]
 scale = Vector2(0.08, 20)
@@ -28,14 +32,8 @@ script = ExtResource("2_t1db6")
 
 [node name="MovementComp" type="Node" parent="." unique_id=777034447 node_paths=PackedStringArray("rb")]
 script = ExtResource("1_o5b3k")
-pos1 = 10.0
-pos2 = 10000.0
+pos1 = 40.0
+pos2 = 80.0
 precision = 1.0
 speed = 100.0
-rb = NodePath("../RigidBody2D")
-
-[node name="RigidBody2D" type="RigidBody2D" parent="." unique_id=1955939278]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D" unique_id=719743613]
-visibility_layer = 0
-shape = SubResource("RectangleShape2D_5h4g0")
+rb = NodePath("..")
