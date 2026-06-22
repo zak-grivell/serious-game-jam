@@ -4,10 +4,10 @@ using System;
 public partial class FiniteStateController : Node
 {
 	// If state is null then nothing will happen and the state can never be changed
-	private IState state;
+	protected IState state;
 
-    // Override this to set the initial state
-    public override void _Ready()
+	// Override this to set the initial state
+	public override void _Ready()
 	{
 		base._Ready();
 	}
