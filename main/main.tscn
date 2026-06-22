@@ -148,7 +148,6 @@ target_position = Vector2(0, 31)
 [node name="Camera2D" type="Camera2D" parent="Scene/CharacterBody2D" unique_id=760465680]
 
 [node name="LaunchBar" type="ProgressBar" parent="Scene/CharacterBody2D" unique_id=1499505273]
-visible = false
 custom_minimum_size = Vector2(70, 13)
 custom_maximum_size = Vector2(70, 13)
 offset_left = -35.0
