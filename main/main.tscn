@@ -2,10 +2,11 @@
 
 [ext_resource type="PackedScene" uid="uid://bsr040tqx1sx0" path="res://transition/transition.tscn" id="1_53q0u"]
 [ext_resource type="Script" uid="uid://bpkn7kbddrque" path="res://main/PlayerController.cs" id="2_xwkvk"]
-[ext_resource type="Texture2D" uid="uid://b7s83eqa3bsdm" path="res://main/assets/hampter-removebg-preview.png" id="3_xwkvk"]
+[ext_resource type="Texture2D" uid="uid://ds45d7lj8xnxq" path="res://main/assets/PlayerAnimation.png" id="3_c651c"]
+[ext_resource type="PackedScene" uid="uid://c201kqm66rjry" path="res://menus/pause-menu/pause_menu.tscn" id="4_c651c"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ltqda"]
-size = Vector2(510, 63)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c651c"]
+size = Vector2(633, 66)
 
 [sub_resource type="Gradient" id="Gradient_3wy1v"]
 
@@ -15,13 +16,82 @@ fill_from = Vector2(0, 1)
 fill_to = Vector2(0, 1)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s4s1w"]
-radius = 22.0
+radius = 36.000004
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3wy1v"]
+atlas = ExtResource("3_c651c")
+region = Rect2(0, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kfbq2"]
+atlas = ExtResource("3_c651c")
+region = Rect2(320, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4dugh"]
+atlas = ExtResource("3_c651c")
+region = Rect2(640, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_67ri8"]
+atlas = ExtResource("3_c651c")
+region = Rect2(960, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_grrlh"]
+atlas = ExtResource("3_c651c")
+region = Rect2(1280, 0, 320, 320)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0i4oc"]
+atlas = ExtResource("3_c651c")
+region = Rect2(1600, 0, 320, 320)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g8iiu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3wy1v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kfbq2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4dugh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_67ri8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grrlh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0i4oc")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_xwkvk"]
+normal = Vector2(1, 0)
+distance = 7.2049155
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_c651c"]
+normal = Vector2(-1, 0)
+distance = 7.2049155
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_3wy1v"]
+normal = Vector2(1, 0)
+distance = -9.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_kfbq2"]
+normal = Vector2(-1, 0)
 
 [node name="Main" type="Control" unique_id=78732012]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 181.0
+offset_right = 19.0
+offset_bottom = 181.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -31,32 +101,90 @@ layout_mode = 1
 [node name="Scene" type="Node2D" parent="." unique_id=1080076457]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Scene" unique_id=153065952]
-position = Vector2(300, 300)
+position = Vector2(306, 203)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Scene/StaticBody2D" unique_id=889530374]
-position = Vector2(0, -0.5)
-shape = SubResource("RectangleShape2D_ltqda")
+position = Vector2(3.5, 1)
+shape = SubResource("RectangleShape2D_c651c")
 
 [node name="Sprite2D" type="Sprite2D" parent="Scene/StaticBody2D" unique_id=1593420286]
-position = Vector2(0.5, 0)
-scale = Vector2(8, 1)
+position = Vector2(-1.5000286, 0)
+scale = Vector2(9.859374, 1)
 texture = SubResource("GradientTexture2D_buqre")
 
 [node name="CharacterBody2D" type="RigidBody2D" parent="Scene" unique_id=1599436710]
-position = Vector2(300, 80)
+position = Vector2(300, 0)
+rotation = -0.018606728
 inertia = 8.0
 linear_damp = 1.0
-angular_damp = 1.0
 script = ExtResource("2_xwkvk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Scene/CharacterBody2D" unique_id=1025784810]
 shape = SubResource("CircleShape2D_s4s1w")
 
-[node name="Sprite2D" type="Sprite2D" parent="Scene/CharacterBody2D" unique_id=2145414226]
-scale = Vector2(0.1, 0.1)
-texture = ExtResource("3_xwkvk")
-
 [node name="OnFloor" type="RayCast2D" parent="Scene/CharacterBody2D" unique_id=1858477538]
-target_position = Vector2(0, 29)
+target_position = Vector2(0, 42.955)
 
 [node name="Camera2D" type="Camera2D" parent="Scene/CharacterBody2D" unique_id=760465680]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Scene/CharacterBody2D" unique_id=588869511]
+scale = Vector2(0.251856, 0.26691788)
+sprite_frames = SubResource("SpriteFrames_g8iiu")
+autoplay = "default"
+frame_progress = 0.3288092
+
+[node name="worldborderleft" type="StaticBody2D" parent="Scene" unique_id=206021060]
+position = Vector2(0, -110)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scene/worldborderleft" unique_id=2059113658]
+position = Vector2(-7, 10)
+shape = SubResource("WorldBoundaryShape2D_xwkvk")
+
+[node name="Line2D(deletable)" type="Line2D" parent="Scene/worldborderleft/CollisionShape2D" unique_id=2108756412]
+position = Vector2(0, -17.810528)
+scale = Vector2(1, 1.0078948)
+points = PackedVector2Array(0, 2, -1, 15, 1, 64, -2, 191, -3, 346, -3, -14)
+
+[node name="worldborderright" type="StaticBody2D" parent="Scene" unique_id=189720154]
+position = Vector2(635, -130)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scene/worldborderright" unique_id=18223731]
+position = Vector2(-7, 10)
+shape = SubResource("WorldBoundaryShape2D_c651c")
+
+[node name="Line2D(deletable)" type="Line2D" parent="Scene/worldborderright/CollisionShape2D" unique_id=1904165710]
+scale = Vector2(1, 1.0078948)
+points = PackedVector2Array(0, 2, -1, 15, 1, 64, -2, 191, -3, 346, -3, -14)
+
+[node name="worldbordertop" type="StaticBody2D" parent="Scene" unique_id=742549755]
+position = Vector2(630, -110)
+rotation = 1.5707964
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scene/worldbordertop" unique_id=1132604812]
+position = Vector2(-7, 10)
+shape = SubResource("WorldBoundaryShape2D_3wy1v")
+
+[node name="Line2D(deletable)" type="Line2D" parent="Scene/worldbordertop/CollisionShape2D" unique_id=547997853]
+scale = Vector2(1, 1.847523)
+points = PackedVector2Array(0, 2, -1, 15, 1, 64, -2, 191, -3, 346, -3, -14)
+
+[node name="worldborderbottom" type="StaticBody2D" parent="Scene" unique_id=385593940]
+position = Vector2(630, 245)
+rotation = 1.5707964
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Scene/worldborderbottom" unique_id=86098201]
+position = Vector2(-7, 10)
+shape = SubResource("WorldBoundaryShape2D_kfbq2")
+
+[node name="Line2D(deletable)" type="Line2D" parent="Scene/worldborderbottom/CollisionShape2D" unique_id=1406373933]
+position = Vector2(0, 2.3405473)
+scale = Vector2(1, 1.847523)
+points = PackedVector2Array(0, 2, -1, 15, 1, 64, -2, 191, -3, 346, -3, -14)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=945506084]
+
+[node name="PauseMenu" parent="CanvasLayer" unique_id=1440574524 instance=ExtResource("4_c651c")]
+offset_left = 5.0
+offset_top = 60.0
+offset_right = 8.0
+offset_bottom = 61.0
