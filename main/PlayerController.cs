@@ -1,4 +1,5 @@
 using Godot;
+using NewGameProject;
 using System;
 
 public partial class PlayerController : RigidBody2D
@@ -9,7 +10,8 @@ public partial class PlayerController : RigidBody2D
 	private const float JUMP_FORCE = -600.0f;
 	private const float VERTICAL_BOOST_MULTIPLIER = 5000f;
 
-	private Sprite2D Sprite;
+	//private Sprite2D Sprite;
+	private AnimatedSprite2D Sprite;
 	private AnimationPlayer an;
 	
 	private RayCast2D floorRaycast;
@@ -22,10 +24,10 @@ public partial class PlayerController : RigidBody2D
 	public override void _Ready()
 	{
 		floorRaycast = GetNode<RayCast2D>("OnFloor");
-		Sprite = GetNode<Sprite2D>("Sprite2D");
+		Sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		// Sprite.SpriteFrames.SetAnimationSpeed("default", SlowestFPS);
 
-		an = GetNode<AnimationPlayer>("AnimationPlayer");
+		//an = GetNode<AnimationPlayer>("AnimationPlayer");
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -79,18 +81,20 @@ public partial class PlayerController : RigidBody2D
 				};
 			}
 
-			an.SpeedScale = (float)NormalisedCharge * 10;
-
 			//idk if i should be doing this every frame but whatever
-			(Sprite.Material as ShaderMaterial).SetShaderParameter("CurrentFrame", Sprite.Frame);
-			(Sprite.Material as ShaderMaterial).SetShaderParameter("FrameCount", Sprite.Hframes);
+			int currentFrame = Sprite.Frame;
+			int frameCount = Sprite.SpriteFrames.GetFrameCount("default");
+
+			(Sprite.Material as ShaderMaterial).SetShaderParameter("CurrentFrame", currentFrame);
+			(Sprite.Material as ShaderMaterial).SetShaderParameter("FrameCount", frameCount);
 
 			GD.Print((Sprite.Material as ShaderMaterial).GetShaderParameter("CurrentFrame"));
 			GD.Print((Sprite.Material as ShaderMaterial).GetShaderParameter("FrameCount"));
 			
-			// Sprite.SpriteFrames.SetAnimationSpeed("default", Mathf.Lerp(SlowestFPS, FastestFPS, Mathf.Abs(NormalisedCharge)));
 		}
-
-
+		else
+		{
+			Sprite.Rotation = MathUtils.VectorToAngle(LinearVelocity) + Mathf.Pi;
+		}
 	}
 }
