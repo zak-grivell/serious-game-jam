@@ -1,5 +1,25 @@
 [gd_scene format=3 uid="uid://cghagw53r12nv"]
 
+[ext_resource type="Script" uid="uid://bg1hq55hr84mo" path="res://scripts/camera/CameraMovement.cs" id="1_jol0d"]
+[ext_resource type="Script" uid="uid://26kjrwc3dw4r" path="res://test scripts/CameraTesting.cs" id="2_dodwv"]
+
+[sub_resource type="Gradient" id="Gradient_q700x"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_q700x"]
+gradient = SubResource("Gradient_q700x")
+fill_from = Vector2(0.39756945, 0.6163194)
+
 [node name="CameraTesting" type="Node2D" unique_id=10679063]
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=114321442]
+script = ExtResource("1_jol0d")
+
+[node name="Node2D" type="Node2D" parent="." unique_id=812643152]
+
+[node name="Sprite2D" type="Sprite2D" parent="Node2D" unique_id=597059053]
+texture = SubResource("GradientTexture2D_q700x")
+
+[node name="Node" type="Node" parent="." unique_id=1865578238 node_paths=PackedStringArray("cameraMovement")]
+script = ExtResource("2_dodwv")
+cameraMovement = NodePath("../Camera2D")
+speed = 500.0
