@@ -7,7 +7,7 @@ public partial class PlayerController : RigidBody2D
     private const float MAX_SPIN = 0.4f;
     private const float LAUNCH_MAX_SPEED = 1000.0f;
     private const float JUMP_FORCE = -600.0f;
-    private const float VERTICAL_BOOST_MULTIPLIER = 1000f;
+    private const float VERTICAL_BOOST_MULTIPLIER = 5000f;
 
     private AnimatedSprite2D Sprite;
     private RayCast2D floorRaycast;
@@ -48,8 +48,11 @@ public partial class PlayerController : RigidBody2D
                     Y = -MathF.Abs((float)NormalisedCharge) * VERTICAL_BOOST_MULTIPLIER
                 };
 
-                AngularVelocity += (float)NormalisedCharge * 2;
-                AngularVelocity -= 0.5f * AngularVelocity * Rotation;
+                if (NormalisedCharge != 0) {
+                    AngularVelocity += (float)NormalisedCharge * 5;
+                } else {
+                    AngularVelocity -= 0.5f * AngularVelocity * Rotation;
+                }
                 
                 NormalisedCharge = 0;
             }
