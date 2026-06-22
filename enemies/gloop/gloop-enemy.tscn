@@ -12,6 +12,9 @@
 gradient = SubResource("Gradient_r6kxj")
 
 [node name="GloopEnemy" type="CharacterBody2D" unique_id=855592643]
+metadata/pos1 = 0.0
+metadata/pos2 = 0.0
+metadata/speed = 0.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=719743613]
 visibility_layer = 0
@@ -30,10 +33,7 @@ deathComp = NodePath("../DeathComp")
 [node name="DeathComp" type="Node" parent="." unique_id=1133529683]
 script = ExtResource("2_t1db6")
 
-[node name="MovementComp" type="Node" parent="." unique_id=777034447 node_paths=PackedStringArray("rb")]
+[node name="MovementComp" type="Node" parent="." unique_id=777034447 node_paths=PackedStringArray("root", "rb")]
 script = ExtResource("1_o5b3k")
-pos1 = 40.0
-pos2 = 80.0
-precision = 1.0
-speed = 100.0
+root = NodePath("..")
 rb = NodePath("..")

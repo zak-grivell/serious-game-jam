@@ -209,3 +209,7 @@ offset_bottom = 58.0
 
 [node name="GloopEnemy" parent="." unique_id=2139560567 instance=ExtResource("5_3wy1v")]
 position = Vector2(20, 0)
+metadata/pos1 = 30.0
+metadata/pos2 = 80.0
+metadata/speed = 15.0
+metadata/test = true
