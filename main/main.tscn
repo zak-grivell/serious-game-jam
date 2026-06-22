@@ -2,7 +2,9 @@
 
 [ext_resource type="PackedScene" uid="uid://bsr040tqx1sx0" path="res://transition/transition.tscn" id="1_53q0u"]
 [ext_resource type="Script" uid="uid://bpkn7kbddrque" path="res://main/PlayerController.cs" id="2_xwkvk"]
+[ext_resource type="Script" uid="uid://dufetdr1vqdac" path="res://main/HeartHealth.cs" id="3_4dugh"]
 [ext_resource type="Texture2D" uid="uid://ds45d7lj8xnxq" path="res://main/assets/PlayerAnimation.png" id="3_c651c"]
+[ext_resource type="Texture2D" uid="uid://d0hmedb88oefy" path="res://images/heart.png" id="4_3wy1v"]
 [ext_resource type="PackedScene" uid="uid://c201kqm66rjry" path="res://menus/pause-menu/pause_menu.tscn" id="4_c651c"]
 [ext_resource type="PackedScene" uid="uid://70qxxcxf1xne" path="res://cutscenes/cutscene.tscn" id="5_3wy1v"]
 
@@ -199,6 +201,43 @@ shape = SubResource("WorldBoundaryShape2D_kfbq2")
 position = Vector2(0, 2.3405473)
 scale = Vector2(1, 1.847523)
 points = PackedVector2Array(0, 2, -1, 15, 1, 64, -2, 191, -3, 346, -3, -14)
+
+[node name="HeartHealth" type="CanvasLayer" parent="Scene" unique_id=1637908785]
+script = ExtResource("3_4dugh")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Scene/HeartHealth" unique_id=891086074]
+custom_minimum_size = Vector2(135, 50)
+anchors_preset = -1
+anchor_right = 0.28500003
+anchor_bottom = 0.15400001
+offset_left = 15.0
+offset_top = 15.0
+offset_right = -32.400024
+offset_bottom = 9.559994
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 4
+
+[node name="heart1" type="TextureRect" parent="Scene/HeartHealth/HBoxContainer" unique_id=563060328]
+custom_minimum_size = Vector2(40, 35)
+custom_maximum_size = Vector2(45, 35)
+layout_mode = 2
+texture = ExtResource("4_3wy1v")
+expand_mode = 1
+
+[node name="heart2" type="TextureRect" parent="Scene/HeartHealth/HBoxContainer" unique_id=95623042]
+custom_minimum_size = Vector2(40, 35)
+custom_maximum_size = Vector2(45, 35)
+layout_mode = 2
+texture = ExtResource("4_3wy1v")
+expand_mode = 1
+
+[node name="heart3" type="TextureRect" parent="Scene/HeartHealth/HBoxContainer" unique_id=1015394691]
+custom_minimum_size = Vector2(40, 35)
+custom_maximum_size = Vector2(45, 35)
+layout_mode = 2
+texture = ExtResource("4_3wy1v")
+expand_mode = 1
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=945506084]
 
