@@ -125,7 +125,7 @@ script = ExtResource("2_xwkvk")
 shape = SubResource("CircleShape2D_s4s1w")
 
 [node name="OnFloor" type="RayCast2D" parent="Scene/CharacterBody2D" unique_id=1858477538]
-target_position = Vector2(-0.70703125, 37.993423)
+target_position = Vector2(0, 31)
 
 [node name="Camera2D" type="Camera2D" parent="Scene/CharacterBody2D" unique_id=760465680]
 
