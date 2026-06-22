@@ -3,130 +3,87 @@ using System;
 
 public partial class PlayerController : RigidBody2D
 {
-	// TO-DO: make the player slow when charging up
-	private const float MAX_SPIN = 0.4f;
-	private const float LAUNCH_MAX_SPEED = 1000.0f;
-	private const float JUMP_FORCE = -600.0f;
-	private const float VERTICAL_BOOST_MULTIPLIER = 1000f;
-	private AnimatedSprite2D Sprite;
-	private float SpinSpeed = 0;
-	private RayCast2D OnFloor;
-	private const double MAX_CHARGE_TIME = 1.0f;
-	private double ChargeTimer = 0;
-	private float SPIN_ACCEL = (float)(MAX_SPIN / MAX_CHARGE_TIME);
-	private double ChargeUpInterpolant;
-	private float HeldDirection;
+    // TO-DO: make the player slow when charging up
+    private const float MAX_SPIN = 0.4f;
+    private const float LAUNCH_MAX_SPEED = 1000.0f;
+    private const float JUMP_FORCE = -600.0f;
+    private const float VERTICAL_BOOST_MULTIPLIER = 5000f;
+
+	private Sprite2D Sprite;
+	private AnimationPlayer an;
+	
+	private RayCast2D floorRaycast;
+	private const float CHARGE_RATE = 20.0f;
+	private const float DECHARGE_RATE = 200.0f;
+	private double NormalisedCharge = 0;
 	private const int SlowestFPS = 6;
 	private const int FastestFPS = 24;
-	private bool InAir;
-	private ProgressBar LaunchBar;
 
-	public override void _Ready() {
-		OnFloor = GetNode<RayCast2D>("OnFloor");
-		Sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
-		Sprite.SpriteFrames.SetAnimationSpeed("default", SlowestFPS);
-		LaunchBar = GetNode<ProgressBar>("LaunchBar");
-		LaunchBar.MaxValue = 1.0;
-		LaunchBar.Value = 0.0;
-		LaunchBar.Visible = false;
+	public override void _Ready()
+	{
+		floorRaycast = GetNode<RayCast2D>("OnFloor");
+		Sprite = GetNode<Sprite2D>("Sprite2D");
+		// Sprite.SpriteFrames.SetAnimationSpeed("default", SlowestFPS);
+
+		an = GetNode<AnimationPlayer>("AnimationPlayer");
 	}
 
 	public override void _PhysicsProcess(double delta)
 	{
-		float direction = Input.GetAxis("ui_left", "ui_right");
+		int direction = MathF.Sign(Input.GetAxis("ui_left", "ui_right"));
 
-		OnFloor.Rotation = -Rotation;
-
-		// if we FELL to the ground, not as we leave it
-		if (OnFloor.IsColliding() && InAir && LinearVelocity.Y > 0)
+		if (direction != 0)
 		{
-			InAir = false;
-			ChargeUpInterpolant = 0;
-			LaunchBar.Value = 0;
-			Sprite.SpriteFrames.SetAnimationSpeed("default", SlowestFPS);
-			GD.Print("touched ground");
+			Sprite.FlipH = direction == -1;
 		}
 
-		if (!InAir)
+		Boolean isOnFloor = floorRaycast.IsColliding();
+
+		floorRaycast.Rotation = -Rotation;
+
+		if (isOnFloor)
 		{
 
-			if (Input.IsActionJustPressed("ui_left") || Input.IsActionJustPressed("ui_right"))
-			{
-				ChargeTimer = 0;
-				HeldDirection = direction;
-			}
-
-			// if released, launch
-			if (Input.IsActionJustReleased("ui_left") || Input.IsActionJustReleased("ui_right"))
+			if (direction == 0)
 			{
 				LinearVelocity = LinearVelocity with
 				{
-					X = LinearVelocity.X + HeldDirection * (float)ChargeUpInterpolant * LAUNCH_MAX_SPEED,
-					Y = -(float)ChargeUpInterpolant * VERTICAL_BOOST_MULTIPLIER
+					X = LinearVelocity.X + (float)NormalisedCharge * LAUNCH_MAX_SPEED,
+					Y = -MathF.Abs((float)NormalisedCharge) * VERTICAL_BOOST_MULTIPLIER
 				};
 
-				GD.Print("direction released " + LinearVelocity.ToString());
-				GD.Print("charge proportion " + (float)ChargeUpInterpolant);
-
-				InAir = true;
-				LaunchBar.Visible = false;
+                if (NormalisedCharge != 0) {
+                    AngularVelocity += (float)NormalisedCharge * 5;
+                } else {
+                    AngularVelocity -= 0.5f * AngularVelocity * Rotation;
+                }
+                
+                NormalisedCharge = 0;
+            }
+            else
+            {
+				LinearVelocity = LinearVelocity with {
+					X = Mathf.Lerp(LinearVelocity .X, 0, MathF.Abs((float)NormalisedCharge))
+				};
+			
+				NormalisedCharge = Mathf.Clamp(Mathf.Lerp(NormalisedCharge, direction, delta * CHARGE_RATE), -1, 1);
+				Rotation = Mathf.LerpAngle(Rotation, -0.5f * direction, 0.1f);
 			}
 
-			// if the button is held, spin up that direction
-			if (Input.IsActionPressed("ui_left") || Input.IsActionPressed("ui_right"))
+			if (Input.IsActionJustPressed("ui_accept"))
 			{
-				if (ChargeTimer < MAX_CHARGE_TIME)
+				LinearVelocity = LinearVelocity with
 				{
-					// uhhh??
-					//SpinSpeed += direction * SPIN_ACCEL * (float)delta;
-					//SpinSpeed = Mathf.Clamp(SpinSpeed, -MAX_SPIN, MAX_SPIN);
-					LinearVelocity = LinearVelocity.Lerp(Vector2.Zero, (float)ChargeUpInterpolant);
-					ChargeTimer += delta;
-					ChargeUpInterpolant = ChargeTimer / MAX_CHARGE_TIME;
-					LaunchBar.Visible = true;
-					LaunchBar.Value = ChargeUpInterpolant;
-					GD.Print("spinning up");
-				}
-				else
-				{
-					ChargeTimer = MAX_CHARGE_TIME;
-				}
-
-				GD.Print("direction held, spin speed " + SpinSpeed.ToString() + " charge timer " + ChargeTimer);
-			}
-			else
-			{
-				if (OnFloor.IsColliding())
-				{
-					SpinSpeed = Mathf.Lerp(SpinSpeed, 0, 0.07f);
-					//GD.Print("slowing down, spin speed is " + SpinSpeed.ToString());
-				}
+					X = LinearVelocity.X,
+					Y = JUMP_FORCE
+				};
 			}
 
+			an.SpeedScale = (float)NormalisedCharge * 10;		
+
+			// Sprite.SpriteFrames.SetAnimationSpeed("default", Mathf.Lerp(SlowestFPS, FastestFPS, Mathf.Abs(NormalisedCharge)));
 		}
 
-		if (Input.IsActionJustPressed("ui_accept") && OnFloor.IsColliding())
-		{
-			LinearVelocity = LinearVelocity with
-			{
-				X = LinearVelocity.X,
-				Y = JUMP_FORCE
-			};
-		}
 
-		SpinSpeed = (float)ChargeUpInterpolant * MAX_SPIN;
-
-		if (!InAir)
-		{
-			GD.Print("spinning at " + SpinSpeed.ToString());
-			GD.Print(HeldDirection.ToString());
-			Sprite.SpriteFrames.SetAnimationSpeed("default", Mathf.Lerp(SlowestFPS, FastestFPS, ChargeUpInterpolant));
-			//Sprite.Rotation += HeldDirection * SpinSpeed;
-		}
-
-		GD.Print(Sprite.SpriteFrames.GetAnimationSpeed("default").ToString());
-		((ShaderMaterial)Sprite.Material).SetShaderParameter("interpolant", ChargeUpInterpolant);
-
-		//Sprite.Modulate = InAir ? new Color(0, 0, 1) : new Color(0, 1, 0);
 	}
 }
