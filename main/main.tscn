@@ -444,6 +444,7 @@ position = Vector2(300, 0)
 rotation = -0.018606728
 gravity_scale = 0.5
 inertia = 8.0
+lock_rotation = true
 linear_damp = 1.0
 script = ExtResource("2_xwkvk")
 

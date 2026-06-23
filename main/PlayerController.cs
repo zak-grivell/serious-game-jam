@@ -19,13 +19,14 @@ public partial class PlayerController : RigidBody2D
 	private const float CHARGE_RATE = 20.0f;
 	private const float DECHARGE_RATE = 200.0f;
 	private double NormalisedCharge = 0;
-	private const int SlowestFPS = 1;
-	private const int FastestFPS = 1;
+	private const int SlowestFPS = 6;
+	private const int FastestFPS = 24;
 	private ProgressBar LaunchBar;
 	private bool CanDamage => Mathf.Abs((float)NormalisedCharge) > 0.99;
 	private const double FLAME_FADE_IN_TIME = 0.8;
 	private double FlameFadeInTimer = 0;
 	private bool WasOnFloorLastFrame;
+	private int HeldDirection;
 	// line above is for launch bar
 
 	public override void _Ready()
@@ -49,6 +50,7 @@ public partial class PlayerController : RigidBody2D
 		if (direction != 0)
 		{
 			Sprite.FlipH = direction == -1;
+			HeldDirection = direction;
 		}
 
 		Boolean isOnFloor = floorRaycast.IsColliding();
@@ -62,7 +64,7 @@ public partial class PlayerController : RigidBody2D
 
 		if (!isOnFloor)
 		{
-			Sprite.Rotation = MathUtils.VectorToAngle(LinearVelocity) + Mathf.Pi;
+			//Sprite.Rotation = MathUtils.VectorToAngle(LinearVelocity) + Mathf.Pi;
 		}
 
 		bool isLaunch = !isPressed && NormalisedCharge != 0;
@@ -74,11 +76,12 @@ public partial class PlayerController : RigidBody2D
 			LinearVelocity = LinearVelocity with
 			{
 				X = LinearVelocity.X + (float)NormalisedCharge * LAUNCH_MAX_SPEED,
-				Y = -MathF.Abs((float)NormalisedCharge) * VERTICAL_BOOST_MULTIPLIER
+				Y = HeightFromLaunch(NormalisedCharge)
 			};
 
 			// AngularVelocity += (float)NormalisedCharge * 5; the spinnies
 
+			Rotation = MathUtils.VectorToAngle(LinearVelocity) - HeldDirection * MathF.PI / 2;
 			NormalisedCharge = 0;
 			LaunchBar.Value = 0;
 			LaunchBar.Visible = false;
@@ -91,7 +94,7 @@ public partial class PlayerController : RigidBody2D
 			};
 
 			NormalisedCharge = Mathf.Clamp(Mathf.Lerp(NormalisedCharge, direction, delta * CHARGE_RATE), -1, 1);
-			// Rotation = Mathf.LerpAngle(Rotation, -0.5f * direction, 0.1f); dunno if we want the rotation
+			Rotation = Mathf.LerpAngle(Rotation, 0, 0.1f);
 			LaunchBar.Visible = true;
 			LaunchBar.Value = MathF.Abs((float)NormalisedCharge);
 		}
@@ -120,8 +123,7 @@ public partial class PlayerController : RigidBody2D
 		(Sprite.Material as ShaderMaterial).SetShaderParameter("FrameCount", frameCount);
 		(Sprite.Material as ShaderMaterial).SetShaderParameter("FlameOpacity", flameOpacity);
 
-		GD.Print((Sprite.Material as ShaderMaterial).GetShaderParameter("FrameCount"));
-		GD.Print("flame opacity = " + (Sprite.Material as ShaderMaterial).GetShaderParameter("FlameOpacity"));
+		GD.Print(MathUtils.VectorToAngle(LinearVelocity).ToString());
 
 		WasOnFloorLastFrame = isOnFloor;
 	}
@@ -130,5 +132,10 @@ public partial class PlayerController : RigidBody2D
 	{
 		NormalisedCharge = 0;
 		FlameFadeInTimer = 0;
+	}
+
+	public float HeightFromLaunch(double interpolant)
+	{
+		return -MathF.Abs((float)interpolant) * VERTICAL_BOOST_MULTIPLIER;
 	}
 }
