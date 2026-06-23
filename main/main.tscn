@@ -525,4 +525,3 @@ text = "DAMAGE"
 script = ExtResource("6_grrlh")
 
 [connection signal="pressed" from="CanvasLayer2/PanelContainer/DamageButton" to="CanvasLayer2/PanelContainer/DamageButton" method="_on_pressed"]
-onload = false
