@@ -4,21 +4,12 @@
 [ext_resource type="Script" uid="uid://bpkn7kbddrque" path="res://main/PlayerController.cs" id="2_xwkvk"]
 [ext_resource type="Script" uid="uid://dufetdr1vqdac" path="res://main/HeartHealth.cs" id="3_4dugh"]
 [ext_resource type="Texture2D" uid="uid://ds45d7lj8xnxq" path="res://main/assets/PlayerAnimation.png" id="3_67ri8"]
-[ext_resource type="Script" uid="uid://dufetdr1vqdac" path="res://main/HeartHealth.cs" id="3_4dugh"]
-[ext_resource type="Texture2D" uid="uid://ds45d7lj8xnxq" path="res://main/assets/PlayerAnimation.png" id="3_67ri8"]
 [ext_resource type="Script" uid="uid://soq3nlg8vcsh" path="res://scripts/life/HealthComp.cs" id="3_grrlh"]
 [ext_resource type="Texture2D" uid="uid://d0hmedb88oefy" path="res://images/heart.png" id="4_3wy1v"]
-
-
-[ext_resource type="Shader" uid="uid://cjm6tultyxsi2" path="res://main/fireball.tres" id="2_67ri8"]
-
-[ext_resource type="Texture2D" uid="uid://d0hmedb88oefy" path="res://images/heart.png" id="4_3wy1v"]
-[ext_resource type="Texture2D" uid="uid://y2a3wbxh3pik" path="res://images/placeholder-tilesheet.png" id="7_3wy1v"]
-
-
 [ext_resource type="PackedScene" uid="uid://c201kqm66rjry" path="res://menus/pause-menu/pause_menu.tscn" id="4_c651c"]
 [ext_resource type="PackedScene" uid="uid://70qxxcxf1xne" path="res://cutscenes/cutscene.tscn" id="5_3wy1v"]
 [ext_resource type="Script" uid="uid://cqhm4xewegeai" path="res://main/DamageButton.cs" id="6_grrlh"]
+[ext_resource type="Texture2D" uid="uid://y2a3wbxh3pik" path="res://images/placeholder-tilesheet.png" id="7_3wy1v"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c651c"]
 size = Vector2(633, 66)
@@ -404,6 +395,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Scene" type="Node2D" parent="." unique_id=1080076457]
+
 [node name="StaticBody2D" type="StaticBody2D" parent="Scene" unique_id=153065952]
 position = Vector2(306, 203)
 
@@ -421,6 +413,7 @@ position = Vector2(300, 0)
 rotation = -0.018606728
 gravity_scale = 0.5
 inertia = 8.0
+lock_rotation = true
 linear_damp = 1.0
 script = ExtResource("2_xwkvk")
 
@@ -428,7 +421,7 @@ script = ExtResource("2_xwkvk")
 shape = SubResource("CircleShape2D_s4s1w")
 
 [node name="OnFloor" type="RayCast2D" parent="Scene/CharacterBody2D" unique_id=1858477538]
-target_position = Vector2(0, 31)
+target_position = Vector2(-0.7814331, 41.99272)
 
 [node name="Camera2D" type="Camera2D" parent="Scene/CharacterBody2D" unique_id=760465680]
 
