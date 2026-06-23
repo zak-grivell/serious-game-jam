@@ -3,6 +3,9 @@ using System;
 
 public partial class HealthComp : Node
 {
+	// signals when health is changed for hearts
+	public event Action<int> HealthChanged;
+	
 	[Export] private int maxHp;
 	private int hp;
 
@@ -16,6 +19,7 @@ public partial class HealthComp : Node
 	{
 		hp = maxHp;
 		currDmgITime = 0.0f;
+		HealthChanged?.Invoke(hp);
 	}
 
 	public override void _Process(double delta) {
@@ -27,6 +31,7 @@ public partial class HealthComp : Node
 		{
 			this.hp -= dmg;
 			this.currDmgITime = dmgITime;
+			HealthChanged?.Invoke(hp);
 			if (this.hp <= 0) deathComp.Die();
 		}
 	}

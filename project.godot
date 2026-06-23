@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="New Game Project"
+config/name="gamejam"
 run/main_scene="uid://c8tesuotehef3"
 config/features=PackedStringArray("4.7", "C#", "GL Compatibility")
 
@@ -24,6 +24,10 @@ window/stretch/aspect="expand"
 [dotnet]
 
 project/assembly_name="New Game Project"
+
+[global_group]
+
+player=""
 
 [input]
 
