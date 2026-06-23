@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public inteface IAttack
+public interface IAttack
 {
 	public void Attack();
 }

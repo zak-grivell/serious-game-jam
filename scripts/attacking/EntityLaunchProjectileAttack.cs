@@ -6,7 +6,7 @@ public partial class EntityLaunchProjectileAttack : ProjectileAttack
 	[Export] private Node2D originNode;
 	
 	// Awful design but i can't be bothered to improve it
-	public void Attack() {
+	public override void Attack() {
 		SetOrigin(originNode.Position);
 		base.Attack();
 	}

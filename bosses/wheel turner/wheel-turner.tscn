@@ -1,3 +1,8 @@
 [gd_scene format=3 uid="uid://bcwqlo55jd83w"]
 
+[ext_resource type="Script" uid="uid://wt6prnlcoja" path="res://scripts/attacking/EntityLaunchProjectileAttack.cs" id="1_tgv1l"]
+
 [node name="WheelTurner" type="Node2D" unique_id=1130631629]
+
+[node name="TestAttack" type="Node" parent="." unique_id=1348791221]
+script = ExtResource("1_tgv1l")
