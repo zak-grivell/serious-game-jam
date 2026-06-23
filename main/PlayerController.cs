@@ -1,6 +1,7 @@
 using Godot;
 using NewGameProject;
 using System;
+using System.Transactions;
 
 public partial class PlayerController : RigidBody2D
 {
@@ -18,24 +19,26 @@ public partial class PlayerController : RigidBody2D
 	private const float CHARGE_RATE = 20.0f;
 	private const float DECHARGE_RATE = 200.0f;
 	private double NormalisedCharge = 0;
-	private const int SlowestFPS = 6;
-	private const int FastestFPS = 24;
+	private const int SlowestFPS = 1;
+	private const int FastestFPS = 1;
 	private ProgressBar LaunchBar;
+	private bool CanDamage => Mathf.Abs((float)NormalisedCharge) > 0.99;
+	private const double FLAME_FADE_IN_TIME = 0.8;
+	private double FlameFadeInTimer = 0;
+	private bool WasOnFloorLastFrame;
 	// line above is for launch bar
 
 	public override void _Ready()
 	{
 		floorRaycast = GetNode<RayCast2D>("OnFloor");
 		Sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
-		// Sprite.SpriteFrames.SetAnimationSpeed("default", SlowestFPS);
-
-		an = GetNode<AnimationPlayer>("AnimationPlayer");
+		Sprite.SpriteFrames.SetAnimationSpeed("default", SlowestFPS);
 
 		LaunchBar = GetNode<ProgressBar>("LaunchBar");
 		LaunchBar.MaxValue = 1.0;
 		LaunchBar.Value = 0.0;
 		LaunchBar.Visible = false;
-
+		FlameFadeInTimer = 0;
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -50,17 +53,22 @@ public partial class PlayerController : RigidBody2D
 
 		Boolean isOnFloor = floorRaycast.IsColliding();
 
+		if (isOnFloor && !WasOnFloorLastFrame)
+		{
+			Land();
+		}
+		
 		floorRaycast.Rotation = -Rotation;
 
 		if (!isOnFloor)
 		{
 			Sprite.Rotation = MathUtils.VectorToAngle(LinearVelocity) + Mathf.Pi;
-			return;
 		}
 
 		bool isLaunch = !isPressed && NormalisedCharge != 0;
 		bool isCharging = isPressed;
 
+		
 		if (isLaunch)
 		{
 			LinearVelocity = LinearVelocity with
@@ -97,17 +105,30 @@ public partial class PlayerController : RigidBody2D
 			};
 		}
 
-		//idk if i should be doing this every frame but whatever
-		int currentFrame = Sprite.Frame;
-		int frameCount = Sprite.SpriteFrames.GetFrameCount("default");
-		float flameOpacity = MathUtils.CubicEasing(Mathf.Abs((float)NormalisedCharge));
+		if (CanDamage)
+		{
+			FlameFadeInTimer += delta;
+			FlameFadeInTimer = Math.Clamp(FlameFadeInTimer, 0, FLAME_FADE_IN_TIME);
+		}
 
-		(Sprite.Material as ShaderMaterial).SetShaderParameter("CurrentFrame", currentFrame);
+		Sprite.SpriteFrames.SetAnimationSpeed("default", Mathf.Lerp(SlowestFPS, FastestFPS, Mathf.Abs(NormalisedCharge)));
+		
+		//idk if i should be doing this every frame but whatever
+		int frameCount = Sprite.SpriteFrames.GetFrameCount("default");
+		float flameOpacity = CanDamage ? MathUtils.CubicEasing((float)(FlameFadeInTimer / FLAME_FADE_IN_TIME)) : 0;
+
 		(Sprite.Material as ShaderMaterial).SetShaderParameter("FrameCount", frameCount);
 		(Sprite.Material as ShaderMaterial).SetShaderParameter("FlameOpacity", flameOpacity);
 
-		GD.Print((Sprite.Material as ShaderMaterial).GetShaderParameter("CurrentFrame"));
 		GD.Print((Sprite.Material as ShaderMaterial).GetShaderParameter("FrameCount"));
 		GD.Print("flame opacity = " + (Sprite.Material as ShaderMaterial).GetShaderParameter("FlameOpacity"));
+
+		WasOnFloorLastFrame = isOnFloor;
+	}
+
+	public void Land()
+	{
+		NormalisedCharge = 0;
+		FlameFadeInTimer = 0;
 	}
 }

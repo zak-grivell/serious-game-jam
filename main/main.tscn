@@ -62,7 +62,6 @@ gradient = SubResource("Gradient_na0o7")
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0i4oc"]
 shader = ExtResource("2_67ri8")
 shader_parameter/FrameCount = 6
-shader_parameter/CurrentFrame = 0
 shader_parameter/Speed = Vector2(1, 0)
 shader_parameter/Texture1 = ExtResource("3_na0o7")
 shader_parameter/Texture2 = SubResource("GradientTexture2D_thpiw")
@@ -117,7 +116,7 @@ animations = [{
 }],
 "loop": 1,
 "name": &"default",
-"speed": 5.0
+"speed": 1.0
 }]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kfbq2"]
@@ -473,6 +472,7 @@ show_percentage = false
 material = SubResource("ShaderMaterial_0i4oc")
 scale = Vector2(0.21013336, 0.20830898)
 sprite_frames = SubResource("SpriteFrames_g8iiu")
+autoplay = "default"
 frame_progress = 0.00749064
 
 [node name="HealthComp" type="Node2D" parent="Scene/CharacterBody2D" unique_id=414462644]
