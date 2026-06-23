@@ -14,9 +14,13 @@ public partial class HeartHealth : CanvasLayer
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-		heart1 = GetNode<TextureRect>("HBoxContainer/Heart1");
-		heart2 = GetNode<TextureRect>("HBoxContainer/Heart2");
-		heart3 = GetNode<TextureRect>("HBoxContainer/Heart3");
+		heart1 = GetNode<TextureRect>("HBoxContainer/heart1");
+		heart2 = GetNode<TextureRect>("HBoxContainer/heart2");
+		heart3 = GetNode<TextureRect>("HBoxContainer/heart3");
+		var player = GetTree().GetFirstNodeInGroup("player");
+		health = player.GetNode<HealthComp>("HealthComp");
+		health.HealthChanged += UpdateHearts;
+		UpdateHearts(health.GetHp());
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
