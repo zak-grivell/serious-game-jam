@@ -19,5 +19,10 @@ namespace NewGameProject
             }
             else return output + Mathf.Pi * 2;
         }
+
+        public static float CubicEasing(float x)
+        {
+            return x * x * x;
+        }
     }
 }
