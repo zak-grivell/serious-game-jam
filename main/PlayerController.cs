@@ -26,7 +26,7 @@ public partial class PlayerController : RigidBody2D
 	private const double FLAME_FADE_IN_TIME = 0.8;
 	private double FlameFadeInTimer = 0;
 	private bool WasOnFloorLastFrame;
-	private int HeldDirection;
+	private int FlightDirection;
 	// line above is for launch bar
 
 	public override void _Ready()
@@ -47,11 +47,10 @@ public partial class PlayerController : RigidBody2D
 		int direction = MathF.Sign(Input.GetAxis("ui_left", "ui_right"));
 		bool isPressed = Input.IsActionPressed("ui_left") || Input.IsActionPressed("ui_right");
 
-		if (direction != 0)
-		{
-			Sprite.FlipH = direction == -1;
-			HeldDirection = direction;
-		}
+		//if (direction != 0)
+		//{
+		//	Sprite.FlipH = direction == -1;
+		//}
 
 		Boolean isOnFloor = floorRaycast.IsColliding();
 
@@ -60,6 +59,12 @@ public partial class PlayerController : RigidBody2D
 			Land();
 		}
 		
+		if (isPressed && isOnFloor)
+		{
+			FlightDirection = direction;
+			Sprite.FlipH = direction == -1;
+		}
+
 		floorRaycast.Rotation = -Rotation;
 
 		if (!isOnFloor)
@@ -68,10 +73,10 @@ public partial class PlayerController : RigidBody2D
 		}
 
 		bool isLaunch = !isPressed && NormalisedCharge != 0;
-		bool isCharging = isPressed;
+		bool isCharging = isPressed && isOnFloor;
 
 		
-		if (isLaunch)
+		if (isLaunch && isOnFloor)
 		{
 			LinearVelocity = LinearVelocity with
 			{
@@ -81,8 +86,8 @@ public partial class PlayerController : RigidBody2D
 
 			// AngularVelocity += (float)NormalisedCharge * 5; the spinnies
 
-			Rotation = MathUtils.VectorToAngle(LinearVelocity) - HeldDirection * MathF.PI / 2;
-			NormalisedCharge = 0;
+			Rotation = MathUtils.VectorToAngle(LinearVelocity) - FlightDirection * MathF.PI / 2;
+			//NormalisedCharge = 0;
 			LaunchBar.Value = 0;
 			LaunchBar.Visible = false;
 		}
