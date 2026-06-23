@@ -36,4 +36,5 @@ public partial class HealthComp : Node
 		}
 	}
 	public int GetHp() => hp;
+	public int GetMaxHp() => maxHp;
 }
