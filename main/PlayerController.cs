@@ -4,22 +4,24 @@ using System;
 
 public partial class PlayerController : RigidBody2D
 {
-	// TO-DO: make the player slow when charging up
-	private const float MAX_SPIN = 0.4f;
-	private const float LAUNCH_MAX_SPEED = 1000.0f;
-	private const float JUMP_FORCE = -600.0f;
-	private const float VERTICAL_BOOST_MULTIPLIER = 500f;
+	[Export]
+	private float LAUNCH_MAX_SPEED = 1000.0f;
+	[Export]
+	private float VERTICAL_BOOST_MULTIPLIER = 500f;
+	[Export]
+	private float CHARGE_RATE = 20.0f;
+	[Export]
+	private int SlowestFPS = 6;
+	[Export]
+	private int FastestFPS = 24;
 
 	//private Sprite2D Sprite;
 	private AnimatedSprite2D Sprite;
 	private AnimationPlayer an;
 
 	private RayCast2D floorRaycast;
-	private const float CHARGE_RATE = 20.0f;
-	private const float DECHARGE_RATE = 200.0f;
+
 	private double NormalisedCharge = 0;
-	private const int SlowestFPS = 6;
-	private const int FastestFPS = 24;
 	private ProgressBar LaunchBar;
 	private bool CanDamage => Mathf.Abs((float)NormalisedCharge) > 0.99;
 	private const double FLAME_FADE_IN_TIME = 0.8;
@@ -79,7 +81,7 @@ public partial class PlayerController : RigidBody2D
 		{
 			LinearVelocity = LinearVelocity with
 			{
-				X = LinearVelocity.X + (float)NormalisedCharge * LAUNCH_MAX_SPEED,
+				X = LinearVelocity.X + MathUtils.CubicEasing((float)NormalisedCharge) * LAUNCH_MAX_SPEED,
 				Y = HeightFromLaunch(NormalisedCharge)
 			};
 
@@ -103,14 +105,14 @@ public partial class PlayerController : RigidBody2D
 			LaunchBar.Value = MathF.Abs((float)NormalisedCharge);
 		}
 
-		if (Input.IsActionJustPressed("ui_accept"))
-		{
-			LinearVelocity = LinearVelocity with
-			{
-				X = LinearVelocity.X,
-				Y = JUMP_FORCE
-			};
-		}
+		//if (Input.IsActionJustPressed("ui_accept"))
+		//{
+		//	LinearVelocity = LinearVelocity with
+		//	{
+		//		X = LinearVelocity.X,
+		//		Y = JUMP_FORCE
+		//	};
+		//}
 
 		if (CanDamage)
 		{
