@@ -1,7 +1,6 @@
 using Godot;
 using NewGameProject;
 using System;
-using System.Transactions;
 
 public partial class PlayerController : RigidBody2D
 {
@@ -129,6 +128,8 @@ public partial class PlayerController : RigidBody2D
 		(Sprite.Material as ShaderMaterial).SetShaderParameter("FlameOpacity", flameOpacity);
 
 		WasOnFloorLastFrame = isOnFloor;
+
+		GD.Print(isOnFloor);
 	}
 
 	public void Land()

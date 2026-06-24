@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bsr040tqx1sx0" path="res://transition/transition.tscn" id="1_53q0u"]
 [ext_resource type="Script" uid="uid://di2rr4m6vn247" path="res://main/Background.cs" id="1_na0o7"]
+[ext_resource type="Script" uid="uid://di2rr4m6vn247" path="res://main/Background.cs" id="1_na0o7"]
 [ext_resource type="Shader" uid="uid://cjm6tultyxsi2" path="res://main/fireball.tres" id="2_67ri8"]
 [ext_resource type="Script" uid="uid://bpkn7kbddrque" path="res://main/PlayerController.cs" id="2_xwkvk"]
 [ext_resource type="Script" uid="uid://dufetdr1vqdac" path="res://main/HeartHealth.cs" id="3_4dugh"]
@@ -13,7 +14,19 @@
 [ext_resource type="PackedScene" uid="uid://70qxxcxf1xne" path="res://cutscenes/cutscene.tscn" id="5_3wy1v"]
 [ext_resource type="Texture2D" uid="uid://bg4ybrqj55stw" path="res://images/tilemap.png" id="6_fwcvl"]
 [ext_resource type="Script" uid="uid://cqhm4xewegeai" path="res://main/DamageButton.cs" id="6_grrlh"]
+[ext_resource type="Texture2D" uid="uid://y2a3wbxh3pik" path="res://images/placeholder-tilesheet.png" id="7_3wy1v"]
 [ext_resource type="Shader" uid="uid://jr4yliff40d6" path="res://main/background.gdshader" id="9_na0o7"]
+[ext_resource type="Texture2D" uid="uid://b7s83eqa3bsdm" path="res://main/assets/hampter-removebg-preview.png" id="11_5xyti"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c651c"]
+size = Vector2(633, 66)
+
+[sub_resource type="Gradient" id="Gradient_c651c"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_buqre"]
+gradient = SubResource("Gradient_c651c")
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 1)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s4s1w"]
 radius = 27.000004
@@ -175,6 +188,25 @@ shader_parameter/upperSkyGradient = SubResource("GradientTexture1D_73k8k")
 shader_parameter/lowerSkyGradient = SubResource("GradientTexture1D_5xyti")
 shader_parameter/DayProgress = 0.0
 
+[sub_resource type="Gradient" id="Gradient_5xyti"]
+colors = PackedColorArray(0, 0.3254902, 0.6156863, 1, 0.105882354, 0.20392157, 0.44705883, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5xyti"]
+gradient = SubResource("Gradient_5xyti")
+
+[sub_resource type="Gradient" id="Gradient_n3o0a"]
+colors = PackedColorArray(0, 0.4509804, 0.9372549, 1, 0.039215688, 0.06666667, 0.23921569, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_73k8k"]
+gradient = SubResource("Gradient_n3o0a")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fwcvl"]
+shader = ExtResource("9_na0o7")
+shader_parameter/sunPosition = Vector2(0, 0)
+shader_parameter/upperSkyGradient = SubResource("GradientTexture1D_73k8k")
+shader_parameter/lowerSkyGradient = SubResource("GradientTexture1D_5xyti")
+shader_parameter/DayProgress = 0.0
+
 [node name="Main" type="Control" unique_id=78732012]
 layout_mode = 3
 anchors_preset = 15
@@ -194,7 +226,6 @@ position = Vector2(300, 0)
 rotation = -0.018606728
 gravity_scale = 0.5
 inertia = 8.0
-lock_rotation = true
 linear_damp = 1.0
 script = ExtResource("2_xwkvk")
 
@@ -290,7 +321,19 @@ offset_bottom = 358.84
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_na0o7")
-DayProgressRate = 0.5
+DayProgressRate = 0.035
+OrbitHorizRadius = 730.0
+OrbitVertRadius = 400.0
+
+[node name="Sun" type="Sprite2D" parent="Background/ColorRect" unique_id=1996083118]
+position = Vector2(-226.75, 211.5)
+scale = Vector2(0.11941747, 0.12603305)
+texture = ExtResource("11_5xyti")
+
+[node name="Moon" type="Sprite2D" parent="Background/ColorRect" unique_id=308072288]
+position = Vector2(-159, 143)
+scale = Vector2(0.11941747, 0.12603305)
+texture = ExtResource("11_5xyti")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=945506084]
 
