@@ -16,7 +16,7 @@ public partial class PlayerController : RigidBody2D
 	private AnimationPlayer an;
 
 	private RayCast2D floorRaycast;
-	private const float CHARGE_RATE = 20.0f;
+	private const float CHARGE_RATE = 5.0f;
 	private const float DECHARGE_RATE = 200.0f;
 	private double NormalisedCharge = 0;
 	private const int SlowestFPS = 6;
@@ -112,7 +112,7 @@ public partial class PlayerController : RigidBody2D
 			LaunchBar.Value = MathF.Abs((float)NormalisedCharge);
 		}
 
-		if (Input.IsActionJustPressed("ui_accept"))
+		if (Input.IsActionJustPressed("ui_accept") && isOnFloor == true)
 		{
 			LinearVelocity = LinearVelocity with
 			{
