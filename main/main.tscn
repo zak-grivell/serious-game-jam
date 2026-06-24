@@ -14,6 +14,7 @@
 [ext_resource type="Script" uid="uid://cqhm4xewegeai" path="res://main/DamageButton.cs" id="6_grrlh"]
 [ext_resource type="Texture2D" uid="uid://y2a3wbxh3pik" path="res://images/placeholder-tilesheet.png" id="7_3wy1v"]
 [ext_resource type="Shader" uid="uid://jr4yliff40d6" path="res://main/background.gdshader" id="9_na0o7"]
+[ext_resource type="Texture2D" uid="uid://b7s83eqa3bsdm" path="res://main/assets/hampter-removebg-preview.png" id="11_5xyti"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c651c"]
 size = Vector2(633, 66)
@@ -562,6 +563,16 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_na0o7")
 DayProgressRate = 0.5
+
+[node name="Sun" type="Sprite2D" parent="Background/ColorRect" unique_id=1996083118]
+position = Vector2(-226.75, 211.5)
+scale = Vector2(0.11941747, 0.12603305)
+texture = ExtResource("11_5xyti")
+
+[node name="Moon" type="Sprite2D" parent="Background/ColorRect" unique_id=308072288]
+position = Vector2(-159, 143)
+scale = Vector2(0.11941747, 0.12603305)
+texture = ExtResource("11_5xyti")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=945506084]
 
