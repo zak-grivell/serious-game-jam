@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://bsr040tqx1sx0" path="res://transition/transition.tscn" id="1_53q0u"]
 [ext_resource type="Shader" uid="uid://cjm6tultyxsi2" path="res://main/fireball.tres" id="2_67ri8"]
+[ext_resource type="Script" uid="uid://bg1hq55hr84mo" path="res://scripts/camera/CameraMovement.cs" id="2_na0o7"]
 [ext_resource type="Script" uid="uid://bpkn7kbddrque" path="res://main/PlayerController.cs" id="2_xwkvk"]
 [ext_resource type="Script" uid="uid://dufetdr1vqdac" path="res://main/HeartHealth.cs" id="3_4dugh"]
 [ext_resource type="Texture2D" uid="uid://ds45d7lj8xnxq" path="res://main/assets/PlayerAnimation.png" id="3_67ri8"]
@@ -454,7 +455,10 @@ shape = SubResource("CircleShape2D_s4s1w")
 [node name="OnFloor" type="RayCast2D" parent="Scene/CharacterBody2D" unique_id=1858477538]
 target_position = Vector2(0, 31)
 
-[node name="Camera2D" type="Camera2D" parent="Scene/CharacterBody2D" unique_id=760465680]
+[node name="Camera2D" type="Camera2D" parent="Scene/CharacterBody2D" unique_id=760465680 groups=["camera"]]
+position_smoothing_enabled = true
+position_smoothing_speed = 15.0
+script = ExtResource("2_na0o7")
 
 [node name="LaunchBar" type="ProgressBar" parent="Scene/CharacterBody2D" unique_id=1499505273]
 custom_minimum_size = Vector2(70, 13)

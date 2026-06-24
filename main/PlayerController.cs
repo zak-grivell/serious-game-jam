@@ -27,7 +27,9 @@ public partial class PlayerController : RigidBody2D
 	private double FlameFadeInTimer = 0;
 	private bool WasOnFloorLastFrame;
 	private int FlightDirection;
-	// line above is for launch bar
+	private CameraMovement camera;
+	private HealthComp health;
+	private int lastHealth;
 
 	public override void _Ready()
 	{
@@ -40,6 +42,12 @@ public partial class PlayerController : RigidBody2D
 		LaunchBar.Value = 0.0;
 		LaunchBar.Visible = false;
 		FlameFadeInTimer = 0;
+		GD.Print("HI");
+		camera = GetNode<CameraMovement>("Camera2D");
+		GD.Print("Camera found: " + camera);
+		health = GetNode<HealthComp>("HealthComp");
+		lastHealth = health.GetHp();
+		health.HealthChanged += OnHealthChanged;
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -128,7 +136,7 @@ public partial class PlayerController : RigidBody2D
 		(Sprite.Material as ShaderMaterial).SetShaderParameter("FrameCount", frameCount);
 		(Sprite.Material as ShaderMaterial).SetShaderParameter("FlameOpacity", flameOpacity);
 
-		GD.Print(MathUtils.VectorToAngle(LinearVelocity).ToString());
+		// GD.Print(MathUtils.VectorToAngle(LinearVelocity).ToString());
 
 		WasOnFloorLastFrame = isOnFloor;
 	}
@@ -143,4 +151,13 @@ public partial class PlayerController : RigidBody2D
 	{
 		return -MathF.Abs((float)interpolant) * VERTICAL_BOOST_MULTIPLIER;
 	}
+	
+	private void OnHealthChanged(int hp) {
+		if (hp < lastHealth) {
+			GD.Print("SHAKING BITCH");
+			camera?.Shake(25f, 0.5f);
+		}
+		lastHealth = hp;
+	}
+	
 }
