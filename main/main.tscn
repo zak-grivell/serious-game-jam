@@ -165,7 +165,7 @@ texture_region_size = Vector2i(32, 32)
 tile_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 1
 navigation_layer_0/layers = 1
-sources/0 = SubResource("TileSetAtlasSource_kfbq2")
+sources/7 = SubResource("TileSetAtlasSource_fwcvl")
 
 [sub_resource type="Gradient" id="Gradient_5xyti"]
 colors = PackedColorArray(0, 0.3254902, 0.6156863, 1, 0.105882354, 0.20392157, 0.44705883, 1)
