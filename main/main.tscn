@@ -224,10 +224,11 @@ grow_vertical = 2
 [node name="CharacterBody2D" type="RigidBody2D" parent="Scene" unique_id=1599436710 groups=["player"]]
 position = Vector2(300, 0)
 rotation = -0.018606728
-gravity_scale = 0.5
+gravity_scale = 1.061
 inertia = 8.0
 linear_damp = 1.0
 script = ExtResource("2_xwkvk")
+CHARGE_RATE = 10.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Scene/CharacterBody2D" unique_id=1025784810]
 shape = SubResource("CircleShape2D_s4s1w")
