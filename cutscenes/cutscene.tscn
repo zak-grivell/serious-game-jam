@@ -1,6 +1,15 @@
 [gd_scene format=3 uid="uid://70qxxcxf1xne"]
 
 [ext_resource type="Script" uid="uid://drb2w3uq744w3" path="res://cutscenes/Cutscene.cs" id="1_c1036"]
+[ext_resource type="Texture2D" uid="uid://c4o4h66bb626o" path="res://cutscenes/assets/cage_back.png" id="2_wtpm2"]
+[ext_resource type="Texture2D" uid="uid://ny2cdtc06a7u" path="res://cutscenes/assets/cage_forward.png" id="3_6olf4"]
+[ext_resource type="Texture2D" uid="uid://dgajlcmixcvhc" path="res://cutscenes/assets/seeing_ball_from_cage.png" id="4_8n78x"]
+[ext_resource type="Texture2D" uid="uid://cuy8qt544bdld" path="res://cutscenes/assets/thoughts.png" id="5_gw7rv"]
+[ext_resource type="Texture2D" uid="uid://da2yinnlakldj" path="res://cutscenes/assets/idea.png" id="6_vsfwe"]
+[ext_resource type="Texture2D" uid="uid://bfje7q8bd4jim" path="res://cutscenes/assets/sun_vs_moon.png" id="7_6olf4"]
+[ext_resource type="Texture2D" uid="uid://bktskxt43im2g" path="res://cutscenes/assets/level_up_in_ball.png" id="7_bh37h"]
+[ext_resource type="Texture2D" uid="uid://ca2dn1ol5lf0v" path="res://cutscenes/assets/zoomy_front.png" id="8_0h64w"]
+[ext_resource type="Texture2D" uid="uid://bvymadxky4nhw" path="res://cutscenes/assets/zoomy.png" id="9_fcjwx"]
 
 [node name="Cutscene" type="Control" unique_id=829148526]
 layout_mode = 3
@@ -20,32 +29,86 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="A" type="ColorRect" parent="CutScene1" unique_id=1424145559]
+[node name="TextureRect" type="TextureRect" parent="CutScene1" unique_id=1210402782]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(0, 1, 1, 1)
+texture = ExtResource("2_wtpm2")
 
-[node name="B" type="ColorRect" parent="CutScene1" unique_id=739771478]
+[node name="TextureRect3" type="TextureRect" parent="CutScene1" unique_id=294678486]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(1, 0, 1, 1)
+texture = ExtResource("3_6olf4")
 
-[node name="C" type="ColorRect" parent="CutScene1" unique_id=301444205]
+[node name="TextureRect2" type="TextureRect" parent="CutScene1" unique_id=751231957]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-color = Color(1, 1, 0, 1)
+texture = ExtResource("4_8n78x")
+
+[node name="TextureRect4" type="TextureRect" parent="CutScene1" unique_id=993735480]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_gw7rv")
+
+[node name="TextureRect5" type="TextureRect" parent="CutScene1" unique_id=616623507]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_vsfwe")
+
+[node name="TextureRect9" type="TextureRect" parent="CutScene1" unique_id=1817952862]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_6olf4")
+
+[node name="TextureRect6" type="TextureRect" parent="CutScene1" unique_id=220631238]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_bh37h")
+
+[node name="TextureRect7" type="TextureRect" parent="CutScene1" unique_id=1357320645]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_0h64w")
+
+[node name="TextureRect8" type="TextureRect" parent="CutScene1" unique_id=61638722]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_fcjwx")
 
 [node name="D" type="ColorRect" parent="." unique_id=1001271414]
 visible = false
