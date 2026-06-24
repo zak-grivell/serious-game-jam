@@ -9,7 +9,7 @@ public partial class PlayerController : RigidBody2D
 	[Export]
 	private float VERTICAL_BOOST_MULTIPLIER = 500f;
 	[Export]
-	private float CHARGE_RATE = 20.0f;
+	private float CHARGE_RATE = 5.0f;
 	[Export]
 	private int SlowestFPS = 6;
 	[Export]
@@ -26,7 +26,6 @@ public partial class PlayerController : RigidBody2D
 	private AnimationPlayer an;
 
 	private RayCast2D floorRaycast;
-	private const float CHARGE_RATE = 5.0f;
 	private const float DECHARGE_RATE = 200.0f;
 	private double NormalisedCharge = 0;
 	private ProgressBar LaunchBar;

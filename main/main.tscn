@@ -14,19 +14,9 @@
 [ext_resource type="PackedScene" uid="uid://70qxxcxf1xne" path="res://cutscenes/cutscene.tscn" id="5_3wy1v"]
 [ext_resource type="Texture2D" uid="uid://bg4ybrqj55stw" path="res://images/tilemap.png" id="6_fwcvl"]
 [ext_resource type="Script" uid="uid://cqhm4xewegeai" path="res://main/DamageButton.cs" id="6_grrlh"]
-[ext_resource type="Texture2D" uid="uid://y2a3wbxh3pik" path="res://images/placeholder-tilesheet.png" id="7_3wy1v"]
 [ext_resource type="Texture2D" uid="uid://b63f8uvqqyjb" path="res://main/assets/textures/T_1_pixel.jpg" id="7_73k8k"]
-[ext_resource type="Shader" path="res://main/background.gdshader" id="9_na0o7"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_c651c"]
-size = Vector2(633, 66)
-
-[sub_resource type="Gradient" id="Gradient_c651c"]
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_buqre"]
-gradient = SubResource("Gradient_c651c")
-fill_from = Vector2(0, 1)
-fill_to = Vector2(0, 1)
+[ext_resource type="Shader" uid="uid://jr4yliff40d6" path="res://main/background.gdshader" id="9_na0o7"]
+[ext_resource type="Texture2D" uid="uid://dem0b0s5kogty" path="res://main/assets/hampter.jpeg" id="11_5xyti"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s4s1w"]
 radius = 27.000004
@@ -133,44 +123,26 @@ texture = ExtResource("6_fwcvl")
 margins = Vector2i(16, 16)
 separation = Vector2i(32, 32)
 texture_region_size = Vector2i(32, 32)
-
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kfbq2"]
-texture = ExtResource("7_3wy1v")
-texture_region_size = Vector2i(64, 64)
-
 0:0/0 = 0
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 1:0/0 = 0
-1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 2:0/0 = 0
-2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(16, -16, 16, 16, -16, 16)
 3:0/0 = 0
-3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 4:0/0 = 0
-4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, 16, -16, 16)
 0:1/0 = 0
-0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 1:1/0 = 0
 2:1/0 = 0
 3:1/0 = 0
-3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 4:1/0 = 0
-4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 0:2/0 = 0
-0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 1:2/0 = 0
-1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 2:2/0 = 0
-2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 3:2/0 = 0
-3:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 4:2/0 = 0
-4:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
-0:3/0 = 0
-1:3/0 = 0
-1:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 2:3/0 = 0
-2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+1:3/0 = 0
+0:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_bxjk7"]
 tile_size = Vector2i(32, 32)
