@@ -1,15 +1,25 @@
 using Godot;
 using NewGameProject;
 using System;
-using System.Transactions;
 
 public partial class PlayerController : RigidBody2D
 {
-	// TO-DO: make the player slow when charging up
-	private const float MAX_SPIN = 0.4f;
-	private const float LAUNCH_MAX_SPEED = 1000.0f;
-	private const float JUMP_FORCE = -600.0f;
-	private const float VERTICAL_BOOST_MULTIPLIER = 500f;
+	[Export]
+	private float LAUNCH_MAX_SPEED = 1000.0f;
+	[Export]
+	private float VERTICAL_BOOST_MULTIPLIER = 500f;
+	[Export]
+	private float CHARGE_RATE = 20.0f;
+	[Export]
+	private int SlowestFPS = 6;
+	[Export]
+	private int FastestFPS = 24;
+	[Export]
+	private float CameraChargingZoom = 1.2f;
+	
+	[Export] private CameraMovement cameraMovement;
+	[Export] private double cameraPeakSpeed;
+	[Export] private float cameraPeakCoef; // The scaling coefficient for the camera peaking
 
 	//private Sprite2D Sprite;
 	private AnimatedSprite2D Sprite;
@@ -19,9 +29,8 @@ public partial class PlayerController : RigidBody2D
 	private const float CHARGE_RATE = 5.0f;
 	private const float DECHARGE_RATE = 200.0f;
 	private double NormalisedCharge = 0;
-	private const int SlowestFPS = 6;
-	private const int FastestFPS = 24;
 	private ProgressBar LaunchBar;
+	private Camera2D Camera;
 	private bool CanDamage => Mathf.Abs((float)NormalisedCharge) > 0.99;
 	private const double FLAME_FADE_IN_TIME = 0.8;
 	private double FlameFadeInTimer = 0;
@@ -37,6 +46,7 @@ public partial class PlayerController : RigidBody2D
 	{
 		floorRaycast = GetNode<RayCast2D>("OnFloor");
 		Sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+		Camera = GetNode<Camera2D>("Camera2D");
 		Sprite.SpriteFrames.SetAnimationSpeed("default", SlowestFPS);
 
 		LaunchBar = GetNode<ProgressBar>("LaunchBar");
@@ -104,7 +114,7 @@ public partial class PlayerController : RigidBody2D
 		{
 			LinearVelocity = LinearVelocity with
 			{
-				X = LinearVelocity.X + (float)NormalisedCharge * LAUNCH_MAX_SPEED,
+				X = LinearVelocity.X + MathUtils.CubicEasing((float)NormalisedCharge) * LAUNCH_MAX_SPEED,
 				Y = HeightFromLaunch(NormalisedCharge)
 			};
 
@@ -130,14 +140,34 @@ public partial class PlayerController : RigidBody2D
 			particles.Emitting = true;
 		}
 
-		if (Input.IsActionJustPressed("ui_accept") && isOnFloor == true)
+		if (isCharging && Math.Abs(NormalisedCharge) > 0.7)
 		{
-			LinearVelocity = LinearVelocity with
-			{
-				X = LinearVelocity.X,
-				Y = JUMP_FORCE
-			};
+			float zoom = (float)Mathf.Lerp(1.0, CameraChargingZoom, MathUtils.CubicEasing((float)Math.Abs(NormalisedCharge)));
+			Camera.Zoom = new Vector2(zoom, zoom);
+			
+			cameraMovement.PeakCameraTowards(
+				new Vector2((float) NormalisedCharge * cameraPeakCoef, 0),
+				cameraPeakSpeed
+			);
 		}
+		else
+		{
+			float zoom = (float)Mathf.Lerp(Camera.Zoom.X, 1f, 0.1f);
+			Camera.Zoom = new Vector2(zoom, zoom);
+			
+			cameraMovement.PeakCameraTowards(
+				Vector2.Zero,
+				cameraPeakSpeed
+			);
+		}
+		//if (Input.IsActionJustPressed("ui_accept"))
+		//{
+		//	LinearVelocity = LinearVelocity with
+		//	{
+		//		X = LinearVelocity.X,
+		//		Y = JUMP_FORCE
+		//	};
+		//}
 
 		if (CanDamage)
 		{
@@ -149,7 +179,7 @@ public partial class PlayerController : RigidBody2D
 		
 		//idk if i should be doing this every frame but whatever
 		int frameCount = Sprite.SpriteFrames.GetFrameCount("default");
-		float flameOpacity = CanDamage ? MathUtils.CubicEasing((float)(FlameFadeInTimer / FLAME_FADE_IN_TIME)) : 0;
+		float flameOpacity = CanDamage ? MathUtils.CubicEasing((float)FlameFadeInterpolant()) : 0;
 
 		(Sprite.Material as ShaderMaterial).SetShaderParameter("FrameCount", frameCount);
 		(Sprite.Material as ShaderMaterial).SetShaderParameter("FlameOpacity", flameOpacity);
@@ -157,6 +187,8 @@ public partial class PlayerController : RigidBody2D
 		// GD.Print(MathUtils.VectorToAngle(LinearVelocity).ToString());
 
 		WasOnFloorLastFrame = isOnFloor;
+
+		GD.Print(isOnFloor);
 	}
 
 	public void Land()
@@ -168,6 +200,12 @@ public partial class PlayerController : RigidBody2D
 	public float HeightFromLaunch(double interpolant)
 	{
 		return -MathF.Abs((float)interpolant) * VERTICAL_BOOST_MULTIPLIER;
+	}
+
+	public double FlameFadeInterpolant()
+	{
+		return FlameFadeInTimer / FLAME_FADE_IN_TIME;
+
 	}
 	
 	private void OnHealthChanged(int hp) {
