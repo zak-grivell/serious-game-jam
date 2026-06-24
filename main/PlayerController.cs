@@ -16,10 +16,6 @@ public partial class PlayerController : RigidBody2D
 	private int FastestFPS = 24;
 	[Export]
 	private float CameraChargingZoom = 1.2f;
-	
-	[Export] private CameraMovement cameraMovement;
-	[Export] private double cameraPeakSpeed;
-	[Export] private float cameraPeakCoef; // The scaling coefficient for the camera peaking
 
 	//private Sprite2D Sprite;
 	private AnimatedSprite2D Sprite;
@@ -117,21 +113,11 @@ public partial class PlayerController : RigidBody2D
 		{
 			float zoom = (float)Mathf.Lerp(1.0, CameraChargingZoom, MathUtils.CubicEasing((float)Math.Abs(NormalisedCharge)));
 			Camera.Zoom = new Vector2(zoom, zoom);
-			
-			cameraMovement.PeakCameraTowards(
-				new Vector2((float) NormalisedCharge * cameraPeakCoef, 0),
-				cameraPeakSpeed
-			);
 		}
 		else
 		{
 			float zoom = (float)Mathf.Lerp(Camera.Zoom.X, 1f, 0.1f);
 			Camera.Zoom = new Vector2(zoom, zoom);
-			
-			cameraMovement.PeakCameraTowards(
-				Vector2.Zero,
-				cameraPeakSpeed
-			);
 		}
 		//if (Input.IsActionJustPressed("ui_accept"))
 		//{
