@@ -13,4 +13,6 @@ public partial class ProjectileAttack : Node, IAttack
 		var proj = (Node2D) projectile.Instantiate();
 		proj.Position = origin;
 	}
+	
+	public virtual bool CanAttack() => true;
 }
