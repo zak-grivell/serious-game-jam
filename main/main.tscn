@@ -416,15 +416,23 @@ navigation_layer_0/layers = 1
 sources/0 = SubResource("TileSetAtlasSource_kfbq2")
 
 [sub_resource type="Gradient" id="Gradient_5xyti"]
-colors = PackedColorArray(0, 0.21960784, 0.72156864, 1, 0, 0.6, 0.99607843, 1)
+colors = PackedColorArray(0, 0.3254902, 0.6156863, 1, 0.105882354, 0.20392157, 0.44705883, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_5xyti"]
+gradient = SubResource("Gradient_5xyti")
+
+[sub_resource type="Gradient" id="Gradient_n3o0a"]
+colors = PackedColorArray(0, 0.4509804, 0.9372549, 1, 0.039215688, 0.06666667, 0.23921569, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_73k8k"]
-gradient = SubResource("Gradient_5xyti")
+gradient = SubResource("Gradient_n3o0a")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fwcvl"]
 shader = ExtResource("9_na0o7")
 shader_parameter/sunPosition = Vector2(0, 0)
-shader_parameter/colourGradient = SubResource("GradientTexture1D_73k8k")
+shader_parameter/upperSkyGradient = SubResource("GradientTexture1D_73k8k")
+shader_parameter/lowerSkyGradient = SubResource("GradientTexture1D_5xyti")
+shader_parameter/DayProgress = 0.0
 
 [node name="Main" type="Control" unique_id=78732012]
 layout_mode = 3
@@ -553,6 +561,7 @@ offset_bottom = 358.84
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_na0o7")
+DayProgressRate = 0.5
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=945506084]
 
