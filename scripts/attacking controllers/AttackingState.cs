@@ -4,12 +4,12 @@ using System;
 public partial class AttackingState : Node, IState
 {
 	
-	public void Update(double delta) {}
+	public virtual void Update(double delta) {}
 
-	public IState NextState() => null;
+	public virtual IState NextState() => null;
 
-	public void OnEnter() {}
-	public void OnLeave() {}
+	public virtual void OnEnter() {}
+	public virtual void OnLeave() {}
 	
-	public IAttack GetAttack() => null;
+	public virtual IAttack GetAttack() => null;
 }
