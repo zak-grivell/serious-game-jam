@@ -19,5 +19,16 @@ namespace NewGameProject
             }
             else return output + Mathf.Pi * 2;
         }
+
+        public static float CubicEasing(float x)
+        {
+            return x * x * x;
+        }
+
+        public static Vector2 RotateVectorClockwise(Vector2 input, float angle) //angle counterclockwise
+        {
+            return new Vector2(input.X * MathF.Cos(angle) - input.Y * MathF.Sin(angle),
+                            input.X * MathF.Sin(angle) + input.Y * MathF.Cos(angle)); //perform rotation
+        }
     }
 }
