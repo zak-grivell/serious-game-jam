@@ -16,8 +16,8 @@ config/features=PackedStringArray("4.7", "C#", "GL Compatibility")
 
 [display]
 
-window/size/viewport_width=640
-window/size/viewport_height=360
+window/size/viewport_width=1920
+window/size/viewport_height=1080
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
@@ -28,6 +28,7 @@ project/assembly_name="New Game Project"
 [global_group]
 
 player=""
+camera=""
 
 [input]
 

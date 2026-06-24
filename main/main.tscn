@@ -1,24 +1,19 @@
 [gd_scene format=4 uid="uid://ekvt1amehlo"]
 
 [ext_resource type="PackedScene" uid="uid://bsr040tqx1sx0" path="res://transition/transition.tscn" id="1_53q0u"]
+[ext_resource type="Shader" uid="uid://cjm6tultyxsi2" path="res://main/fireball.tres" id="2_67ri8"]
+[ext_resource type="Script" uid="uid://bg1hq55hr84mo" path="res://scripts/camera/CameraMovement.cs" id="2_na0o7"]
 [ext_resource type="Script" uid="uid://bpkn7kbddrque" path="res://main/PlayerController.cs" id="2_xwkvk"]
 [ext_resource type="Script" uid="uid://dufetdr1vqdac" path="res://main/HeartHealth.cs" id="3_4dugh"]
 [ext_resource type="Texture2D" uid="uid://ds45d7lj8xnxq" path="res://main/assets/PlayerAnimation.png" id="3_67ri8"]
-[ext_resource type="Script" uid="uid://dufetdr1vqdac" path="res://main/HeartHealth.cs" id="3_4dugh"]
-[ext_resource type="Texture2D" uid="uid://ds45d7lj8xnxq" path="res://main/assets/PlayerAnimation.png" id="3_67ri8"]
 [ext_resource type="Script" uid="uid://soq3nlg8vcsh" path="res://scripts/life/HealthComp.cs" id="3_grrlh"]
+[ext_resource type="Texture2D" uid="uid://gvynu55kgaqp" path="res://main/assets/textures/T_VFX_MarbleNoise_tiled.png" id="3_na0o7"]
 [ext_resource type="Texture2D" uid="uid://d0hmedb88oefy" path="res://images/heart.png" id="4_3wy1v"]
-
-
-[ext_resource type="Shader" uid="uid://cjm6tultyxsi2" path="res://main/fireball.tres" id="2_67ri8"]
-
-[ext_resource type="Texture2D" uid="uid://d0hmedb88oefy" path="res://images/heart.png" id="4_3wy1v"]
-[ext_resource type="Texture2D" uid="uid://y2a3wbxh3pik" path="res://images/placeholder-tilesheet.png" id="7_3wy1v"]
-
-
 [ext_resource type="PackedScene" uid="uid://c201kqm66rjry" path="res://menus/pause-menu/pause_menu.tscn" id="4_c651c"]
 [ext_resource type="PackedScene" uid="uid://70qxxcxf1xne" path="res://cutscenes/cutscene.tscn" id="5_3wy1v"]
 [ext_resource type="Script" uid="uid://cqhm4xewegeai" path="res://main/DamageButton.cs" id="6_grrlh"]
+[ext_resource type="Texture2D" uid="uid://y2a3wbxh3pik" path="res://images/placeholder-tilesheet.png" id="7_3wy1v"]
+[ext_resource type="Texture2D" uid="uid://b63f8uvqqyjb" path="res://main/assets/textures/T_1_pixel.jpg" id="7_73k8k"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c651c"]
 size = Vector2(633, 66)
@@ -46,6 +41,35 @@ corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
+
+[sub_resource type="Gradient" id="Gradient_fwcvl"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_thpiw"]
+gradient = SubResource("Gradient_fwcvl")
+fill_from = Vector2(0.6666667, 0)
+
+[sub_resource type="Gradient" id="Gradient_73k8k"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_3qhic"]
+gradient = SubResource("Gradient_73k8k")
+fill_from = Vector2(0.55128205, 1)
+fill_to = Vector2(0.017094018, 1)
+
+[sub_resource type="Gradient" id="Gradient_na0o7"]
+colors = PackedColorArray(0, 0, 0, 0, 1, 0.5019608, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_7853d"]
+gradient = SubResource("Gradient_na0o7")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0i4oc"]
+shader = ExtResource("2_67ri8")
+shader_parameter/FrameCount = 6
+shader_parameter/Speed = Vector2(1, 0)
+shader_parameter/Texture1 = ExtResource("3_na0o7")
+shader_parameter/Texture2 = SubResource("GradientTexture2D_thpiw")
+shader_parameter/Texture4 = SubResource("GradientTexture2D_3qhic")
+shader_parameter/Texture5 = SubResource("GradientTexture1D_7853d")
+shader_parameter/FlameOpacity = 1.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0i4oc"]
 atlas = ExtResource("3_67ri8")
@@ -94,8 +118,12 @@ animations = [{
 }],
 "loop": 1,
 "name": &"default",
-"speed": 5.0
+"speed": 1.0
 }]
+
+[sub_resource type="Curve" id="Curve_43yv0"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.2923497), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kfbq2"]
 texture = ExtResource("7_3wy1v")
@@ -404,6 +432,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Scene" type="Node2D" parent="." unique_id=1080076457]
+
 [node name="StaticBody2D" type="StaticBody2D" parent="Scene" unique_id=153065952]
 position = Vector2(306, 203)
 
@@ -421,6 +450,7 @@ position = Vector2(300, 0)
 rotation = -0.018606728
 gravity_scale = 0.5
 inertia = 8.0
+lock_rotation = true
 linear_damp = 1.0
 script = ExtResource("2_xwkvk")
 
@@ -430,7 +460,10 @@ shape = SubResource("CircleShape2D_s4s1w")
 [node name="OnFloor" type="RayCast2D" parent="Scene/CharacterBody2D" unique_id=1858477538]
 target_position = Vector2(0, 31)
 
-[node name="Camera2D" type="Camera2D" parent="Scene/CharacterBody2D" unique_id=760465680]
+[node name="Camera2D" type="Camera2D" parent="Scene/CharacterBody2D" unique_id=760465680 groups=["camera"]]
+position_smoothing_enabled = true
+position_smoothing_speed = 15.0
+script = ExtResource("2_na0o7")
 
 [node name="LaunchBar" type="ProgressBar" parent="Scene/CharacterBody2D" unique_id=1499505273]
 custom_minimum_size = Vector2(70, 13)
@@ -446,14 +479,34 @@ value = 0.5
 show_percentage = false
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Scene/CharacterBody2D" unique_id=657390569]
+material = SubResource("ShaderMaterial_0i4oc")
 scale = Vector2(0.21013336, 0.20830898)
 sprite_frames = SubResource("SpriteFrames_g8iiu")
+autoplay = "default"
 frame_progress = 0.00749064
 
 [node name="HealthComp" type="Node2D" parent="Scene/CharacterBody2D" unique_id=414462644]
 script = ExtResource("3_grrlh")
 maxHp = 3
 dmgITime = 1.0
+
+[node name="ChargeParticles" type="CPUParticles2D" parent="Scene/CharacterBody2D" unique_id=1440480378]
+position = Vector2(-9, 116)
+rotation = 2.024582
+amount = 30
+texture = ExtResource("7_73k8k")
+lifetime = 0.55
+explosiveness = 0.3
+randomness = 0.5
+local_coords = true
+direction = Vector2(0, 0)
+spread = 70.0
+gravity = Vector2(-35, 0)
+initial_velocity_min = 35.0
+initial_velocity_max = 65.0
+scale_amount_min = 2.0
+scale_amount_max = 6.0
+scale_amount_curve = SubResource("Curve_43yv0")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="Scene" unique_id=1743828336]
 position = Vector2(-19, 565)
