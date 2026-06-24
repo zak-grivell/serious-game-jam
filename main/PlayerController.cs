@@ -7,7 +7,7 @@ public partial class PlayerController : RigidBody2D
 {
 	// TO-DO: make the player slow when charging up
 	private const float MAX_SPIN = 0.4f;
-	private const float LAUNCH_MAX_SPEED = 1000.0f;
+	private const float LAUNCH_MAX_SPEED = 500.0f;
 	private const float JUMP_FORCE = -600.0f;
 	private const float VERTICAL_BOOST_MULTIPLIER = 500f;
 
@@ -16,7 +16,7 @@ public partial class PlayerController : RigidBody2D
 	private AnimationPlayer an;
 
 	private RayCast2D floorRaycast;
-	private const float CHARGE_RATE = 20.0f;
+	private const float CHARGE_RATE = 5.0f;
 	private const float DECHARGE_RATE = 200.0f;
 	private double NormalisedCharge = 0;
 	private const int SlowestFPS = 6;
