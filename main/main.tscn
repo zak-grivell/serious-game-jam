@@ -191,16 +191,13 @@ grow_vertical = 2
 
 [node name="Scene" type="Node2D" parent="." unique_id=1080076457]
 
-[node name="CharacterBody2D" type="RigidBody2D" parent="Scene" unique_id=1599436710 node_paths=PackedStringArray("cameraMovement") groups=["player"]]
+[node name="CharacterBody2D" type="RigidBody2D" parent="Scene" unique_id=1599436710 groups=["player"]]
 position = Vector2(300, 0)
 rotation = -0.018606728
 gravity_scale = 1.061
 inertia = 8.0
 linear_damp = 1.0
 script = ExtResource("2_xwkvk")
-cameraMovement = NodePath("Camera2D")
-cameraPeakSpeed = 1100.0
-cameraPeakCoef = 400.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Scene/CharacterBody2D" unique_id=1025784810]
 shape = SubResource("CircleShape2D_s4s1w")
@@ -318,7 +315,6 @@ offset_right = 1.0
 offset_bottom = 3.0
 
 [node name="Cutscene" parent="CanvasLayer" unique_id=829148526 instance=ExtResource("5_3wy1v")]
-visible = false
 
 [node name="Transition" parent="CanvasLayer" unique_id=355810688 instance=ExtResource("1_53q0u")]
 
