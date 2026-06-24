@@ -8,6 +8,7 @@ public partial class CameraMovement : Camera2D
 		peakTarget = Vector2.Zero;
 	private double peakTime = 1, currPeakTime = 0;
 
+
 	public override void _Process(double delta)
 	{
 		this.currPeakTime += delta;
