@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://70qxxcxf1xne" path="res://cutscenes/cutscene.tscn" id="5_3wy1v"]
 [ext_resource type="Script" uid="uid://cqhm4xewegeai" path="res://main/DamageButton.cs" id="6_grrlh"]
 [ext_resource type="Texture2D" uid="uid://y2a3wbxh3pik" path="res://images/placeholder-tilesheet.png" id="7_3wy1v"]
+[ext_resource type="Texture2D" uid="uid://b63f8uvqqyjb" path="res://main/assets/textures/T_1_pixel.jpg" id="7_73k8k"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_c651c"]
 size = Vector2(633, 66)
@@ -119,6 +120,10 @@ animations = [{
 "name": &"default",
 "speed": 1.0
 }]
+
+[sub_resource type="Curve" id="Curve_43yv0"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.2923497), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kfbq2"]
 texture = ExtResource("7_3wy1v")
@@ -484,6 +489,24 @@ frame_progress = 0.00749064
 script = ExtResource("3_grrlh")
 maxHp = 3
 dmgITime = 1.0
+
+[node name="ChargeParticles" type="CPUParticles2D" parent="Scene/CharacterBody2D" unique_id=1440480378]
+position = Vector2(-9, 116)
+rotation = 2.024582
+amount = 30
+texture = ExtResource("7_73k8k")
+lifetime = 0.55
+explosiveness = 0.3
+randomness = 0.5
+local_coords = true
+direction = Vector2(0, 0)
+spread = 70.0
+gravity = Vector2(-35, 0)
+initial_velocity_min = 35.0
+initial_velocity_max = 65.0
+scale_amount_min = 2.0
+scale_amount_max = 6.0
+scale_amount_curve = SubResource("Curve_43yv0")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="Scene" unique_id=1743828336]
 position = Vector2(-19, 565)

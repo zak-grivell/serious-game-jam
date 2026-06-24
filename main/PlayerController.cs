@@ -30,6 +30,8 @@ public partial class PlayerController : RigidBody2D
 	private CameraMovement camera;
 	private HealthComp health;
 	private int lastHealth;
+	private CpuParticles2D particles;
+	private Vector2 particleBaseOffset = new Vector2(-9, 15);
 
 	public override void _Ready()
 	{
@@ -48,6 +50,8 @@ public partial class PlayerController : RigidBody2D
 		health = GetNode<HealthComp>("HealthComp");
 		lastHealth = health.GetHp();
 		health.HealthChanged += OnHealthChanged;
+		particles = GetNode<CpuParticles2D>("ChargeParticles");
+		particles.Emitting = false;
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -71,6 +75,18 @@ public partial class PlayerController : RigidBody2D
 		{
 			FlightDirection = direction;
 			Sprite.FlipH = direction == -1;
+			if (direction == 1) {
+				GD.Print(direction, "direction value");
+				particles.Rotation = 116;
+				particles.Scale = new Vector2(1, 1);
+				particles.Position = new Vector2(-9, 16);
+			}
+			else if (direction == -1) {
+				GD.Print(direction, "direction value");
+				particles.Rotation = 129;
+				particles.Scale = new Vector2(-1, -1);
+				particles.Position = new Vector2(14, 18);
+			}
 		}
 
 		floorRaycast.Rotation = -Rotation;
@@ -98,6 +114,7 @@ public partial class PlayerController : RigidBody2D
 			//NormalisedCharge = 0;
 			LaunchBar.Value = 0;
 			LaunchBar.Visible = false;
+			particles.Emitting = false;
 		}
 		else if (isCharging)
 		{
@@ -110,6 +127,7 @@ public partial class PlayerController : RigidBody2D
 			Rotation = Mathf.LerpAngle(Rotation, 0, 0.1f);
 			LaunchBar.Visible = true;
 			LaunchBar.Value = MathF.Abs((float)NormalisedCharge);
+			particles.Emitting = true;
 		}
 
 		if (Input.IsActionJustPressed("ui_accept") && isOnFloor == true)
