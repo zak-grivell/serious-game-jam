@@ -14,6 +14,8 @@ public partial class PlayerController : RigidBody2D
 	private int SlowestFPS = 6;
 	[Export]
 	private int FastestFPS = 24;
+	[Export]
+	private float CameraChargingZoom = 1.2f;
 
 	//private Sprite2D Sprite;
 	private AnimatedSprite2D Sprite;
@@ -23,6 +25,7 @@ public partial class PlayerController : RigidBody2D
 
 	private double NormalisedCharge = 0;
 	private ProgressBar LaunchBar;
+	private Camera2D Camera;
 	private bool CanDamage => Mathf.Abs((float)NormalisedCharge) > 0.99;
 	private const double FLAME_FADE_IN_TIME = 0.8;
 	private double FlameFadeInTimer = 0;
@@ -34,6 +37,7 @@ public partial class PlayerController : RigidBody2D
 	{
 		floorRaycast = GetNode<RayCast2D>("OnFloor");
 		Sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+		Camera = GetNode<Camera2D>("Camera2D");
 		Sprite.SpriteFrames.SetAnimationSpeed("default", SlowestFPS);
 
 		LaunchBar = GetNode<ProgressBar>("LaunchBar");
@@ -105,6 +109,16 @@ public partial class PlayerController : RigidBody2D
 			LaunchBar.Value = MathF.Abs((float)NormalisedCharge);
 		}
 
+		if (isCharging && Math.Abs(NormalisedCharge) > 0.7)
+		{
+			float zoom = (float)Mathf.Lerp(1.0, CameraChargingZoom, MathUtils.CubicEasing((float)Math.Abs(NormalisedCharge)));
+			Camera.Zoom = new Vector2(zoom, zoom);
+		}
+		else
+		{
+			float zoom = (float)Mathf.Lerp(Camera.Zoom.X, 1f, 0.1f);
+			Camera.Zoom = new Vector2(zoom, zoom);
+		}
 		//if (Input.IsActionJustPressed("ui_accept"))
 		//{
 		//	LinearVelocity = LinearVelocity with
@@ -124,7 +138,7 @@ public partial class PlayerController : RigidBody2D
 		
 		//idk if i should be doing this every frame but whatever
 		int frameCount = Sprite.SpriteFrames.GetFrameCount("default");
-		float flameOpacity = CanDamage ? MathUtils.CubicEasing((float)(FlameFadeInTimer / FLAME_FADE_IN_TIME)) : 0;
+		float flameOpacity = CanDamage ? MathUtils.CubicEasing((float)FlameFadeInterpolant()) : 0;
 
 		(Sprite.Material as ShaderMaterial).SetShaderParameter("FrameCount", frameCount);
 		(Sprite.Material as ShaderMaterial).SetShaderParameter("FlameOpacity", flameOpacity);
@@ -143,5 +157,11 @@ public partial class PlayerController : RigidBody2D
 	public float HeightFromLaunch(double interpolant)
 	{
 		return -MathF.Abs((float)interpolant) * VERTICAL_BOOST_MULTIPLIER;
+	}
+
+	public double FlameFadeInterpolant()
+	{
+		return FlameFadeInTimer / FLAME_FADE_IN_TIME;
+
 	}
 }
