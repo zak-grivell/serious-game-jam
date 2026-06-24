@@ -127,9 +127,9 @@ public partial class PlayerController : RigidBody2D
 		(Sprite.Material as ShaderMaterial).SetShaderParameter("FrameCount", frameCount);
 		(Sprite.Material as ShaderMaterial).SetShaderParameter("FlameOpacity", flameOpacity);
 
-		GD.Print(MathUtils.VectorToAngle(LinearVelocity).ToString());
-
 		WasOnFloorLastFrame = isOnFloor;
+
+		GD.Print(isOnFloor);
 	}
 
 	public void Land()

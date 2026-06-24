@@ -466,7 +466,6 @@ position = Vector2(300, 0)
 rotation = -0.018606728
 gravity_scale = 0.5
 inertia = 8.0
-lock_rotation = true
 linear_damp = 1.0
 script = ExtResource("2_xwkvk")
 
@@ -562,7 +561,9 @@ offset_bottom = 358.84
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_na0o7")
-DayProgressRate = 0.5
+DayProgressRate = 0.035
+OrbitHorizRadius = 730.0
+OrbitVertRadius = 400.0
 
 [node name="Sun" type="Sprite2D" parent="Background/ColorRect" unique_id=1996083118]
 position = Vector2(-226.75, 211.5)
