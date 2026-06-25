@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bsr040tqx1sx0" path="res://transition/transition.tscn" id="1_53q0u"]
 [ext_resource type="Script" uid="uid://di2rr4m6vn247" path="res://main/Background.cs" id="1_na0o7"]
 [ext_resource type="Shader" uid="uid://cjm6tultyxsi2" path="res://main/fireball.tres" id="2_67ri8"]
+[ext_resource type="Script" uid="uid://bg1hq55hr84mo" path="res://scripts/camera/CameraMovement.cs" id="2_n3o0a"]
 [ext_resource type="Script" uid="uid://bpkn7kbddrque" path="res://main/PlayerController.cs" id="2_xwkvk"]
 [ext_resource type="Script" uid="uid://dufetdr1vqdac" path="res://main/HeartHealth.cs" id="3_4dugh"]
 [ext_resource type="Texture2D" uid="uid://ds45d7lj8xnxq" path="res://main/assets/PlayerAnimation.png" id="3_67ri8"]
@@ -191,13 +192,16 @@ grow_vertical = 2
 
 [node name="Scene" type="Node2D" parent="." unique_id=1080076457]
 
-[node name="CharacterBody2D" type="RigidBody2D" parent="Scene" unique_id=1599436710 groups=["player"]]
+[node name="CharacterBody2D" type="RigidBody2D" parent="Scene" unique_id=1599436710 node_paths=PackedStringArray("cameraMovement") groups=["player"]]
 position = Vector2(300, 0)
 rotation = -0.018606728
 gravity_scale = 1.061
 inertia = 8.0
 linear_damp = 1.0
 script = ExtResource("2_xwkvk")
+cameraMovement = NodePath("Camera2D")
+cameraPeakSpeed = 1100.0
+cameraPeakCoef = 400.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Scene/CharacterBody2D" unique_id=1025784810]
 shape = SubResource("CircleShape2D_s4s1w")
@@ -206,6 +210,7 @@ shape = SubResource("CircleShape2D_s4s1w")
 target_position = Vector2(-0.7814331, 41.99272)
 
 [node name="Camera2D" type="Camera2D" parent="Scene/CharacterBody2D" unique_id=760465680]
+script = ExtResource("2_n3o0a")
 
 [node name="LaunchBar" type="ProgressBar" parent="Scene/CharacterBody2D" unique_id=1499505273]
 custom_minimum_size = Vector2(70, 13)
