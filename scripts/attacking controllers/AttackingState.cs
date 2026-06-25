@@ -3,13 +3,12 @@ using System;
 
 public partial class AttackingState : Node, IState
 {
+	protected IAttack attack;
 	
-	public virtual void Update(double delta) {}
-
-	public virtual IState NextState() => null;
+	public virtual IState NextState(double delta) => null;
 
 	public virtual void OnEnter() {}
 	public virtual void OnLeave() {}
 	
-	public virtual IAttack GetAttack() => null;
+	public IAttack GetAttack() => this.attack;
 }
