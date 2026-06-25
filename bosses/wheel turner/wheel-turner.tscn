@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://bcwqlo55jd83w"]
+
+[ext_resource type="Script" uid="uid://coqamdn3p3j1k" path="res://scripts/attacking controllers/random/RandomAttackController.cs" id="1_54di8"]
+[ext_resource type="Script" uid="uid://c5mqdq2v64c3r" path="res://bosses/wheel turner/attacks/test attack/JumpAttack.cs" id="2_5256t"]
+[ext_resource type="Texture2D" uid="uid://b63f8uvqqyjb" path="res://main/assets/textures/T_1_pixel.jpg" id="3_54di8"]
+[ext_resource type="Script" uid="uid://cshuhfbkonjy6" path="res://scripts/physics/GravityComp.cs" id="4_fqmci"]
+[ext_resource type="Script" uid="uid://soq3nlg8vcsh" path="res://scripts/life/HealthComp.cs" id="5_sy515"]
+[ext_resource type="Script" uid="uid://bt57c4dvunsgs" path="res://scripts/life/DeathComp.cs" id="6_3frjf"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5h4g0"]
+
+[node name="WheelTurner" type="CharacterBody2D" unique_id=698038954]
+collision_layer = 4
+collision_mask = 11
+
+[node name="AttackingController" type="Node" parent="." unique_id=2121137798 node_paths=PackedStringArray("attackingStates")]
+script = ExtResource("1_54di8")
+attackingStates = [NodePath("JumpAttack")]
+
+[node name="JumpAttack" type="Node" parent="AttackingController" unique_id=1348791221 node_paths=PackedStringArray("AttackOwner", "floorRaycast")]
+script = ExtResource("2_5256t")
+AttackOwner = NodePath("../..")
+floorRaycast = NodePath("../../BossOnFloor")
+jumpStrength = 50.0
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1073556878]
+scale = Vector2(118.191216, 117.55883)
+texture = ExtResource("3_54di8")
+
+[node name="BossOnFloor" type="RayCast2D" parent="." unique_id=1174976158]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1721998679]
+light_mask = 0
+visibility_layer = 4
+scale = Vector2(6, 6)
+shape = SubResource("RectangleShape2D_5h4g0")
+
+[node name="GravityComp" type="Node" parent="." unique_id=109625254 node_paths=PackedStringArray("rb")]
+script = ExtResource("4_fqmci")
+rb = NodePath("..")
+gravity = 10.0
+
+[node name="HealthComp" type="Node" parent="." unique_id=1872065822 node_paths=PackedStringArray("deathComp")]
+script = ExtResource("5_sy515")
+maxHp = 20
+dmgITime = 0.2
+deathComp = NodePath("DeathComp")
+
+[node name="DeathComp" type="Node" parent="HealthComp" unique_id=462708715]
+script = ExtResource("6_3frjf")

@@ -41,8 +41,6 @@ public partial class Background : ColorRect
 		Moon.Position = OrbitCentre() + new Vector2(OrbitHorizRadius * Mathf.Cos(angle + Mathf.Pi), OrbitVertRadius * Mathf.Sin(angle + Mathf.Pi));
 
 		(Material as ShaderMaterial).SetShaderParameter("DayProgress", DayProgress);
-
-		GD.Print(DayProgress);
 	}
 
 	public Vector2 OrbitCentre()

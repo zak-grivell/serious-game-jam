@@ -186,8 +186,6 @@ public partial class PlayerController : RigidBody2D
 		// GD.Print(MathUtils.VectorToAngle(LinearVelocity).ToString());
 
 		WasOnFloorLastFrame = isOnFloor;
-
-		GD.Print(isOnFloor);
 	}
 
 	public void Land()
