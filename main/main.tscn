@@ -16,7 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://bg4ybrqj55stw" path="res://images/tilemap.png" id="6_fwcvl"]
 [ext_resource type="Script" uid="uid://cqhm4xewegeai" path="res://main/DamageButton.cs" id="6_grrlh"]
 [ext_resource type="Script" uid="uid://raapl8gsvdhh" path="res://scripts/level/LevelTile.cs" id="7_n3o0a"]
-[ext_resource type="Script" uid="uid://bs4johdgloukr" path="res://main/collision.gd" id="8_piupu"]
+[ext_resource type="Script" uid="uid://ls0onaertrga" path="res://scripts/player/PlayerCollision.cs" id="8_piupu"]
 [ext_resource type="Shader" uid="uid://jr4yliff40d6" path="res://main/background.gdshader" id="9_na0o7"]
 [ext_resource type="Texture2D" uid="uid://b7s83eqa3bsdm" path="res://main/assets/hampter-removebg-preview.png" id="11_5xyti"]
 
