@@ -66,7 +66,7 @@ public partial class PlayerController : RigidBody2D
 			Sprite.FlipH = direction == -1;
 		}
 
-        floorRaycast.Rotation = -Rotation;
+		floorRaycast.Rotation = -Rotation;
 
 		if (!isOnFloor)
 		{
