@@ -2,19 +2,22 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public class RandomAttackIdleState : IState
+public partial class RandomAttackIdleState : AttackingState
 {
-	private AttackingState[] attackingStates;
-	private List<AttackingState> validAttackingStates = new List<AttackingState>();
+	private RandomAttackingState[] attackingStates;
+	private List<RandomAttackingState> validAttackingStates = new List<RandomAttackingState>();
 	
-	public RandomAttackIdleState(AttackingState[] attackingStates) {
+	public RandomAttackIdleState(RandomAttackingState[] attackingStates) {
 		this.attackingStates = attackingStates;
+		foreach(RandomAttackingState state in attackingStates) {
+			state.SetIdleState(this);
+		}
 	}
 
-	public IState NextState(double delta) {
+	public override IState NextState(double delta) {
 		// Get valid attacks
-		validAttackingStates = new List<AttackingState>();
-		foreach(AttackingState state in attackingStates) {
+		validAttackingStates = new List<RandomAttackingState>();
+		foreach(RandomAttackingState state in attackingStates) {
 			if(state.GetAttack().CanAttack())
 				validAttackingStates.Add(state);
 		}
@@ -24,6 +27,4 @@ public class RandomAttackIdleState : IState
 		return validAttackingStates[randIx];
 	}
 
-	public void OnEnter() {}
-	public void OnLeave() {}
 }

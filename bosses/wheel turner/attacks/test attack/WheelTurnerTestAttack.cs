@@ -5,6 +5,11 @@ public partial class WheelTurnerTestAttack : RandomAttackingState
 {
 	[Export] private double attackCooldown;
 	private double currentCooldown = 0;
+	
+	public override void _Ready() {
+		base._Ready();
+		attack = new DebugPrintAttack("Attacking!! >=)");
+	}
 
 	public override IState NextState(double delta) {
 		if(currentCooldown >= attackCooldown) {

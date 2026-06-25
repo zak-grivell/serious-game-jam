@@ -5,10 +5,13 @@ public partial class DebugPrintAttack : IAttack
 {
 	[Export] private string msg;
 	
-	public override void Attack() {
-		GD.Print(msg);
-		base.Attack();
+	public DebugPrintAttack(string msg) {
+		this.msg = msg;
 	}
 	
-	public override bool CanAttack() => true;
+	public void Attack() {
+		GD.Print(msg);
+	}
+	
+	public bool CanAttack() => true;
 }
