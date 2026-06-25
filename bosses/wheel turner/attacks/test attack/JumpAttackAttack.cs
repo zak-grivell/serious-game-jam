@@ -11,8 +11,7 @@ public partial class JumpAttackAttack : IAttack
 	
 	public void Attack(double delta) {
 		GD.Print("Running attack!");
-		AttackOwner.Velocity = new Vector2(0f, 100f);
-		AttackOwner.MoveAndSlide();
+		AttackOwner.Velocity = new Vector2(0f, -10f);
 	}
 	
 	public bool CanAttack() => true;

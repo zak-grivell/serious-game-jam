@@ -32,7 +32,7 @@ namespace NewGameProject.bosses.wheel_turner.attacks.test_attack
 			
 			if(firstTime) GetAttack().Attack(delta);
 			firstTime = false;
-			
+			AttackOwner.MoveAndSlide();
 			if (isOnFloor && !OnFloorLastFrame)
 			{
 				return idleState;
