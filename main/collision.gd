@@ -12,5 +12,13 @@ func _process(delta: float) -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	print(body.name)
+	body.HitEnemy(self)
+	return
+	
+	if (body.has_method("HitEnemy")):
+		body.HitEnemy(self)
+		print("found damage method")
+	else:
+		print("no damage method found")
 	
 	

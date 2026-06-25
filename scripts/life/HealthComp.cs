@@ -26,14 +26,19 @@ public partial class HealthComp : Node
 		if(this.currDmgITime > 0) this.currDmgITime -= delta;
 	}
 
-	public void Damage(int dmg) {
+	public bool Damage(int dmg) {
 		if (currDmgITime <= 0)
 		{
 			this.hp -= dmg;
 			this.currDmgITime = dmgITime;
 			HealthChanged?.Invoke(hp);
-			if (this.hp <= 0) deathComp.Die();
+			if (this.hp <= 0) {
+				deathComp.Die();
+				return true;
+					}
 		}
+
+		return false;
 	}
 	public int GetHp() => hp;
 	public int GetMaxHp() => maxHp;
