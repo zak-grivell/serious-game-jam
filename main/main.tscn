@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://di2rr4m6vn247" path="res://main/Background.cs" id="1_na0o7"]
 [ext_resource type="PackedScene" uid="uid://bcwqlo55jd83w" path="res://bosses/wheel turner/wheel-turner.tscn" id="1_piupu"]
 [ext_resource type="Shader" uid="uid://cjm6tultyxsi2" path="res://main/fireball.tres" id="2_67ri8"]
-[ext_resource type="Script" uid="uid://bg1hq55hr84mo" path="res://scripts/camera/CameraMovement.cs" id="2_na0o7"]
+[ext_resource type="Script" uid="uid://bg1hq55hr84mo" path="res://scripts/camera/CameraMovement.cs" id="2_n3o0a"]
 [ext_resource type="Script" uid="uid://bpkn7kbddrque" path="res://main/PlayerController.cs" id="2_xwkvk"]
 [ext_resource type="Script" uid="uid://dufetdr1vqdac" path="res://main/HeartHealth.cs" id="3_4dugh"]
 [ext_resource type="Texture2D" uid="uid://ds45d7lj8xnxq" path="res://main/assets/PlayerAnimation.png" id="3_67ri8"]
@@ -15,11 +15,11 @@
 [ext_resource type="PackedScene" uid="uid://70qxxcxf1xne" path="res://cutscenes/cutscene.tscn" id="5_3wy1v"]
 [ext_resource type="Texture2D" uid="uid://bg4ybrqj55stw" path="res://images/tilemap.png" id="6_fwcvl"]
 [ext_resource type="Script" uid="uid://cqhm4xewegeai" path="res://main/DamageButton.cs" id="6_grrlh"]
-[ext_resource type="Texture2D" uid="uid://b63f8uvqqyjb" path="res://main/assets/textures/T_1_pixel.jpg" id="7_73k8k"]
 [ext_resource type="Script" uid="uid://raapl8gsvdhh" path="res://scripts/level/LevelTile.cs" id="7_n3o0a"]
 [ext_resource type="Script" uid="uid://ls0onaertrga" path="res://scripts/player/PlayerCollision.cs" id="8_piupu"]
 [ext_resource type="Shader" uid="uid://jr4yliff40d6" path="res://main/background.gdshader" id="9_na0o7"]
-[ext_resource type="Texture2D" uid="uid://dem0b0s5kogty" path="res://main/assets/hampter.jpeg" id="11_5xyti"]
+[ext_resource type="Texture2D" uid="uid://b63f8uvqqyjb" path="res://main/assets/textures/T_1_pixel.jpg" id="9_q0sk7"]
+[ext_resource type="Texture2D" uid="uid://b7s83eqa3bsdm" path="res://main/assets/hampter-removebg-preview.png" id="11_5xyti"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s4s1w"]
 radius = 27.000004
@@ -121,12 +121,12 @@ animations = [{
 radius = 29.274567
 
 [sub_resource type="Curve" id="Curve_43yv0"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.2923497), 0.0, 0.0, 0, 0]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.29), 0.0, 0.0, 0, 0]
 point_count = 2
 
 [sub_resource type="Curve" id="Curve_gvs4p"]
-_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.99999, 0.5589041), 0.0, 0.0, 0, 0, Vector2(1, 0.5589041), 0.0, 0.0, 0, 0]
-point_count = 3
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.55), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fwcvl"]
 texture = ExtResource("6_fwcvl")
@@ -138,7 +138,7 @@ texture_region_size = Vector2i(32, 32)
 1:0/0 = 0
 1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 2:0/0 = 0
-2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(16, -16, 16, 16, -16, 16)
 3:0/0 = 0
 3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 4:0/0 = 0
@@ -161,13 +161,11 @@ texture_region_size = Vector2i(32, 32)
 3:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 4:2/0 = 0
 4:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
-2:3/0 = 0
-2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
+0:3/0 = 0
 1:3/0 = 0
 1:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
-0:3/0 = 0
-3:3/0 = 0
-4:3/0 = 0
+2:3/0 = 0
+2:3/0/physics_layer_0/polygon_0/points = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
 
 [sub_resource type="TileSet" id="TileSet_bxjk7"]
 tile_size = Vector2i(32, 32)
@@ -209,14 +207,16 @@ grow_vertical = 2
 [node name="Scene" type="Node2D" parent="." unique_id=1080076457]
 
 [node name="WheelTurner" parent="Scene" unique_id=1130631629 instance=ExtResource("1_piupu")]
-position = Vector2(3511.0002, 370)
+position = Vector2(3510, 308)
 rotation = -0.018606728
 
 [node name="CharacterBody2D" type="RigidBody2D" parent="Scene" unique_id=1599436710 groups=["player"]]
-position = Vector2(300, 0)
+position = Vector2(3000.27, 0)
 rotation = -0.018606728
 gravity_scale = 1.061
 inertia = 8.0
+contact_monitor = true
+max_contacts_reported = 5
 linear_damp = 1.0
 script = ExtResource("2_xwkvk")
 
@@ -226,10 +226,8 @@ shape = SubResource("CircleShape2D_s4s1w")
 [node name="OnFloor" type="RayCast2D" parent="Scene/CharacterBody2D" unique_id=1858477538]
 target_position = Vector2(-0.7814331, 41.99272)
 
-[node name="Camera2D" type="Camera2D" parent="Scene/CharacterBody2D" unique_id=760465680 groups=["camera"]]
-position_smoothing_enabled = true
-position_smoothing_speed = 15.0
-script = ExtResource("2_na0o7")
+[node name="Camera2D" type="Camera2D" parent="Scene/CharacterBody2D" unique_id=760465680]
+script = ExtResource("2_n3o0a")
 
 [node name="LaunchBar" type="ProgressBar" parent="Scene/CharacterBody2D" unique_id=1499505273]
 custom_minimum_size = Vector2(70, 13)
@@ -263,16 +261,15 @@ script = ExtResource("8_piupu")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Scene/CharacterBody2D/EnemyHitter" unique_id=1906446820]
 shape = SubResource("CircleShape2D_thpiw")
 
-[node name="ChargeParticles" type="CPUParticles2D" parent="Scene/CharacterBody2D" unique_id=1440480378]
+[node name="ChargeParticles" type="CPUParticles2D" parent="Scene/CharacterBody2D" unique_id=1510453208]
 position = Vector2(-9, 116)
 rotation = 2.024582
 amount = 30
-texture = ExtResource("7_73k8k")
+texture = ExtResource("9_q0sk7")
 lifetime = 0.55
 explosiveness = 0.3
 randomness = 0.5
 local_coords = true
-direction = Vector2(0, 0)
 spread = 70.0
 gravity = Vector2(-35, 0)
 initial_velocity_min = 35.0
@@ -281,9 +278,10 @@ scale_amount_min = 2.0
 scale_amount_max = 6.0
 scale_amount_curve = SubResource("Curve_43yv0")
 
-[node name="FireParticles" type="CPUParticles2D" parent="Scene/CharacterBody2D" unique_id=2098621372]
+[node name="FireParticles" type="CPUParticles2D" parent="Scene/CharacterBody2D" unique_id=1239779941]
 position = Vector2(-20, 0)
 amount = 300
+texture = ExtResource("9_q0sk7")
 lifetime = 2.0
 explosiveness = 0.1
 emission_shape = 1
