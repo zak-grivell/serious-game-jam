@@ -4,176 +4,166 @@ using System;
 
 public partial class PlayerController : RigidBody2D
 {
-	[Export]
-	private float LAUNCH_MAX_SPEED = 1000.0f;
-	[Export]
-	private float VERTICAL_BOOST_MULTIPLIER = 500f;
-	[Export]
-	private float CHARGE_RATE = 20.0f;
-	[Export]
-	private int SlowestFPS = 6;
-	[Export]
-	private int FastestFPS = 24;
-	[Export]
-	private float CameraChargingZoom = 1.2f;
-	
-	[Export] private CameraMovement cameraMovement;
-	[Export] private double cameraPeakSpeed;
-	[Export] private float cameraPeakCoef; // The scaling coefficient for the camera peaking
+    // TO-DO: make the player slow when charging up
+    private const float MAX_SPIN = 0.4f;
+    private const float LAUNCH_MAX_SPEED = 1000.0f;
+    private const float JUMP_FORCE = -600.0f;
+    private const float VERTICAL_BOOST_MULTIPLIER = 500f;
 
-	//private Sprite2D Sprite;
-	private AnimatedSprite2D Sprite;
-	private AnimationPlayer an;
+    //private Sprite2D Sprite;
+    private AnimatedSprite2D Sprite;
+    private AnimationPlayer an;
 
-	private RayCast2D floorRaycast;
+    private RayCast2D floorRaycast;
+    private const float CHARGE_RATE = 5.0f;
+    private const float DECHARGE_RATE = 200.0f;
+    private double NormalisedCharge = 0;
+    private const int SlowestFPS = 6;
+    private const int FastestFPS = 24;
+    private ProgressBar LaunchBar;
+    private bool CanDamage => Mathf.Abs((float)NormalisedCharge) > 0.99;
+    private const double FLAME_FADE_IN_TIME = 0.8;
+    private double FlameFadeInTimer = 0;
+    private bool WasOnFloorLastFrame;
+    private int FlightDirection;
 
-	private double NormalisedCharge = 0;
-	private ProgressBar LaunchBar;
-	private Camera2D Camera;
-	private bool CanDamage => Mathf.Abs((float)NormalisedCharge) > 0.99;
-	private const double FLAME_FADE_IN_TIME = 0.8;
-	private double FlameFadeInTimer = 0;
-	private bool WasOnFloorLastFrame;
-	private int FlightDirection;
-	// line above is for launch bar
+    private bool justBounced = false;
 
-	public override void _Ready()
-	{
-		floorRaycast = GetNode<RayCast2D>("OnFloor");
-		Sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
-		Camera = GetNode<Camera2D>("Camera2D");
-		Sprite.SpriteFrames.SetAnimationSpeed("default", SlowestFPS);
+    public override void _Ready()
+    {
+        floorRaycast = GetNode<RayCast2D>("OnFloor");
+        Sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+        Sprite.SpriteFrames.SetAnimationSpeed("default", SlowestFPS);
 
-		LaunchBar = GetNode<ProgressBar>("LaunchBar");
-		LaunchBar.MaxValue = 1.0;
-		LaunchBar.Value = 0.0;
-		LaunchBar.Visible = false;
-		FlameFadeInTimer = 0;
-	}
+        LaunchBar = GetNode<ProgressBar>("LaunchBar");
+        LaunchBar.MaxValue = 1.0;
+        LaunchBar.Value = 0.0;
+        LaunchBar.Visible = false;
+        FlameFadeInTimer = 0;
+    }
 
-	public override void _PhysicsProcess(double delta)
-	{
-		int direction = MathF.Sign(Input.GetAxis("ui_left", "ui_right"));
-		bool isPressed = Input.IsActionPressed("ui_left") || Input.IsActionPressed("ui_right");
+    public override void _PhysicsProcess(double delta)
+    {
+        int direction = MathF.Sign(Input.GetAxis("ui_left", "ui_right"));
+        bool isPressed = Input.IsActionPressed("ui_left") || Input.IsActionPressed("ui_right");
 
-		//if (direction != 0)
-		//{
-		//	Sprite.FlipH = direction == -1;
-		//}
+        //if (direction != 0)
+        //{
+        //	Sprite.FlipH = direction == -1;
+        //}
 
-		Boolean isOnFloor = floorRaycast.IsColliding();
+        Boolean isOnFloor = floorRaycast.IsColliding();
 
-		if (isOnFloor && !WasOnFloorLastFrame)
-		{
-			Land();
-		}
-		
-		if (isPressed && isOnFloor)
-		{
-			FlightDirection = direction;
-			Sprite.FlipH = direction == -1;
-		}
+        if (isOnFloor && !WasOnFloorLastFrame)
+        {
+            Land();
+        }
 
-		floorRaycast.Rotation = -Rotation;
+        if (isPressed && isOnFloor)
+        {
+            FlightDirection = direction;
+            Sprite.FlipH = direction == -1;
+        }
 
-		if (!isOnFloor)
-		{
-			//Sprite.Rotation = MathUtils.VectorToAngle(LinearVelocity) + Mathf.Pi;
-		}
+        floorRaycast.Rotation = -Rotation;
 
-		bool isLaunch = !isPressed && NormalisedCharge != 0;
-		bool isCharging = isPressed && isOnFloor;
+        if (!isOnFloor)
+        {
+            //Sprite.Rotation = MathUtils.VectorToAngle(LinearVelocity) + Mathf.Pi;
+        }
 
-		
-		if (isLaunch && isOnFloor)
-		{
-			LinearVelocity = LinearVelocity with
-			{
-				X = LinearVelocity.X + MathUtils.CubicEasing((float)NormalisedCharge) * LAUNCH_MAX_SPEED,
-				Y = HeightFromLaunch(NormalisedCharge)
-			};
+        bool isLaunch = !isPressed && NormalisedCharge != 0;
+        bool isCharging = isPressed && isOnFloor;
 
-			// AngularVelocity += (float)NormalisedCharge * 5; the spinnies
 
-			Rotation = MathUtils.VectorToAngle(LinearVelocity) - FlightDirection * MathF.PI / 2;
-			//NormalisedCharge = 0;
-			LaunchBar.Value = 0;
-			LaunchBar.Visible = false;
-		}
-		else if (isCharging)
-		{
-			LinearVelocity = LinearVelocity with
-			{
-				X = Mathf.Lerp(LinearVelocity.X, 0, MathF.Abs((float)NormalisedCharge))
-			};
+        if (isLaunch && isOnFloor)
+        {
+            LinearVelocity = LinearVelocity with
+            {
+                X = LinearVelocity.X + (float)NormalisedCharge * LAUNCH_MAX_SPEED,
+                Y = HeightFromLaunch(NormalisedCharge)
+            };
 
-			NormalisedCharge = Mathf.Clamp(Mathf.Lerp(NormalisedCharge, direction, delta * CHARGE_RATE), -1, 1);
-			Rotation = Mathf.LerpAngle(Rotation, 0, 0.1f);
-			LaunchBar.Visible = true;
-			LaunchBar.Value = MathF.Abs((float)NormalisedCharge);
-		}
+            // AngularVelocity += (float)NormalisedCharge * 5; the spinnies
 
-		if (isCharging && Math.Abs(NormalisedCharge) > 0.7)
-		{
-			float zoom = (float)Mathf.Lerp(1.0, CameraChargingZoom, MathUtils.CubicEasing((float)Math.Abs(NormalisedCharge)));
-			Camera.Zoom = new Vector2(zoom, zoom);
-			
-			cameraMovement.PeakCameraTowards(
-				new Vector2((float) NormalisedCharge * cameraPeakCoef, 0),
-				cameraPeakSpeed
-			);
-		}
-		else
-		{
-			float zoom = (float)Mathf.Lerp(Camera.Zoom.X, 1f, 0.1f);
-			Camera.Zoom = new Vector2(zoom, zoom);
-			
-			cameraMovement.PeakCameraTowards(
-				Vector2.Zero,
-				cameraPeakSpeed
-			);
-		}
-		//if (Input.IsActionJustPressed("ui_accept"))
-		//{
-		//	LinearVelocity = LinearVelocity with
-		//	{
-		//		X = LinearVelocity.X,
-		//		Y = JUMP_FORCE
-		//	};
-		//}
+            Rotation = MathUtils.VectorToAngle(LinearVelocity) - FlightDirection * MathF.PI / 2;
+            //NormalisedCharge = 0;
+            LaunchBar.Value = 0;
+            LaunchBar.Visible = false;
+        }
+        else if (isCharging)
+        {
+            LinearVelocity = LinearVelocity with
+            {
+                X = Mathf.Lerp(LinearVelocity.X, 0, MathF.Abs((float)NormalisedCharge))
+            };
 
-		if (CanDamage)
-		{
-			FlameFadeInTimer += delta;
-			FlameFadeInTimer = Math.Clamp(FlameFadeInTimer, 0, FLAME_FADE_IN_TIME);
-		}
+            NormalisedCharge = Mathf.Clamp(Mathf.Lerp(NormalisedCharge, direction, delta * CHARGE_RATE), -1, 1);
+            Rotation = Mathf.LerpAngle(Rotation, 0, 0.1f);
+            LaunchBar.Visible = true;
+            LaunchBar.Value = MathF.Abs((float)NormalisedCharge);
+        }
 
-		Sprite.SpriteFrames.SetAnimationSpeed("default", Mathf.Lerp(SlowestFPS, FastestFPS, Mathf.Abs(NormalisedCharge)));
-		
-		//idk if i should be doing this every frame but whatever
-		int frameCount = Sprite.SpriteFrames.GetFrameCount("default");
-		float flameOpacity = CanDamage ? MathUtils.CubicEasing((float)FlameFadeInterpolant()) : 0;
+        if (Input.IsActionJustPressed("ui_accept"))
+        {
+            LinearVelocity = LinearVelocity with
+            {
+                X = LinearVelocity.X,
+                Y = JUMP_FORCE
+            };
+        }
 
-		(Sprite.Material as ShaderMaterial).SetShaderParameter("FrameCount", frameCount);
-		(Sprite.Material as ShaderMaterial).SetShaderParameter("FlameOpacity", flameOpacity);
+        if (CanDamage)
+        {
+            FlameFadeInTimer += delta;
+            FlameFadeInTimer = Math.Clamp(FlameFadeInTimer, 0, FLAME_FADE_IN_TIME);
+        }
 
-		WasOnFloorLastFrame = isOnFloor;
-	}
+        Sprite.SpriteFrames.SetAnimationSpeed("default", Mathf.Lerp(SlowestFPS, FastestFPS, Mathf.Abs(NormalisedCharge)));
 
-	public void Land()
-	{
-		NormalisedCharge = 0;
-		FlameFadeInTimer = 0;
-	}
+        //idk if i should be doing this every frame but whatever
+        int frameCount = Sprite.SpriteFrames.GetFrameCount("default");
+        float flameOpacity = CanDamage ? MathUtils.CubicEasing((float)(FlameFadeInTimer / FLAME_FADE_IN_TIME)) : 0;
 
-	public float HeightFromLaunch(double interpolant)
-	{
-		return -MathF.Abs((float)interpolant) * VERTICAL_BOOST_MULTIPLIER;
-	}
+        (Sprite.Material as ShaderMaterial).SetShaderParameter("FrameCount", frameCount);
+        (Sprite.Material as ShaderMaterial).SetShaderParameter("FlameOpacity", flameOpacity);
+        // GD.Print(MathUtils.VectorToAngle(LinearVelocity).ToString());
 
-	public double FlameFadeInterpolant()
-	{
-		return FlameFadeInTimer / FLAME_FADE_IN_TIME;
+        WasOnFloorLastFrame = isOnFloor;
+    }
 
-	}
+    public void Land()
+    {
+        NormalisedCharge = 0;
+        FlameFadeInTimer = 0;
+    }
+
+    public float HeightFromLaunch(double interpolant)
+    {
+        return -MathF.Abs((float)interpolant) * VERTICAL_BOOST_MULTIPLIER;
+    }
+
+    public override void _IntegrateForces(PhysicsDirectBodyState2D state)
+    {
+
+        int bossesHit = 0;
+    
+        for (int i = 0; i < state.GetContactCount(); i++)
+        {
+            GodotObject collider = state.GetContactColliderObject(i);
+            if (collider is CharacterBody2D)
+            {
+                bossesHit++;
+                if (justBounced) continue;
+
+                Vector2 normal = state.GetContactLocalNormal(i);
+                state.LinearVelocity = state.LinearVelocity.Bounce(normal);
+                justBounced = true;
+            }
+        }
+
+        if (bossesHit == 0) {
+            justBounced = false;
+        }
+    }
 }

@@ -9,7 +9,7 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5h4g0"]
 
-[node name="WheelTurner" type="CharacterBody2D" unique_id=698038954]
+[node name="WheelTurner" type="CharacterBody2D" unique_id=698038954 groups=["boss"]]
 collision_layer = 4
 collision_mask = 11
 motion_mode = 1
