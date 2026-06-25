@@ -8,8 +8,6 @@ public partial class CameraMovement : Camera2D
 		peakTarget = Vector2.Zero;
 	private double peakTime = 1, currPeakTime = 0;
 
-<<<<<<< HEAD
-=======
 	// shake variables
 	private float shakeAmount = 0;
 	private float shakeTimer = 0;
@@ -19,7 +17,6 @@ public partial class CameraMovement : Camera2D
 	{
 		basePosition = Position;
 	}
->>>>>>> c5eaa16244509d872d564d60413ec4bda19881ef
 
 	public override void _Process(double delta)
 	{
