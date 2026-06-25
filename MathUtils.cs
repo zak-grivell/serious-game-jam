@@ -30,5 +30,13 @@ namespace NewGameProject
             return new Vector2(input.X * MathF.Cos(angle) - input.Y * MathF.Sin(angle),
                             input.X * MathF.Sin(angle) + input.Y * MathF.Cos(angle)); //perform rotation
         }
+
+        public static Vector2 Lerp(Vector2 a, Vector2 b, float interp)
+        {
+            float x = Mathf.Lerp(a.X, b.X, interp);
+            float y = Mathf.Lerp(a.Y, b.Y, interp);
+
+            return new Vector2(x, y);
+        }
     }
 }

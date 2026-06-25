@@ -1,7 +1,5 @@
 [gd_scene format=3 uid="uid://4mwsbpg7oyd1"]
 
-[ext_resource type="Script" path="res://scripts/scrolling text/ScrollingText.cs" id="1_v65du"]
-
 [node name="ScollingTextIntro" type="Node2D" unique_id=71528956]
 
 [node name="Node2D" type="Node2D" parent="." unique_id=360371704]
@@ -52,8 +50,4 @@ fit_content = true
 scroll_active = false
 horizontal_alignment = 1
 
-[node name="ScrollingText" type="Node" parent="Node2D" unique_id=2337703 node_paths=PackedStringArray("posNode")]
-script = ExtResource("1_v65du")
-posNode = NodePath("..")
-scrollTime = 10000.0
-scrollSpeed = 100.0
+[node name="ScrollingText" type="Node" parent="Node2D" unique_id=2337703]

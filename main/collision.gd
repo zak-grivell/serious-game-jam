@@ -14,8 +14,8 @@ func _process(delta: float) -> void:
 
 func _on_body_entered(body: Node2D) -> void:
 	print(body.name)
-	if (my_csharp_node.has_method("HitEnemy")):
-		my_csharp_node.HitEnemy(body)
+	if (get_parent().has_method("HitEnemy")):
+		get_parent().HitEnemy(body)
 		print("found damage method")
 	else:
 		print("no damage method found")

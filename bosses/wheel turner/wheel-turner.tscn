@@ -39,7 +39,7 @@ shape = SubResource("RectangleShape2D_5h4g0")
 [node name="GravityComp" type="Node" parent="." unique_id=109625254 node_paths=PackedStringArray("rb")]
 script = ExtResource("4_fqmci")
 rb = NodePath("..")
-gravity = 10.0
+gravity = 100.0
 
 [node name="HealthComp" type="Node" parent="." unique_id=1872065822 node_paths=PackedStringArray("deathComp")]
 script = ExtResource("5_sy515")
