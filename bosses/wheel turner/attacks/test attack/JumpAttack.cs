@@ -12,10 +12,11 @@ namespace NewGameProject.bosses.wheel_turner.attacks.test_attack
 	{
 		[Export] private CharacterBody2D AttackOwner;
 		[Export] private RayCast2D floorRaycast;
+		[Export] private float jumpStrength;
 		
 		public override void _Ready() {
 			base._Ready();
-			attack = new JumpAttackAttack(AttackOwner);
+			attack = new JumpAttackAttack(AttackOwner, jumpStrength);
 		}
 		
 		private bool firstTime = true;
