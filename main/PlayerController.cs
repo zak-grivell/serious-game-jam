@@ -141,14 +141,12 @@ public partial class PlayerController : RigidBody2D
 
 		WasOnFloorLastFrame = isOnFloor;
 		InDamagingFlight = true;
-		GD.Print(InDamagingFlight);
 	}
 
 	public void Land()
 	{
 		NormalisedCharge = 0;
 		FlameFadeInTimer = 0;
-		GD.Print("land called");
 		InDamagingFlight = false;
 	}
 
