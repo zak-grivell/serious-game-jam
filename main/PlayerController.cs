@@ -11,6 +11,8 @@ public partial class PlayerController : RigidBody2D
 	private const float JUMP_FORCE = -600.0f;
 	private const float VERTICAL_BOOST_MULTIPLIER = 500f;
 
+	public float GRIP_FORCE = 200f;
+
 	//private Sprite2D Sprite;
 	private AnimatedSprite2D Sprite;
 	private AnimationPlayer an;
@@ -27,6 +29,7 @@ public partial class PlayerController : RigidBody2D
 	private double FlameFadeInTimer = 0;
 	private bool WasOnFloorLastFrame;
 	private int FlightDirection;
+
 
 	private bool justBounced = false;
 	private bool InDamagingFlight;
@@ -161,15 +164,20 @@ public partial class PlayerController : RigidBody2D
 	
 		for (int i = 0; i < state.GetContactCount(); i++)
 		{
-			GodotObject collider = state.GetContactColliderObject(i);
+			Node2D collider = (Node2D)state.GetContactColliderObject(i);
+
+				Vector2 normal = state.GetContactLocalNormal(i);
 			if (collider is CharacterBody2D)
 			{
 				bossesHit++;
 				if (justBounced) continue;
 
-				Vector2 normal = state.GetContactLocalNormal(i);
 				state.LinearVelocity = state.LinearVelocity.Bounce(normal);
 				justBounced = true;
+			}
+			
+			if (collider.IsInGroup("floor")) {
+				state.ApplyCentralForce(-normal * GRIP_FORCE);
 			}
 		}
 
