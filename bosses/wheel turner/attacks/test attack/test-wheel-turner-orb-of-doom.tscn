@@ -1,8 +1,0 @@
-[gd_scene format=3 uid="uid://bkejr1bvwqrgm"]
-
-[ext_resource type="PackedScene" uid="uid://diims8y4idwwg" path="res://projectiles/orb of doom/orb-of-doom.tscn" id="1_dat5v"]
-
-[node name="TestWheelTurnerOrbOfDoom" type="Node2D" unique_id=875128207]
-
-[node name="OrbOfDoom" parent="." unique_id=1905422025 instance=ExtResource("1_dat5v")]
-metadata/directionVector = Vector2(10, 0)
