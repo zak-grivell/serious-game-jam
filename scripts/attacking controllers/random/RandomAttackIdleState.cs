@@ -6,14 +6,12 @@ public class RandomAttackIdleState : IState
 {
 	private AttackingState[] attackingStates;
 	private List<AttackingState> validAttackingStates = new List<AttackingState>();
-
+	
 	public RandomAttackIdleState(AttackingState[] attackingStates) {
 		this.attackingStates = attackingStates;
 	}
-	
-	public virtual void Update(double delta) {}
 
-	public IState NextState() {
+	public IState NextState(double delta) {
 		// Get valid attacks
 		validAttackingStates = new List<AttackingState>();
 		foreach(AttackingState state in attackingStates) {

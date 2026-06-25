@@ -1,11 +1,14 @@
 [gd_scene format=3 uid="uid://bcwqlo55jd83w"]
 
-[ext_resource type="Script" uid="uid://wt6prnlcoja" path="res://scripts/attacks/EntityLaunchProjectileAttack.cs" id="1_tgv1l"]
-[ext_resource type="PackedScene" uid="uid://bkejr1bvwqrgm" path="res://bosses/wheel turner/attacks/test attack/test-wheel-turner-orb-of-doom.tscn" id="2_5256t"]
+[ext_resource type="Script" uid="uid://coqamdn3p3j1k" path="res://scripts/attacking controllers/random/RandomAttackController.cs" id="1_54di8"]
+[ext_resource type="Script" uid="uid://cnabe34iql5ii" path="res://bosses/wheel turner/attacks/test attack/WheelTurnerTestAttack.cs" id="2_5256t"]
 
 [node name="WheelTurner" type="Node2D" unique_id=1130631629]
 
-[node name="TestAttack" type="Node" parent="." unique_id=1348791221 node_paths=PackedStringArray("originNode")]
-script = ExtResource("1_tgv1l")
-originNode = NodePath("..")
-projectile = ExtResource("2_5256t")
+[node name="AttackingController" type="Node" parent="." unique_id=2121137798 node_paths=PackedStringArray("attackingStates")]
+script = ExtResource("1_54di8")
+attackingStates = [NodePath("TestAttack")]
+
+[node name="TestAttack" type="Node" parent="AttackingController" unique_id=1348791221]
+script = ExtResource("2_5256t")
+attackCooldown = 3.0
