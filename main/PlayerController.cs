@@ -57,10 +57,10 @@ public partial class PlayerController : RigidBody2D
 		health = GetNode<HealthComp>("HealthComp");
 		lastHealth = health.GetHp();
 		health.HealthChanged += OnHealthChanged;
-		/*particles = GetNode<CpuParticles2D>("ChargeParticles");
+		particles = GetNode<CpuParticles2D>("ChargeParticles");
 		particles.Emitting = false;
 		FireParticles = GetNode<CpuParticles2D>("FireParticles");
-		FireParticles.Emitting = false;*/ //find
+		FireParticles.Emitting = false;
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -86,16 +86,16 @@ public partial class PlayerController : RigidBody2D
 			Sprite.FlipH = direction == -1;
 			if (direction == 1) {
 				// GD.Print(direction, "direction value");
-				/*particles.Rotation = 116;
+				particles.Rotation = 116;
 				particles.Scale = new Vector2(1, 1);
-				particles.Position = new Vector2(-9, 16);*/ //find
+				particles.Position = new Vector2(-9, 16);
 				MoveDirection = 1;
 			}
 			else if (direction == -1) {
 				// GD.Print(direction, "direction value");
-				/*particles.Rotation = 129;
+				particles.Rotation = 129;
 				particles.Scale = new Vector2(-1, -1);
-				particles.Position = new Vector2(14, 18);*/ //find
+				particles.Position = new Vector2(14, 18);
 				MoveDirection = -1;
 			}
 		}
@@ -130,24 +130,22 @@ public partial class PlayerController : RigidBody2D
 			//NormalisedCharge = 0;
 			LaunchBar.Value = 0;
 			LaunchBar.Visible = false;
-			//particles.Emitting = false; //find
+			particles.Emitting = false;
 			GD.Print("11111111111111");
 			GD.Print("direction: ", direction);
 			if (MoveDirection == 1) {
 				GD.Print("2222222");
-				/*FireParticles.Position = new Vector2(-20, 0);
+				FireParticles.Position = new Vector2(-20, 0);
 				FireParticles.Scale = new Vector2(1, 1);
 				GD.Print("forwards Position: ", FireParticles.Position, " Scale: ", FireParticles.Scale);
-				*/ //find
 			}
 			else if (MoveDirection == -1) {
 				GD.Print("3333333");
-				/*FireParticles.Position = new Vector2(20, 0);
+			FireParticles.Position = new Vector2(20, 0);
 				FireParticles.Scale = new Vector2(-1, -1);
 				GD.Print("forwards Position: ", FireParticles.Position, " Scale: ", FireParticles.Scale);
-				*/ //find
 			}
-			//FireParticles.Emitting = true; //find
+			FireParticles.Emitting = true;
 		}
 		else if (isCharging)
 		{
@@ -161,7 +159,7 @@ public partial class PlayerController : RigidBody2D
 			Rotation = Mathf.LerpAngle(Rotation, 0, 0.1f);
 			LaunchBar.Visible = true;
 			LaunchBar.Value = MathF.Abs((float)NormalisedCharge);
-			//particles.Emitting = true; //find
+			particles.Emitting = true;
 		}
 
 		if (Input.IsActionJustPressed("ui_accept") && isOnFloor == true)
