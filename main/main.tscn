@@ -462,13 +462,19 @@ position = Vector2(-1.5000286, 0)
 scale = Vector2(9.859374, 1)
 texture = SubResource("GradientTexture2D_buqre")
 
+<<<<<<< Updated upstream
 [node name="CharacterBody2D" type="RigidBody2D" parent="Scene" unique_id=1599436710 node_paths=PackedStringArray("cameraMovement") groups=["player"]]
+=======
+>>>>>>> parent of be07c6e (Added some camera peaking to the player)
+[node name="CharacterBody2D" type="RigidBody2D" parent="Scene" unique_id=1599436710 groups=["player"]]
+>>>>>>> Stashed changes
 position = Vector2(300, 0)
 rotation = -0.018606728
 gravity_scale = 1.061
 inertia = 8.0
 linear_damp = 1.0
 script = ExtResource("2_xwkvk")
+<<<<<<< Updated upstream
 CHARGE_RATE = 10.0
 cameraMovement = NodePath("Camera2D")
 cameraPeakSpeed = 1100.0
