@@ -3,7 +3,7 @@ using System;
 
 public partial class RandomAttackController : FiniteStateController
 {
-	[Export] private AttackingState[] attackingStates;
+	[Export] private RandomAttackingState[] attackingStates;
 	
 	public override void _Ready() {
 		base._Ready();
