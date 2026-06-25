@@ -1,6 +1,7 @@
 using Godot;
 using NewGameProject;
 using System;
+using System.Transactions;
 
 public partial class PlayerController : RigidBody2D
 {
@@ -28,7 +29,7 @@ public partial class PlayerController : RigidBody2D
 	private int FlightDirection;
 
 	private bool justBounced = false;
-
+	private bool InDamagingFlight;
 	public override void _Ready()
 	{
 		floorRaycast = GetNode<RayCast2D>("OnFloor");
@@ -84,6 +85,11 @@ public partial class PlayerController : RigidBody2D
 				Y = HeightFromLaunch(NormalisedCharge)
 			};
 
+			if (CanDamage)
+			{
+				InDamagingFlight = true;
+			}
+
 			// AngularVelocity += (float)NormalisedCharge * 5; the spinnies
 
 			Rotation = MathUtils.VectorToAngle(LinearVelocity) - FlightDirection * MathF.PI / 2;
@@ -99,6 +105,7 @@ public partial class PlayerController : RigidBody2D
 			};
 
 			NormalisedCharge = Mathf.Clamp(Mathf.Lerp(NormalisedCharge, direction, delta * CHARGE_RATE), -1, 1);
+
 			Rotation = Mathf.LerpAngle(Rotation, 0, 0.1f);
 			LaunchBar.Visible = true;
 			LaunchBar.Value = MathF.Abs((float)NormalisedCharge);
@@ -130,12 +137,16 @@ public partial class PlayerController : RigidBody2D
 		// GD.Print(MathUtils.VectorToAngle(LinearVelocity).ToString());
 
 		WasOnFloorLastFrame = isOnFloor;
+		InDamagingFlight = true;
+		GD.Print(InDamagingFlight);
 	}
 
 	public void Land()
 	{
 		NormalisedCharge = 0;
 		FlameFadeInTimer = 0;
+		GD.Print("land called");
+		InDamagingFlight = false;
 	}
 
 	public float HeightFromLaunch(double interpolant)
@@ -169,17 +180,23 @@ public partial class PlayerController : RigidBody2D
 
 	public void HitEnemy(Node2D enemy)
 	{
-		if (!CanDamage)
+		GD.Print(InDamagingFlight.ToString() + " final");
+
+		if (!InDamagingFlight)
 		{
+			GD.Print("can't damage");
 			HealthComp hp = GetNode<HealthComp>("HealthComp");
 			hp.Damage(1);
+			return;
 		}
 
 		HealthComp health = enemy.GetNodeOrNull<HealthComp>("HealthComp");
+
 		if (health != null)
 		{
-			GD.Print("damage dealt");
+			GD.Print("can damage");
 			bool lethal = health.Damage(1);
+			GD.Print("damage dealt, hp is " + health.GetHp().ToString() + "/" + health.GetMaxHp().ToString());			
 		}
 	}
 }
