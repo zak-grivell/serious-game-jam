@@ -8,19 +8,46 @@ public partial class CameraMovement : Camera2D
 		peakTarget = Vector2.Zero;
 	private double peakTime = 1, currPeakTime = 0;
 
+<<<<<<< HEAD
+=======
+	// shake variables
+	private float shakeAmount = 0;
+	private float shakeTimer = 0;
+	private Vector2 basePosition;
+	
+	public override void _Ready()
+	{
+		basePosition = Position;
+	}
+>>>>>>> c5eaa16244509d872d564d60413ec4bda19881ef
 
 	public override void _Process(double delta)
 	{
 		this.currPeakTime += delta;
-		this.Position = peakOrigin.Lerp(
+		basePosition = peakOrigin.Lerp(
 			peakTarget, 
 			(float) Math.Min(currPeakTime/peakTime, 1));
+			
+		// shake logic (only if player takes damage)
+		Vector2 shakeOffset = Vector2.Zero;
+		if (shakeTimer > 0) {
+			shakeTimer -= (float)delta;
+			shakeOffset = new Vector2((float)GD.RandRange(-shakeAmount, shakeAmount), (float)GD.RandRange(-shakeAmount, shakeAmount));
+			shakeAmount = Mathf.Lerp(shakeAmount, 0, (float)delta * 10);
+		}
+		Position = basePosition + shakeOffset;
 	}
+	
 	
 	public void PeakCameraTowards(Vector2 peakTarget, double speed) {
 		this.peakOrigin = this.Position;
 		this.peakTarget = peakTarget;
-		this.currPeakTime = 0;
+		this.currPeakTime = 10;
 		this.peakTime = (peakTarget - peakOrigin).Length() / speed;
+	}
+	
+	public void Shake(float amount, float duration) {
+		shakeAmount = amount;
+		shakeTimer = duration;
 	}
 }

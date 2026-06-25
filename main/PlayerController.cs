@@ -28,6 +28,16 @@ public partial class PlayerController : RigidBody2D
 	private bool WasOnFloorLastFrame;
 	private int FlightDirection;
 
+	private CameraMovement camera;
+	private HealthComp health;
+	private int lastHealth;
+	// ChargeParticles
+	private CpuParticles2D particles;
+	private Vector2 particleBaseOffset = new Vector2(-9, 15);
+	// FireParticles
+	private CpuParticles2D FireParticles;
+	private int MoveDirection;
+
 	private bool justBounced = false;
 	private bool InDamagingFlight;
 	public override void _Ready()
@@ -41,6 +51,16 @@ public partial class PlayerController : RigidBody2D
 		LaunchBar.Value = 0.0;
 		LaunchBar.Visible = false;
 		FlameFadeInTimer = 0;
+		GD.Print("HI");
+		camera = GetNode<CameraMovement>("Camera2D");
+		GD.Print("Camera found: " + camera);
+		health = GetNode<HealthComp>("HealthComp");
+		lastHealth = health.GetHp();
+		health.HealthChanged += OnHealthChanged;
+		particles = GetNode<CpuParticles2D>("ChargeParticles");
+		particles.Emitting = false;
+		FireParticles = GetNode<CpuParticles2D>("FireParticles");
+		FireParticles.Emitting = false;
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -64,6 +84,20 @@ public partial class PlayerController : RigidBody2D
 		{
 			FlightDirection = direction;
 			Sprite.FlipH = direction == -1;
+			if (direction == 1) {
+				// GD.Print(direction, "direction value");
+				particles.Rotation = 116;
+				particles.Scale = new Vector2(1, 1);
+				particles.Position = new Vector2(-9, 16);
+				MoveDirection = 1;
+			}
+			else if (direction == -1) {
+				// GD.Print(direction, "direction value");
+				particles.Rotation = 129;
+				particles.Scale = new Vector2(-1, -1);
+				particles.Position = new Vector2(14, 18);
+				MoveDirection = -1;
+			}
 		}
 
 		floorRaycast.Rotation = -Rotation;
@@ -96,6 +130,22 @@ public partial class PlayerController : RigidBody2D
 			//NormalisedCharge = 0;
 			LaunchBar.Value = 0;
 			LaunchBar.Visible = false;
+			particles.Emitting = false;
+			GD.Print("11111111111111");
+			GD.Print("direction: ", direction);
+			if (MoveDirection == 1) {
+				GD.Print("2222222");
+				FireParticles.Position = new Vector2(-20, 0);
+				FireParticles.Scale = new Vector2(1, 1);
+				GD.Print("forwards Position: ", FireParticles.Position, " Scale: ", FireParticles.Scale);
+			}
+			else if (MoveDirection == -1) {
+				GD.Print("3333333");
+				FireParticles.Position = new Vector2(20, 0);
+				FireParticles.Scale = new Vector2(-1, -1);
+				GD.Print("forwards Position: ", FireParticles.Position, " Scale: ", FireParticles.Scale);
+			}
+			FireParticles.Emitting = true;
 		}
 		else if (isCharging)
 		{
@@ -109,9 +159,10 @@ public partial class PlayerController : RigidBody2D
 			Rotation = Mathf.LerpAngle(Rotation, 0, 0.1f);
 			LaunchBar.Visible = true;
 			LaunchBar.Value = MathF.Abs((float)NormalisedCharge);
+			particles.Emitting = true;
 		}
 
-		if (Input.IsActionJustPressed("ui_accept"))
+		if (Input.IsActionJustPressed("ui_accept") && isOnFloor == true)
 		{
 			LinearVelocity = LinearVelocity with
 			{
@@ -134,6 +185,7 @@ public partial class PlayerController : RigidBody2D
 
 		(Sprite.Material as ShaderMaterial).SetShaderParameter("FrameCount", frameCount);
 		(Sprite.Material as ShaderMaterial).SetShaderParameter("FlameOpacity", flameOpacity);
+		
 		// GD.Print(MathUtils.VectorToAngle(LinearVelocity).ToString());
 
 		WasOnFloorLastFrame = isOnFloor;
@@ -197,4 +249,13 @@ public partial class PlayerController : RigidBody2D
 			GD.Print("damage dealt, hp is " + health.GetHp().ToString() + "/" + health.GetMaxHp().ToString());			
 		}
 	}
+	
+	private void OnHealthChanged(int hp) {
+		if (hp < lastHealth) {
+			GD.Print("SHAKING BITCH");
+			camera?.Shake(25f, 0.5f);
+		}
+		lastHealth = hp;
+	}
+
 }
