@@ -8,7 +8,7 @@ public partial class ProjectileAttack : Node, IAttack
 	
 	public void SetOrigin(Vector2 origin) => this.origin = origin;
 	
-	public virtual void Attack() {
+	public virtual void Attack(double delta) {
 		// Terrible practice =,(   vvvvv
 		var proj = (Node2D) projectile.Instantiate();
 		proj.Position = origin;

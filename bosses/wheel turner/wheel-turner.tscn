@@ -2,12 +2,27 @@
 
 [ext_resource type="Script" uid="uid://coqamdn3p3j1k" path="res://scripts/attacking controllers/random/RandomAttackController.cs" id="1_54di8"]
 [ext_resource type="Script" uid="uid://c5mqdq2v64c3r" path="res://bosses/wheel turner/attacks/test attack/JumpAttack.cs" id="2_5256t"]
+[ext_resource type="Texture2D" uid="uid://b63f8uvqqyjb" path="res://main/assets/textures/T_1_pixel.jpg" id="3_54di8"]
 
-[node name="WheelTurner" type="Node2D" unique_id=1130631629]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5h4g0"]
+
+[node name="WheelTurner" type="CharacterBody2D" unique_id=698038954]
 
 [node name="AttackingController" type="Node" parent="." unique_id=2121137798 node_paths=PackedStringArray("attackingStates")]
 script = ExtResource("1_54di8")
 attackingStates = [NodePath("TestAttack")]
 
-[node name="TestAttack" type="Node" parent="AttackingController" unique_id=1348791221]
+[node name="TestAttack" type="Node" parent="AttackingController" unique_id=1348791221 node_paths=PackedStringArray("AttackOwner", "floorRaycast")]
 script = ExtResource("2_5256t")
+AttackOwner = NodePath("../..")
+floorRaycast = NodePath("../../BossOnFloor")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1073556878]
+position = Vector2(58.59561, 58.779484)
+scale = Vector2(118.191216, 117.55883)
+texture = ExtResource("3_54di8")
+
+[node name="BossOnFloor" type="RayCast2D" parent="." unique_id=1174976158]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1721998679]
+shape = SubResource("RectangleShape2D_5h4g0")

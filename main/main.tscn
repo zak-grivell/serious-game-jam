@@ -5,7 +5,6 @@
 [ext_resource type="PackedScene" uid="uid://bcwqlo55jd83w" path="res://bosses/wheel turner/wheel-turner.tscn" id="1_piupu"]
 [ext_resource type="Shader" uid="uid://cjm6tultyxsi2" path="res://main/fireball.tres" id="2_67ri8"]
 [ext_resource type="Script" uid="uid://bg1hq55hr84mo" path="res://scripts/camera/CameraMovement.cs" id="2_n3o0a"]
-[ext_resource type="Texture2D" uid="uid://b63f8uvqqyjb" path="res://main/assets/textures/T_1_pixel.jpg" id="2_q0sk7"]
 [ext_resource type="Script" uid="uid://bpkn7kbddrque" path="res://main/PlayerController.cs" id="2_xwkvk"]
 [ext_resource type="Script" uid="uid://dufetdr1vqdac" path="res://main/HeartHealth.cs" id="3_4dugh"]
 [ext_resource type="Texture2D" uid="uid://ds45d7lj8xnxq" path="res://main/assets/PlayerAnimation.png" id="3_67ri8"]
@@ -197,13 +196,6 @@ grow_vertical = 2
 [node name="WheelTurner" parent="Scene" unique_id=1130631629 instance=ExtResource("1_piupu")]
 position = Vector2(3511.0002, 370)
 rotation = -0.018606728
-
-[node name="Sprite2D" type="Sprite2D" parent="Scene/WheelTurner" unique_id=1196333314]
-position = Vector2(58.59561, 58.779484)
-scale = Vector2(118.191216, 117.55883)
-texture = ExtResource("2_q0sk7")
-
-[node name="BossOnFloor" type="RayCast2D" parent="Scene/WheelTurner" unique_id=432115141]
 
 [node name="CharacterBody2D" type="RigidBody2D" parent="Scene" unique_id=1599436710 node_paths=PackedStringArray("cameraMovement") groups=["player"]]
 position = Vector2(300, 0)

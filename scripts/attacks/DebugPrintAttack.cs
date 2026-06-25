@@ -9,7 +9,7 @@ public partial class DebugPrintAttack : IAttack
 		this.msg = msg;
 	}
 	
-	public void Attack() {
+	public void Attack(double delta) {
 		GD.Print(msg);
 	}
 	

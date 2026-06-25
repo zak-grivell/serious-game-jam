@@ -16,7 +16,7 @@ public partial class WheelTurnerTestAttack : RandomAttackingState
 			currentCooldown = 0;
 			return idleState;
 		}else if(currentCooldown == 0 && GetAttack().CanAttack())
-			GetAttack().Attack();
+			GetAttack().Attack(delta);
 		currentCooldown += delta;
 		return this;
 	}
