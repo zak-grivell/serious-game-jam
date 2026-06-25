@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bcwqlo55jd83w"]
 
 [ext_resource type="Script" uid="uid://coqamdn3p3j1k" path="res://scripts/attacking controllers/random/RandomAttackController.cs" id="1_54di8"]
-[ext_resource type="Script" uid="uid://cnabe34iql5ii" path="res://bosses/wheel turner/attacks/test attack/WheelTurnerTestAttack.cs" id="2_5256t"]
+[ext_resource type="Script" uid="uid://c5mqdq2v64c3r" path="res://bosses/wheel turner/attacks/test attack/JumpAttack.cs" id="2_5256t"]
 
 [node name="WheelTurner" type="Node2D" unique_id=1130631629]
 
@@ -11,4 +11,3 @@ attackingStates = [NodePath("TestAttack")]
 
 [node name="TestAttack" type="Node" parent="AttackingController" unique_id=1348791221]
 script = ExtResource("2_5256t")
-attackCooldown = 3.0
