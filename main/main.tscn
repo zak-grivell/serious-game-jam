@@ -198,19 +198,18 @@ grow_vertical = 2
 [node name="Scene" type="Node2D" parent="." unique_id=1080076457]
 
 [node name="WheelTurner" parent="Scene" unique_id=1130631629 instance=ExtResource("1_piupu")]
-position = Vector2(3511.0002, 370)
+position = Vector2(3510, 308)
 rotation = -0.018606728
 
-[node name="CharacterBody2D" type="RigidBody2D" parent="Scene" unique_id=1599436710 node_paths=PackedStringArray("cameraMovement") groups=["player"]]
-position = Vector2(300, 0)
+[node name="CharacterBody2D" type="RigidBody2D" parent="Scene" unique_id=1599436710 groups=["player"]]
+position = Vector2(3000.27, 0)
 rotation = -0.018606728
 gravity_scale = 1.061
 inertia = 8.0
+contact_monitor = true
+max_contacts_reported = 5
 linear_damp = 1.0
 script = ExtResource("2_xwkvk")
-cameraMovement = NodePath("Camera2D")
-cameraPeakSpeed = 1100.0
-cameraPeakCoef = 400.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Scene/CharacterBody2D" unique_id=1025784810]
 shape = SubResource("CircleShape2D_s4s1w")

@@ -1,47 +1,39 @@
 using Godot;
 using NewGameProject;
 using System;
+using System.Transactions;
 
 public partial class PlayerController : RigidBody2D
 {
-	[Export]
-	private float LAUNCH_MAX_SPEED = 1000.0f;
-	[Export]
-	private float VERTICAL_BOOST_MULTIPLIER = 500f;
-	[Export]
-	private float CHARGE_RATE = 20.0f;
-	[Export]
-	private int SlowestFPS = 6;
-	[Export]
-	private int FastestFPS = 24;
-	[Export]
-	private float CameraChargingZoom = 1.2f;
-	
-	[Export] private CameraMovement cameraMovement;
-	[Export] private double cameraPeakSpeed;
-	[Export] private float cameraPeakCoef; // The scaling coefficient for the camera peaking
+	// TO-DO: make the player slow when charging up
+	private const float MAX_SPIN = 0.4f;
+	private const float LAUNCH_MAX_SPEED = 1000.0f;
+	private const float JUMP_FORCE = -600.0f;
+	private const float VERTICAL_BOOST_MULTIPLIER = 500f;
 
 	//private Sprite2D Sprite;
 	private AnimatedSprite2D Sprite;
 	private AnimationPlayer an;
 
 	private RayCast2D floorRaycast;
-
+	private const float CHARGE_RATE = 5.0f;
+	private const float DECHARGE_RATE = 200.0f;
 	private double NormalisedCharge = 0;
+	private const int SlowestFPS = 6;
+	private const int FastestFPS = 24;
 	private ProgressBar LaunchBar;
-	private Camera2D Camera;
 	private bool CanDamage => Mathf.Abs((float)NormalisedCharge) > 0.99;
 	private const double FLAME_FADE_IN_TIME = 0.8;
 	private double FlameFadeInTimer = 0;
 	private bool WasOnFloorLastFrame;
 	private int FlightDirection;
-	// line above is for launch bar
 
+	private bool justBounced = false;
+	private bool InDamagingFlight;
 	public override void _Ready()
 	{
 		floorRaycast = GetNode<RayCast2D>("OnFloor");
 		Sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
-		Camera = GetNode<Camera2D>("Camera2D");
 		Sprite.SpriteFrames.SetAnimationSpeed("default", SlowestFPS);
 
 		LaunchBar = GetNode<ProgressBar>("LaunchBar");
@@ -67,7 +59,7 @@ public partial class PlayerController : RigidBody2D
 		{
 			Land();
 		}
-		
+
 		if (isPressed && isOnFloor)
 		{
 			FlightDirection = direction;
@@ -84,14 +76,19 @@ public partial class PlayerController : RigidBody2D
 		bool isLaunch = !isPressed && NormalisedCharge != 0;
 		bool isCharging = isPressed && isOnFloor;
 
-		
+
 		if (isLaunch && isOnFloor)
 		{
 			LinearVelocity = LinearVelocity with
 			{
-				X = LinearVelocity.X + MathUtils.CubicEasing((float)NormalisedCharge) * LAUNCH_MAX_SPEED,
+				X = LinearVelocity.X + (float)NormalisedCharge * LAUNCH_MAX_SPEED,
 				Y = HeightFromLaunch(NormalisedCharge)
 			};
+
+			if (CanDamage)
+			{
+				InDamagingFlight = true;
+			}
 
 			// AngularVelocity += (float)NormalisedCharge * 5; the spinnies
 
@@ -108,39 +105,20 @@ public partial class PlayerController : RigidBody2D
 			};
 
 			NormalisedCharge = Mathf.Clamp(Mathf.Lerp(NormalisedCharge, direction, delta * CHARGE_RATE), -1, 1);
+
 			Rotation = Mathf.LerpAngle(Rotation, 0, 0.1f);
 			LaunchBar.Visible = true;
 			LaunchBar.Value = MathF.Abs((float)NormalisedCharge);
 		}
 
-		if (isCharging && Math.Abs(NormalisedCharge) > 0.7)
+		if (Input.IsActionJustPressed("ui_accept"))
 		{
-			float zoom = (float)Mathf.Lerp(1.0, CameraChargingZoom, MathUtils.CubicEasing((float)Math.Abs(NormalisedCharge)));
-			Camera.Zoom = new Vector2(zoom, zoom);
-			
-			cameraMovement.PeakCameraTowards(
-				new Vector2((float) NormalisedCharge * cameraPeakCoef, 0),
-				cameraPeakSpeed
-			);
+			LinearVelocity = LinearVelocity with
+			{
+				X = LinearVelocity.X,
+				Y = JUMP_FORCE
+			};
 		}
-		else
-		{
-			float zoom = (float)Mathf.Lerp(Camera.Zoom.X, 1f, 0.1f);
-			Camera.Zoom = new Vector2(zoom, zoom);
-			
-			cameraMovement.PeakCameraTowards(
-				Vector2.Zero,
-				cameraPeakSpeed
-			);
-		}
-		//if (Input.IsActionJustPressed("ui_accept"))
-		//{
-		//	LinearVelocity = LinearVelocity with
-		//	{
-		//		X = LinearVelocity.X,
-		//		Y = JUMP_FORCE
-		//	};
-		//}
 
 		if (CanDamage)
 		{
@@ -149,21 +127,24 @@ public partial class PlayerController : RigidBody2D
 		}
 
 		Sprite.SpriteFrames.SetAnimationSpeed("default", Mathf.Lerp(SlowestFPS, FastestFPS, Mathf.Abs(NormalisedCharge)));
-		
+
 		//idk if i should be doing this every frame but whatever
 		int frameCount = Sprite.SpriteFrames.GetFrameCount("default");
-		float flameOpacity = CanDamage ? MathUtils.CubicEasing((float)FlameFadeInterpolant()) : 0;
+		float flameOpacity = CanDamage ? MathUtils.CubicEasing((float)(FlameFadeInTimer / FLAME_FADE_IN_TIME)) : 0;
 
 		(Sprite.Material as ShaderMaterial).SetShaderParameter("FrameCount", frameCount);
 		(Sprite.Material as ShaderMaterial).SetShaderParameter("FlameOpacity", flameOpacity);
+		// GD.Print(MathUtils.VectorToAngle(LinearVelocity).ToString());
 
 		WasOnFloorLastFrame = isOnFloor;
+		InDamagingFlight = true;
 	}
 
 	public void Land()
 	{
 		NormalisedCharge = 0;
 		FlameFadeInTimer = 0;
+		InDamagingFlight = false;
 	}
 
 	public float HeightFromLaunch(double interpolant)
@@ -171,9 +152,49 @@ public partial class PlayerController : RigidBody2D
 		return -MathF.Abs((float)interpolant) * VERTICAL_BOOST_MULTIPLIER;
 	}
 
-	public double FlameFadeInterpolant()
+	public override void _IntegrateForces(PhysicsDirectBodyState2D state)
 	{
-		return FlameFadeInTimer / FLAME_FADE_IN_TIME;
 
+		int bossesHit = 0;
+	
+		for (int i = 0; i < state.GetContactCount(); i++)
+		{
+			GodotObject collider = state.GetContactColliderObject(i);
+			if (collider is CharacterBody2D)
+			{
+				bossesHit++;
+				if (justBounced) continue;
+
+				Vector2 normal = state.GetContactLocalNormal(i);
+				state.LinearVelocity = state.LinearVelocity.Bounce(normal);
+				justBounced = true;
+			}
+		}
+
+		if (bossesHit == 0) {
+			justBounced = false;
+		}
+	}
+
+	public void HitEnemy(Node2D enemy)
+	{
+		GD.Print(InDamagingFlight.ToString() + " final");
+
+		if (!InDamagingFlight)
+		{
+			GD.Print("can't damage");
+			HealthComp hp = GetNode<HealthComp>("HealthComp");
+			hp.Damage(1);
+			return;
+		}
+
+		HealthComp health = enemy.GetNodeOrNull<HealthComp>("HealthComp");
+
+		if (health != null)
+		{
+			GD.Print("can damage");
+			bool lethal = health.Damage(1);
+			GD.Print("damage dealt, hp is " + health.GetHp().ToString() + "/" + health.GetMaxHp().ToString());			
+		}
 	}
 }
