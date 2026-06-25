@@ -18,6 +18,7 @@
 [ext_resource type="Script" uid="uid://raapl8gsvdhh" path="res://scripts/level/LevelTile.cs" id="7_n3o0a"]
 [ext_resource type="Script" uid="uid://ls0onaertrga" path="res://scripts/player/PlayerCollision.cs" id="8_piupu"]
 [ext_resource type="Shader" uid="uid://jr4yliff40d6" path="res://main/background.gdshader" id="9_na0o7"]
+[ext_resource type="Texture2D" uid="uid://b63f8uvqqyjb" path="res://main/assets/textures/T_1_pixel.jpg" id="9_q0sk7"]
 [ext_resource type="Texture2D" uid="uid://b7s83eqa3bsdm" path="res://main/assets/hampter-removebg-preview.png" id="11_5xyti"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_s4s1w"]
@@ -118,6 +119,14 @@ animations = [{
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_thpiw"]
 radius = 29.274567
+
+[sub_resource type="Curve" id="Curve_43yv0"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.29), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_gvs4p"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.55), 0.0, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fwcvl"]
 texture = ExtResource("6_fwcvl")
@@ -251,6 +260,39 @@ script = ExtResource("8_piupu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Scene/CharacterBody2D/EnemyHitter" unique_id=1906446820]
 shape = SubResource("CircleShape2D_thpiw")
+
+[node name="ChargeParticles" type="CPUParticles2D" parent="Scene/CharacterBody2D" unique_id=1510453208]
+position = Vector2(-9, 116)
+rotation = 2.024582
+amount = 30
+texture = ExtResource("9_q0sk7")
+lifetime = 0.55
+explosiveness = 0.3
+randomness = 0.5
+local_coords = true
+spread = 70.0
+gravity = Vector2(-35, 0)
+initial_velocity_min = 35.0
+initial_velocity_max = 65.0
+scale_amount_min = 2.0
+scale_amount_max = 6.0
+scale_amount_curve = SubResource("Curve_43yv0")
+
+[node name="FireParticles" type="CPUParticles2D" parent="Scene/CharacterBody2D" unique_id=1239779941]
+position = Vector2(-20, 0)
+amount = 300
+texture = ExtResource("9_q0sk7")
+lifetime = 2.0
+explosiveness = 0.1
+emission_shape = 1
+emission_sphere_radius = 25.0
+gravity = Vector2(-200, 0)
+initial_velocity_min = 25.0
+initial_velocity_max = 25.0
+scale_amount_min = 4.0
+scale_amount_max = 8.0
+scale_amount_curve = SubResource("Curve_gvs4p")
+color = Color(0.9882353, 0.34901962, 0.1764706, 1)
 
 [node name="TileMapLayer" type="TileMapLayer" parent="Scene" unique_id=1743828336]
 position = Vector2(-19, 565)
