@@ -17,8 +17,7 @@ public partial class FiniteStateController : Node
 		base._Process(delta);
 		if (state != null)
 		{
-			state.Update(delta);
-			IState nextState = state.NextState();
+			IState nextState = state.NextState(delta);
 			if (nextState != null && nextState != this.state) {
 				this.state.OnLeave();
 				nextState.OnEnter();

@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://4mwsbpg7oyd1"]
+
+[ext_resource type="Script" path="res://scripts/scrolling text/ScrollingText.cs" id="1_v65du"]
+
+[node name="ScollingTextIntro" type="Node2D" unique_id=71528956]
+
+[node name="Node2D" type="Node2D" parent="." unique_id=360371704]
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Node2D" unique_id=796087131]
+offset_right = 1200.0
+offset_bottom = 24633.0
+bbcode_enabled = true
+text = "[font_size=48]
+“Wheel turner” is the character turning the wheel that keeps the earth spinning, just a placeholder name
+
+Opening cutscene
+
+Setting: in the living room of the house inside a cage (nobody else lives here, but the house looks as though people lived there in the past) and the television is on, with a documentary about the Earth playing. The Hamster is finishing off its five-star award-winning meal (specific meal to be decided) and thinks wistfully,
+  “That (food item) was so good, I could eat it again!” Audio from the television becomes audible, and the camera cuts to the TV with a voice saying,
+  “Have you ever wondered how the day turns to night? (wheel turner running in wheel onscreen) This lil’ fella runs night and day upon the Turning Wheel, rotating our Earth and giving us the cycle of night and day!” The Wheel Turner looks visibly exhausted, but still they run.
+The hamster considers this briefly, and has an idea! (light bulb appears above its head?) The hamster enters its ball, leaps out of its cage and makes for the outdoors.
+
+Speech/thoughts overheard in game (incomplete)
+
+Throughout the game, a thought bubble could appear over the hamster every so often with food inside it, indicating that the hamster is constantly thinking about the meal they want to eat again.
+
+Hamster reaches the Wheel Turner
+
+To be written, some dialogue where the Wheel Turner is clearly incredibly attached to turning the wheel and provokes the hamster into combat
+
+Ending cutscene
+
+(hamster defeats the wheel turner, jumps onto the wheel and begins to turn it backwards)
+
+The Wheel Turner realises what the hamster is doing, and cries out,
+  “NO! STOP!”
+The hamster is confused as to what triggers such a reaction from the Wheel Turner, and asks,
+  “What’s wrong, Wheel Turner?”
+  “I must… I must keep running. I can’t stop!”
+  “Why not take a break, Wheel Turner? You seem pretty tired…”
+
+  “There’s… there’s a reason I never stopped. If I ever stopped running, if I ever let time stop advancing, they’ll catch up to me…”
+  “Who will catch up to you, Wheel Turner? You’re really fast! Surely you got a headstart on them?”
+  “No headstart is enough… no headstart is nearly enough…”
+He pauses, and breathes heavily.
+  “Why do this? Why turn time back? Surely you don’t want to turn back time, face the past again?”
+  “I… I just wanted to eat my dinner again. The past isn’t all bad, Wheel Turner! Think of all the lovely dinners you had! Think of everyone you knew! My people… might not be around anymore, but we had so many tasty dinners together! (pause) I think I’ve turned back time enough now. You can have your wheel back.”
+
+The hamster returns home to find its meal waiting for it again, and takes a bite. It realises the meal wasn’t as nice as it remembers it being, and starts to wonder what other meals it might have, in the future.
+"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+
+[node name="ScrollingText" type="Node" parent="Node2D" unique_id=2337703 node_paths=PackedStringArray("posNode")]
+script = ExtResource("1_v65du")
+posNode = NodePath("..")
+scrollTime = 10000.0
+scrollSpeed = 100.0

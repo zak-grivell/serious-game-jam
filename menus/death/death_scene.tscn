@@ -1,0 +1,88 @@
+[gd_scene format=3 uid="uid://g3exltvnlp2r"]
+
+[ext_resource type="Script" uid="uid://do2auwpfsvfnx" path="res://menus/death/death_scene.gd" id="1_m52bq"]
+[ext_resource type="Texture2D" uid="uid://f0rxjylwlgx1" path="res://images/hamster.jpg" id="1_wimkr"]
+
+[node name="death_scene" type="Control" unique_id=814306884]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_m52bq")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1712851825]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_wimkr")
+expand_mode = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="TextureRect" unique_id=894677985]
+custom_minimum_size = Vector2(850, 500)
+custom_maximum_size = Vector2(850, 500)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -125.0
+offset_right = 100.0
+offset_bottom = 135.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="TextureRect/PanelContainer" unique_id=838323621]
+custom_minimum_size = Vector2(850, 500)
+custom_maximum_size = Vector2(850, 500)
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 25
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TextureRect/PanelContainer/MarginContainer" unique_id=416289274]
+custom_minimum_size = Vector2(830, 480)
+custom_maximum_size = Vector2(830, 480)
+layout_mode = 2
+theme_override_constants/separation = -5
+
+[node name="Label" type="Label" parent="TextureRect/PanelContainer/MarginContainer/VBoxContainer" unique_id=867486435]
+custom_minimum_size = Vector2(700, 250)
+custom_maximum_size = Vector2(700, 250)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 128
+text = "YOU DIED :("
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TextureRect/PanelContainer/MarginContainer/VBoxContainer" unique_id=2113045488]
+custom_minimum_size = Vector2(650, 100)
+custom_maximum_size = Vector2(650, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 35
+
+[node name="restart" type="Button" parent="TextureRect/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1792899763]
+custom_minimum_size = Vector2(300, 100)
+custom_maximum_size = Vector2(300, 100)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/font_size = 54
+text = "RESTART"
+
+[node name="quit" type="Button" parent="TextureRect/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer" unique_id=1060833104]
+custom_minimum_size = Vector2(300, 100)
+custom_maximum_size = Vector2(300, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 54
+text = "EXIT"
+
+[connection signal="pressed" from="TextureRect/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="TextureRect/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/quit" to="." method="_on_quit_pressed"]

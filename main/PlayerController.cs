@@ -27,6 +27,7 @@ public partial class PlayerController : RigidBody2D
 	private double FlameFadeInTimer = 0;
 	private bool WasOnFloorLastFrame;
 	private int FlightDirection;
+
 	private CameraMovement camera;
 	private HealthComp health;
 	private int lastHealth;
@@ -36,7 +37,12 @@ public partial class PlayerController : RigidBody2D
 	// FireParticles
 	private CpuParticles2D FireParticles;
 	private int MoveDirection;
+	private double StillMoving = 10;
+	// musci
+	[Export] private AudioStream levelMusic;
 
+	private bool justBounced = false;
+	private bool InDamagingFlight;
 	public override void _Ready()
 	{
 		floorRaycast = GetNode<RayCast2D>("OnFloor");
@@ -48,9 +54,7 @@ public partial class PlayerController : RigidBody2D
 		LaunchBar.Value = 0.0;
 		LaunchBar.Visible = false;
 		FlameFadeInTimer = 0;
-		GD.Print("HI");
 		camera = GetNode<CameraMovement>("Camera2D");
-		GD.Print("Camera found: " + camera);
 		health = GetNode<HealthComp>("HealthComp");
 		lastHealth = health.GetHp();
 		health.HealthChanged += OnHealthChanged;
@@ -58,6 +62,9 @@ public partial class PlayerController : RigidBody2D
 		particles.Emitting = false;
 		FireParticles = GetNode<CpuParticles2D>("FireParticles");
 		FireParticles.Emitting = false;
+		GetNode<MusicManager>("/root/MusicManager").Stop();
+		AudioStream music = GD.Load<AudioStream>("res://audio/theme final.mp3");
+		GetNode<MusicManager>("/root/MusicManager").Play(music);
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -76,19 +83,21 @@ public partial class PlayerController : RigidBody2D
 		{
 			Land();
 		}
-		
+
 		if (isPressed && isOnFloor)
 		{
 			FlightDirection = direction;
 			Sprite.FlipH = direction == -1;
-			if (direction == 1) {
+			if (direction == 1)
+			{
 				// GD.Print(direction, "direction value");
 				particles.Rotation = 116;
 				particles.Scale = new Vector2(1, 1);
 				particles.Position = new Vector2(-9, 16);
 				MoveDirection = 1;
 			}
-			else if (direction == -1) {
+			else if (direction == -1)
+			{
 				// GD.Print(direction, "direction value");
 				particles.Rotation = 129;
 				particles.Scale = new Vector2(-1, -1);
@@ -107,7 +116,7 @@ public partial class PlayerController : RigidBody2D
 		bool isLaunch = !isPressed && NormalisedCharge != 0;
 		bool isCharging = isPressed && isOnFloor;
 
-		
+
 		if (isLaunch && isOnFloor)
 		{
 			LinearVelocity = LinearVelocity with
@@ -116,6 +125,11 @@ public partial class PlayerController : RigidBody2D
 				Y = HeightFromLaunch(NormalisedCharge)
 			};
 
+			if (CanDamage)
+			{
+				InDamagingFlight = true;
+			}
+
 			// AngularVelocity += (float)NormalisedCharge * 5; the spinnies
 
 			Rotation = MathUtils.VectorToAngle(LinearVelocity) - FlightDirection * MathF.PI / 2;
@@ -123,19 +137,16 @@ public partial class PlayerController : RigidBody2D
 			LaunchBar.Value = 0;
 			LaunchBar.Visible = false;
 			particles.Emitting = false;
-			GD.Print("11111111111111");
-			GD.Print("direction: ", direction);
-			if (MoveDirection == 1) {
-				GD.Print("2222222");
+			if (MoveDirection == 1)
+			{
 				FireParticles.Position = new Vector2(-20, 0);
 				FireParticles.Scale = new Vector2(1, 1);
 				GD.Print("forwards Position: ", FireParticles.Position, " Scale: ", FireParticles.Scale);
 			}
-			else if (MoveDirection == -1) {
-				GD.Print("3333333");
+			else if (MoveDirection == -1)
+			{
 				FireParticles.Position = new Vector2(20, 0);
 				FireParticles.Scale = new Vector2(-1, -1);
-				GD.Print("forwards Position: ", FireParticles.Position, " Scale: ", FireParticles.Scale);
 			}
 			FireParticles.Emitting = true;
 		}
@@ -147,6 +158,7 @@ public partial class PlayerController : RigidBody2D
 			};
 
 			NormalisedCharge = Mathf.Clamp(Mathf.Lerp(NormalisedCharge, direction, delta * CHARGE_RATE), -1, 1);
+
 			Rotation = Mathf.LerpAngle(Rotation, 0, 0.1f);
 			LaunchBar.Visible = true;
 			LaunchBar.Value = MathF.Abs((float)NormalisedCharge);
@@ -169,7 +181,7 @@ public partial class PlayerController : RigidBody2D
 		}
 
 		Sprite.SpriteFrames.SetAnimationSpeed("default", Mathf.Lerp(SlowestFPS, FastestFPS, Mathf.Abs(NormalisedCharge)));
-		
+
 		//idk if i should be doing this every frame but whatever
 		int frameCount = Sprite.SpriteFrames.GetFrameCount("default");
 		float flameOpacity = CanDamage ? MathUtils.CubicEasing((float)(FlameFadeInTimer / FLAME_FADE_IN_TIME)) : 0;
@@ -180,25 +192,84 @@ public partial class PlayerController : RigidBody2D
 		// GD.Print(MathUtils.VectorToAngle(LinearVelocity).ToString());
 
 		WasOnFloorLastFrame = isOnFloor;
+		InDamagingFlight = true;
+		
+		// is the hamster still movign
+		if (StillMoving > LinearVelocity.Length()) {
+			FireParticles.Emitting = false;
+		}
+		else if (StillMoving < LinearVelocity.Length()) {
+			FireParticles.Emitting = true;
+		}
 	}
 
 	public void Land()
 	{
 		NormalisedCharge = 0;
 		FlameFadeInTimer = 0;
+		InDamagingFlight = false;
 	}
 
 	public float HeightFromLaunch(double interpolant)
 	{
 		return -MathF.Abs((float)interpolant) * VERTICAL_BOOST_MULTIPLIER;
 	}
-	
-	private void OnHealthChanged(int hp) {
-		if (hp < lastHealth) {
-			GD.Print("SHAKING BITCH");
+
+	public override void _IntegrateForces(PhysicsDirectBodyState2D state)
+	{
+
+		int bossesHit = 0;
+
+		for (int i = 0; i < state.GetContactCount(); i++)
+		{
+			GodotObject collider = state.GetContactColliderObject(i);
+			if (collider is CharacterBody2D)
+			{
+				bossesHit++;
+				if (justBounced) continue;
+
+				Vector2 normal = state.GetContactLocalNormal(i);
+				state.LinearVelocity = state.LinearVelocity.Bounce(normal);
+				justBounced = true;
+			}
+		}
+
+		if (bossesHit == 0)
+		{
+			justBounced = false;
+		}
+	}
+
+	public void HitEnemy(Node2D enemy)
+	{
+		GD.Print(InDamagingFlight.ToString() + " final");
+
+		if (!InDamagingFlight)
+		{
+			GD.Print("can't damage");
+			HealthComp hp = GetNode<HealthComp>("HealthComp");
+			hp.Damage(1);
+			return;
+		}
+
+		HealthComp health = enemy.GetNodeOrNull<HealthComp>("HealthComp");
+
+		if (health != null)
+		{
+			GD.Print("can damage");
+			bool lethal = health.Damage(1);
+			GD.Print("damage dealt, hp is " + health.GetHp().ToString() + "/" + health.GetMaxHp().ToString());
+		}
+	}
+
+	private void OnHealthChanged(int hp)
+	{
+		if (hp < lastHealth)
+		{
 			camera?.Shake(25f, 0.5f);
 		}
 		lastHealth = hp;
+		
 	}
-	
+
 }
