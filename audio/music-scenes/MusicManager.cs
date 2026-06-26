@@ -11,11 +11,11 @@ public partial class MusicManager : Node {
 	public void Play(AudioStream music) {
 		if (MusicPlayer.Stream == music && MusicPlayer.Playing)
 			return;
-		// MusicPlayer.Stream = music;
-		// MusicPlayer.Play();
+		MusicPlayer.Stream = music;
+		MusicPlayer.Play();
 	}
 
 	public void Stop() {
-		// MusicPlayer.Stop();
+		MusicPlayer.Stop();
 	}
 }
