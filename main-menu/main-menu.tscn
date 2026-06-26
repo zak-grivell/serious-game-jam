@@ -126,5 +126,6 @@ text = "QUIT"
 layout_mode = 1
 onload = false
 
+[connection signal="pressed" from="idk what this is/MarginContainer/VBoxContainer/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="idk what this is/MarginContainer/VBoxContainer/VBoxContainer/Credits" to="." method="_on_credits_pressed"]
 [connection signal="pressed" from="idk what this is/MarginContainer/VBoxContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
