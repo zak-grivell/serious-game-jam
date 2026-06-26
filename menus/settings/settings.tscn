@@ -23,7 +23,8 @@ texture = ExtResource("2_jykqg")
 expand_mode = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1614421201]
-custom_minimum_size = Vector2(200, 250)
+custom_minimum_size = Vector2(600, 750)
+custom_maximum_size = Vector2(600, 750)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -38,8 +39,8 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=183373118]
-custom_minimum_size = Vector2(200, 250)
-custom_maximum_size = Vector2(200, 250)
+custom_minimum_size = Vector2(600, 750)
+custom_maximum_size = Vector2(600, 750)
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
@@ -52,12 +53,12 @@ layout_mode = 2
 theme_override_constants/separation = -5
 
 [node name="back" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1125957851]
-custom_minimum_size = Vector2(50, 25)
-custom_maximum_size = Vector2(50, 25)
+custom_minimum_size = Vector2(125, 50)
+custom_maximum_size = Vector2(125, 50)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 26
 text = "BACK"
 
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/back" to="." method="_on_back_pressed"]

@@ -37,3 +37,7 @@ func _on_restart_pressed() -> void:
 func _on_exit_pressed() -> void:
 	resume()
 	get_tree().change_scene_to_file("res://main-menu/main-menu.tscn")
+
+func _on_settings_pressed() -> void:
+	resume()
+	get_tree().change_scene_to_file("res://menus/settings/settings.tscn")

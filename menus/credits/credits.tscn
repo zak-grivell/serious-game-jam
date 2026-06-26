@@ -23,7 +23,8 @@ texture = ExtResource("2_32j7k")
 expand_mode = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=256555716]
-custom_minimum_size = Vector2(200, 250)
+custom_minimum_size = Vector2(600, 750)
+custom_maximum_size = Vector2(600, 750)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -38,8 +39,8 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1178580964]
-custom_minimum_size = Vector2(200, 250)
-custom_maximum_size = Vector2(200, 250)
+custom_minimum_size = Vector2(600, 750)
+custom_maximum_size = Vector2(600, 750)
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
@@ -47,23 +48,25 @@ theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=337345193]
-custom_minimum_size = Vector2(180, 200)
+custom_minimum_size = Vector2(500, 600)
 layout_mode = 2
-theme_override_constants/separation = -5
+theme_override_constants/separation = 0
 
 [node name="heading" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=543114959]
-custom_minimum_size = Vector2(100, 35)
+custom_minimum_size = Vector2(350, 120)
+custom_maximum_size = Vector2(350, -1)
 layout_mode = 2
 size_flags_horizontal = 4
-theme_override_font_sizes/normal_font_size = 24
+theme_override_font_sizes/normal_font_size = 86
 text = "CREDITS"
 
 [node name="text" type="RichTextLabel" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=580197981]
-custom_minimum_size = Vector2(110, 190)
+custom_minimum_size = Vector2(300, 520)
+custom_maximum_size = Vector2(300, 520)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_font_sizes/normal_font_size = 10
+theme_override_font_sizes/normal_font_size = 26
 text = "---- Art ----
 Gemma
 
@@ -78,15 +81,14 @@ Leia
 Zoe
 Keiran"
 horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="back" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1263784830]
-custom_minimum_size = Vector2(50, 25)
-custom_maximum_size = Vector2(50, 25)
+custom_minimum_size = Vector2(125, 50)
+custom_maximum_size = Vector2(125, 50)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-theme_override_font_sizes/font_size = 12
+theme_override_font_sizes/font_size = 26
 text = "BACK"
 
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/back" to="." method="_on_back_pressed"]
