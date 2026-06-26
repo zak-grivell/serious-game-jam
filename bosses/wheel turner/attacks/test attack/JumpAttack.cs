@@ -45,7 +45,7 @@ namespace NewGameProject.bosses.wheel_turner.attacks.test_attack
 			if (ElapsedTime < TargetTime)
 			{
 				AttackOwner.Position = MathUtils.Lerp(AttackOwner.Position, JumpDestination, (float)(ElapsedTime / TargetTime));
-				GD.Print("trying");
+				// GD.Print("trying");
 			}
 
 			if(firstTime) GetAttack().Attack(delta);

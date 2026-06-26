@@ -147,6 +147,7 @@ public partial class PlayerController : RigidBody2D
 	{
 		NormalisedCharge = 0;
 		FlameFadeInTimer = 0;
+		GD.Print("land called");
 		InDamagingFlight = false;
 	}
 
@@ -186,7 +187,7 @@ public partial class PlayerController : RigidBody2D
 
 	public void HitEnemy(Node2D enemy)
 	{
-		GD.Print(InDamagingFlight.ToString() + " final");
+		// GD.Print(InDamagingFlight.ToString() + " final");
 
 		if (!InDamagingFlight)
 		{
