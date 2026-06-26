@@ -37,6 +37,9 @@ public partial class PlayerController : RigidBody2D
 	// FireParticles
 	private CpuParticles2D FireParticles;
 	private int MoveDirection;
+	private double StillMoving = 10;
+	// musci
+	[Export] private AudioStream levelMusic;
 
 	private bool justBounced = false;
 	private bool InDamagingFlight;
@@ -61,6 +64,9 @@ public partial class PlayerController : RigidBody2D
 		particles.Emitting = false;
 		FireParticles = GetNode<CpuParticles2D>("FireParticles");
 		FireParticles.Emitting = false;
+		GetNode<MusicManager>("/root/MusicManager").Stop();
+		AudioStream music = GD.Load<AudioStream>("res://audio/theme.mp3");
+		GetNode<MusicManager>("/root/MusicManager").Play(music);
 	}
 
 	public override void _PhysicsProcess(double delta)
@@ -194,6 +200,14 @@ public partial class PlayerController : RigidBody2D
 
 		WasOnFloorLastFrame = isOnFloor;
 		InDamagingFlight = true;
+		
+		// is the hamster still movign
+		if (StillMoving > LinearVelocity.Length()) {
+			FireParticles.Emitting = false;
+		}
+		else if (StillMoving < LinearVelocity.Length()) {
+			FireParticles.Emitting = true;
+		}
 	}
 
 	public void Land()
