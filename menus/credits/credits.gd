@@ -3,7 +3,7 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	var music = load("res://audio/menu demo.mp3")
+	var music = load("res://audio/menu.mp3")
 	MusicManager.Play(music)
 
 

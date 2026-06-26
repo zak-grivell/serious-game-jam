@@ -65,7 +65,7 @@ public partial class PlayerController : RigidBody2D
 		FireParticles = GetNode<CpuParticles2D>("FireParticles");
 		FireParticles.Emitting = false;
 		GetNode<MusicManager>("/root/MusicManager").Stop();
-		AudioStream music = GD.Load<AudioStream>("res://audio/theme.mp3");
+		AudioStream music = GD.Load<AudioStream>("res://audio/theme final.mp3");
 		GetNode<MusicManager>("/root/MusicManager").Play(music);
 	}
 
