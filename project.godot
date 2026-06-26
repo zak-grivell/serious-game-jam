@@ -14,6 +14,10 @@ config/name="gamejam"
 run/main_scene="uid://c8tesuotehef3"
 config/features=PackedStringArray("4.7", "C#", "GL Compatibility")
 
+[autoload]
+
+MusicManager="*uid://oh76vpmch8x3"
+
 [display]
 
 window/size/viewport_width=1920
