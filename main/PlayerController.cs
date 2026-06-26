@@ -277,6 +277,11 @@ public partial class PlayerController : RigidBody2D
 			camera?.Shake(25f, 0.5f);
 		}
 		lastHealth = hp;
+		
+		if (hp == 0) {
+			GD.Print("death and destruction");
+			
+		}
 	}
 
 }
