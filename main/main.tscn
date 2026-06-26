@@ -280,7 +280,7 @@ scale_amount_curve = SubResource("Curve_43yv0")
 
 [node name="FireParticles" type="CPUParticles2D" parent="Scene/CharacterBody2D" unique_id=1239779941]
 position = Vector2(-20, 0)
-amount = 300
+amount = 600
 texture = ExtResource("9_q0sk7")
 lifetime = 2.0
 explosiveness = 0.1
@@ -290,7 +290,7 @@ gravity = Vector2(-200, 0)
 initial_velocity_min = 25.0
 initial_velocity_max = 25.0
 scale_amount_min = 4.0
-scale_amount_max = 8.0
+scale_amount_max = 10.0
 scale_amount_curve = SubResource("Curve_gvs4p")
 color = Color(0.9882353, 0.34901962, 0.1764706, 1)
 
