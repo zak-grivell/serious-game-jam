@@ -33,13 +33,6 @@ public partial class HealthComp : Node
 			this.currDmgITime = dmgITime;
 			HealthChanged?.Invoke(hp);
 			if (this.hp <= 0) {
-				GD.Print("DEADDDD");
-				if (deathComp == null) {
-					GD.PrintErr("DeathComp is NULL! Assign it in the HealthComp inspector.");
-					return true;
-				}
-
-				GD.Print("Calling death comp: ", deathComp.Name, " type: ", deathComp.GetType().Name);
 				deathComp.Die();
 				return true;
 					}

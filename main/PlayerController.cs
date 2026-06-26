@@ -54,9 +54,7 @@ public partial class PlayerController : RigidBody2D
 		LaunchBar.Value = 0.0;
 		LaunchBar.Visible = false;
 		FlameFadeInTimer = 0;
-		GD.Print("HI");
 		camera = GetNode<CameraMovement>("Camera2D");
-		GD.Print("Camera found: " + camera);
 		health = GetNode<HealthComp>("HealthComp");
 		lastHealth = health.GetHp();
 		health.HealthChanged += OnHealthChanged;
@@ -139,21 +137,16 @@ public partial class PlayerController : RigidBody2D
 			LaunchBar.Value = 0;
 			LaunchBar.Visible = false;
 			particles.Emitting = false;
-			GD.Print("11111111111111");
-			GD.Print("direction: ", direction);
 			if (MoveDirection == 1)
 			{
-				GD.Print("2222222");
 				FireParticles.Position = new Vector2(-20, 0);
 				FireParticles.Scale = new Vector2(1, 1);
 				GD.Print("forwards Position: ", FireParticles.Position, " Scale: ", FireParticles.Scale);
 			}
 			else if (MoveDirection == -1)
 			{
-				GD.Print("3333333");
 				FireParticles.Position = new Vector2(20, 0);
 				FireParticles.Scale = new Vector2(-1, -1);
-				GD.Print("forwards Position: ", FireParticles.Position, " Scale: ", FireParticles.Scale);
 			}
 			FireParticles.Emitting = true;
 		}
@@ -273,15 +266,10 @@ public partial class PlayerController : RigidBody2D
 	{
 		if (hp < lastHealth)
 		{
-			GD.Print("SHAKING BITCH");
 			camera?.Shake(25f, 0.5f);
 		}
 		lastHealth = hp;
 		
-		if (hp == 0) {
-			GD.Print("death and destruction");
-			
-		}
 	}
 
 }
